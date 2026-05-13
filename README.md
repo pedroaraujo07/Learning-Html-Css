@@ -1,2 +1,2 @@
 # Learning-Html-Css
-Exercícios simples de HTML e CSS feitos por mim.
+Exercícios de HTML e CSS feitos por mim.
