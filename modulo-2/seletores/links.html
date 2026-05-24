@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links</title>
+    <style>
+        a {
+            color: red;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:visited {
+            color: darkred;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: green;
+        }
+
+        a:active {
+            color: blue;
+        }
+
+        .special::before {
+            content: "⇸ "
+        }
+
+        .special:after {
+            content: " ⤆";
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Personalizando Links</h1>
+    <ul>
+        <li><a href="https://www.ufc.com" target="_blank" rel="external" class="special">UFC</a></li>
+        <li><a href="https://www.nike.com" target="_blank" rel="external">Nike</a></li>
+        <li><a href="https://www.sofascore.com" target="_blank" rel="external">SofaScore</a></li>
+    </ul>
+    
+</body>
+</html>
