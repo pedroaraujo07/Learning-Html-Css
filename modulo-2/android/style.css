@@ -7,16 +7,29 @@
     src: url(fontes/idroid.otf) format(opentype);
 }
 
+:root {
+    --c0: #c2e6d1;
+    --c1: #84E1AD;
+    --c2: #3CD681;
+    --c3: #2e9f5f;
+    --c4: #3a6c52;
+    --c5: #195B38;
+
+    --fonte: Arial, Verdana, Helvetica, sans-serif;
+    --fonte2: 'Bebas Neue', cursive;
+    --fonte3: "Idroid", sans-serif;
+}
+
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--fonte);
     font-weight: normal;
     font-style: normal;
     background-color: #84E1AD;
 }
 
 header {
-    background-image: linear-gradient(to bottom, #3CD681, #288D54, #195B38);
+    background-image: linear-gradient(to bottom, var(--c2), var(--c3), var(--c5));
     color: white;
     text-align: center;
     margin: 0;
@@ -26,7 +39,7 @@ header {
 
 #theader {
     margin: 0;
-    font-family: 'Bebas Neue', cursive;
+    font-family: var(--fonte2);
     font-weight: normal;
     text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
 }
@@ -47,22 +60,24 @@ a {
 }
 
 .menu {
-    color: #c2e6d1;
+    color: var(--c0);
     padding: 10px;
 }
 
 .menu:hover {
-    background-color: #2e9f5f;
-    color: #195B38;
+    background-color: var(--c3);
+    color: var(--c5);
     font-weight: bold;
 }
 
 main {
     background-color: white;
-    margin: 0 6em;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.415);
     padding: 1em;
     border-radius: 0 0 1em 1em;
+    max-width: 800px;
+    margin: auto;
+
 }
 
 h1 {
@@ -71,8 +86,8 @@ h1 {
 }
 
 .idroid {
-    font-family: "Idroid", sans-serif;
-    color: #3a6c52;
+    font-family: var(--fonte3);
+    color: var(--c4);
 }
 
 .h2main {
@@ -85,7 +100,7 @@ p {
 }
 
 .pdestaque {
-    color: #3a6c52;
+    color: var(--c4);
     font-weight: bold;
 }
 
@@ -100,7 +115,7 @@ img {
 }
 
 #video {
-    background-color: #195B38;
+    background-color: var(--c5);
     padding: 6em;
     margin: 0 -1em 1em -1em;
     display: block;
@@ -120,7 +135,7 @@ iframe {
 }
 
 aside {
-    background-color: #c2e6d1;
+    background-color: var(--c0);
     font-size: medium;
     padding: 0.5em;
     border-radius: 1em;
@@ -128,7 +143,7 @@ aside {
 }
 
 #h2aside {
-    background-color: #2e9f5f;
+    background-color: var(--c3);
     color: white;
     font-size: medium;
     border-radius: 1em 1em 0 0;
@@ -145,8 +160,8 @@ li::before {
 }
 
 footer {
-    background-color: #195B38;
-    color: #c2e6d1;
+    background-color: var(--c5);
+    color: var(--c0);
     font-style: italic;
 }
 
@@ -154,6 +169,7 @@ footer {
     font-weight: bold;
     font-style: normal;
     color: whitesmoke;
+    text-decoration: none;
 }
 
 #pfooter {
