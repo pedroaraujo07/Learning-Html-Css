@@ -76,6 +76,7 @@ main {
     padding: 1em;
     border-radius: 0 0 1em 1em;
     max-width: 800px;
+    min-width: 320px;
     margin: auto;
 
 }
@@ -110,6 +111,13 @@ picture {
 }
 
 img {
+    display: block;
+    margin: auto;
+    width: 100%;
+}
+
+.img2 {
+    width: 50%;
     display: block;
     margin: auto;
 }
