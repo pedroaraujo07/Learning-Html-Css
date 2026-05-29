@@ -173,21 +173,25 @@ aside {
 }
 
 #h2aside {
-    background-color: var(--c3);
+    background-color: var(--c4);
     color: white;
     font-size: medium;
     border-radius: 1em 1em 0 0;
     margin: -0.5em;
+    margin-bottom: 0em;
     padding: 0.5em 0.5em;
 }
 
-li::before {
-    content: "🗸 ";
+ul {
+    columns: 2;
+    list-style-type: "\1F5F8\00A0\00A0";
 }
 
-.li-inline {
-    display: block;
+
+li:hover {
+    color: var(--c5);
 }
+
 
 footer {
     background-color: var(--c5);
@@ -207,4 +211,10 @@ footer {
     margin: 1em 0 0 0;
     padding: 0.5em;
     font-size: 0.7em;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: var(--c0);
+    transition-duration: 0.5s;
 }
