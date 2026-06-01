@@ -147,17 +147,19 @@ img {
 #video {
     background-color: var(--c5);
     padding: 6em;
+    padding-bottom: 46.44%;
     margin: 0 -1em 1em -1em;
     display: block;
+    position: relative;
 
 }
 
 iframe {
-    display: block;
-    height: 100%;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    padding: 1em;
+    top: 5%;
+    left: 5%;
+    height: 90%;
+    width: 90%;
+    position: absolute;
 }
 
 #v2 {
