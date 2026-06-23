@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking FIFA</title>
+</head>
+<style>
+
+    * {
+        margin: 0;
+    }
+
+    h1 {
+        background-color: #045694;
+        color: white;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+        padding: 3%;
+        font-size: 4vw;
+    }
+
+    table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 90vw;
+        margin: 5%;
+    }
+
+    tr {
+        width: 30vw;
+    }
+
+    .tr-par {
+        background-color: whitesmoke;
+    }
+
+    th {
+        border: 1px solid black;
+        padding: 10px;
+        background-color: whitesmoke;
+    }
+
+    td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .td-rank {
+        text-align: left;
+    }
+
+    .td-pts {
+        text-align: right;
+    }
+
+    tfoot > tr > th {
+        background-color: white;
+    }
+
+
+</style>
+<body>
+    <h1>Ranking Mundial Masculino FIFA</h1>
+    <!--
+        ANATOMIA PARA TABELAS GRANDES
+        TABLE
+            THEAD
+                TR, TD, TH
+            TBODY
+                TR, TD, TH
+            TFOOT
+                TR, TD, TH
+    -->
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Classificação</th>
+                <th>Equipe</th>
+                <th>Pontos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="td-rank">1</td>
+                <td>Argentina</td>
+                <td class="td-pts">1901.93</td>
+            </tr>
+            <tr class="tr-par">
+                <td class="td-rank">2</td>
+                <td>França</td>
+                <td class="td-pts">1894.40</td>
+            </tr>
+            <tr>
+                <td class="td-rank">3</td>
+                <td>Espanha</td>
+                <td class="td-pts">1864.32</td>
+            </tr>
+            <tr class="tr-par">
+                <td class="td-rank">4</td>
+                <td>Inglaterra</td>
+                <td class="td-pts">1847.68</td>
+            </tr>
+            <tr>
+                <td class="td-rank">5</td>
+                <td>Brasil</td>
+                <td class="td-pts">1772.01</td>
+            </tr>
+            <tr class="tr-par">
+                <td class="td-rank">6</td>
+                <td>Marrocos</td>
+                <td class="td-pts">1769.98</td>
+            </tr>
+            <tr>
+                <td class="td-rank">7</td>
+                <td>Holanda</td>
+                <td class="td-pts">1764.40</td>
+            </tr>
+            <tr class="tr-par">
+                <td class="td-rank">8</td>
+                <td>Alemanha</td>
+                <td class="td-pts">1760.46</td>
+            </tr>
+            <tr>
+                <td class="td-rank">9</td>
+                <td>Portugal</td>
+                <td class="td-pts">1755.09</td>
+            </tr>
+            <tr class="tr-par">
+                <td class="td-rank">10</td>
+                <td>Bélgica</td>
+                <td class="td-pts">1727.88</td>
+            </tr>            
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total de equipes</th>
+                <td colspan="2">211</td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
