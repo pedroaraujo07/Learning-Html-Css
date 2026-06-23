@@ -27,6 +27,12 @@
         margin: 5%;
     }
 
+    caption {
+        font-size: 3.5vw;
+        padding: 2%;
+        font-weight: bold;
+    }
+
     tr {
         width: 30vw;
     }
@@ -39,6 +45,7 @@
         border: 1px solid black;
         padding: 10px;
         background-color: whitesmoke;
+        width: 30vw;
     }
 
     td {
@@ -66,6 +73,7 @@
     <!--
         ANATOMIA PARA TABELAS GRANDES
         TABLE
+            CAPTION
             THEAD
                 TR, TD, TH
             TBODY
@@ -75,11 +83,12 @@
     -->
     
     <table>
+        <caption>Ranking de Seleções FIFA</caption>
         <thead>
             <tr>
-                <th>Classificação</th>
-                <th>Equipe</th>
-                <th>Pontos</th>
+                <th scope="col">Classificação</th>
+                <th scope="col">Equipe</th>
+                <th scope="col">Pontos</th>
             </tr>
         </thead>
         <tbody>
@@ -136,7 +145,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <th>Total de equipes</th>
+                <th scope="row">Total de equipes</th>
                 <td colspan="2">211</td>
             </tr>
         </tfoot>
