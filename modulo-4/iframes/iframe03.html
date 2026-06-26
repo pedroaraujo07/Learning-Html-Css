@@ -7,25 +7,34 @@
 
     <style>
 
+        body {
+            background-color: azure;
+        }
+
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         iframe {
             width: 90vw;
             height: 60vh;
             display: block;
             margin: auto;
+            border: 2px solid black;
         }
 
     </style>
 
 </head>
 <body>
-    <h1>Escolha a página</h1>
+    <h1>Escolha uma das páginas</h1>
     <ul>
         <li><a href="paginas/pag01.html" target="iframe">Primeira página</a></li>
         <li><a href="paginas/pag02.html" target="iframe">Segunda página</a></li>
         <li><a href="paginas/pag03.html" target="iframe">Terceira página</a></li>
     </ul>
     <p>Resultado da escolha:</p>
-    <iframe name="iframe" src="" frameborder="1">
+    <iframe name="iframe" srcdoc="<h1>Página Sem Escolha</h1><p>Escolha uma das páginas clicando nelas.</p>" frameborder="1">
         <p>Navegador não compátivel.</p>
     </iframe>
 </body>
