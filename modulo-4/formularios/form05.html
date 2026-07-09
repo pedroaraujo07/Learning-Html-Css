@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esportes Pesquisa</title>
+
+    <style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif
+        }
+
+    </style>
+
+</head>
+<body>
+    <h1>Pesquisa sobre Esportes</h1>
+    <form action="cadastro.php">
+
+        <fieldset>
+            <legend>Sexo</legend>
+
+            <input type="radio" name="sexo" id="masc" value="M">
+            <label for="masc"> Masculino</label> <br>
+
+            <input type="radio" name="sexo" id="fem" value="F">
+            <label for="fem"> Feminino</label> <br>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Esportes que você pratica</legend>
+
+            <input type="checkbox" name="fut" id="fut">
+            <label for="fut"> Futebol</label> <br>
+
+            <input type="checkbox" name="futsal" id="futsal">
+            <label for="futsal"> Futsal</label> <br>
+
+            <input type="checkbox" name="ftv" id="ftv">
+            <label for="ftv"> Futevôlei</label> <br>
+
+            <input type="checkbox" name="gym" id="gym">
+            <label for="gym"> Musculação</label> <br>
+
+            <input type="checkbox" name="volei" id="volei">
+            <label for="volei"> Vôlei</label> <br>
+
+            <input type="checkbox" name="basquete" id="basquete">
+            <label for="basquete"> Basquete</label> <br>
+
+            <input type="checkbox" name="tenis" id="tenis">
+            <label for="tenis"> Tênis</label> <br>
+
+        </fieldset>
+
+        <p>
+            <input type="submit" value="Enviar">
+            <input type="reset" value="Limpar">
+        </p>
+
+    </form>
+</body>
+</html>
