@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Dados</title>
+
+    <style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif
+        }
+
+    </style>
+
+</head>
+<body>
+    <h1>Cadastro de Dados</h1>
+    <form action="cadastro.php" method="post" autocomplete="on">
+
+        <fieldset>
+            <legend>Dados Pessoais</legend>
+            <p>
+                <label for="nome">Nome: </label>
+                <input type="text" name="nome" id="nome" required autocomplete="name" maxlength="30" minlength="2">
+            </p>
+            <p>
+                <label for="email">Email: </label>
+                <input type="email" name="email" id="email" required autocomplete="email" maxlength="40" minlength="4">
+            </p>
+            <p>
+                <label for="tel">Telefone: </label>
+                <input type="tel" name="tel" id="tel" required autocomplete="tel" placeholder="+00(00)00000-0000" maxlength="20" minlength="6">
+            </p>
+        </fieldset>
+
+        <p>
+            <input type="submit" value="Enviar">
+            <input type="reset" value="Limpar">
+        </p>
+
+    </form>
+</body>
+</html>
