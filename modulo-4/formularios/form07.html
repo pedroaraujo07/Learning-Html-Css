@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Copa 2026</title>
+
+    <style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif
+        }
+
+    </style>
+
+</head>
+<body>
+    <h1>Formulário Copa 2026</h1>
+    <form action="cadastro.php" method="post" autocomplete="on">
+
+        <p>
+            <label for="selecao">Melhor seleção da Copa 2026: </label>
+            <select name="selecao" id="selecao">
+                <option value="" selected>-</option>
+
+                <optgroup label="América do Sul">
+                    <option value="arg">Argentina</option>
+                    <option value="bra">Brasil</option>
+                </optgroup>
+
+                <optgroup label="Europa">
+                    <option value="ale">Alemanha</option>
+                    <option value="fra">França</option>
+                </optgroup>
+
+                <optgroup label="África">
+                    <option value="egi">Egito</option>
+                    <option value="mar">Marrocos</option>
+                </optgroup>
+            </select>
+        </p>
+
+        <p>
+            <label for="jogador">Melhor jogador da Copa 2026: </label>
+            <input type="text" name="jogador" id="jogador" list="jogadores">
+            <datalist id="jogadores">
+                <option value="Achraf Hakimi"></option>
+                <option value="Erling Haaland"></option>
+                <option value="Kylian Mbappé"></option>
+                <option value="Lionel Messi"></option>
+            </datalist>
+        </p>
+
+        <p>
+            <label for="nota">Escreva uma mensagem: </label> <br>
+            <textarea name="nota" id="nota" cols="60" rows="10"></textarea>
+        </p>
+
+        <p>
+            <input type="submit" value="Enviar">
+            <input type="reset" value="Limpar">
+        </p>
+
+    </form>
+</body>
+</html>
