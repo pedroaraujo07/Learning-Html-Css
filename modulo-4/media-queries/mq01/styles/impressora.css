@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/* Estilos para impressão */
+
+html {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+menu {
+    display: none;
+}
+
+p {
+    text-align: justify;
+}
+
+article::after {
+    content: "Esse artigo foi impresso através do site www.pedroaraujo.com.br";
+}
