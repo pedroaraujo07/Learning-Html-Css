@@ -1,2 +1,21 @@
 @charset "UTF-8";
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    background-color: #233eff;
+}
+
+h1, p {
+    color: white;
+}
+
+body {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
