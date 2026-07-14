@@ -9,10 +9,14 @@ html, body {
     width: 100vw;
     height: 100vh;
     background-color: #233eff;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1, p {
     color: white;
+    padding: 1rem 1rem 0 1rem;
+    text-align: center;
+    text-shadow: #0d165891 1px 1px 1px;
 }
 
 body {

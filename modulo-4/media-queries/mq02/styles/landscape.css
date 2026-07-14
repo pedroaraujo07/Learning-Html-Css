@@ -4,3 +4,7 @@ body {
     background-image: url(../imgs/cev-landscape.jpg);
     background-position: left bottom;
 }
+
+p {
+    margin-top: -10px;
+}
