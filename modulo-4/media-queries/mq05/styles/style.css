@@ -47,7 +47,7 @@ header a:hover {
 
 main {
     margin: auto;
-    line-height: 1.3em;
+    line-height: 1.5em;
     background-color: white;
     padding: 1rem;
 }
@@ -68,6 +68,8 @@ main h2#jogo1 {
     margin-top: 1em;
 }
 
-main li {
+main li, main p {
     list-style-type: none;
+    font-size: large;
+    line-height: 1.5em;
 }
