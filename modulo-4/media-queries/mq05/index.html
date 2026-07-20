@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
     <title>Quartas de Final Copa do Mundo 2026</title>
 </head>
 <body>
@@ -11,12 +12,14 @@
 
         <h1>O que aconteceu nas Quartas de Final Copa do Mundo 2026?</h1>
 
-        <menu>
+        <span id="burguer" class="material-symbols-outlined" onclick="clickMenu()">menu</span>
+
+        <menu id="menu">
             <ul>
-                <li><a href="#">Jogo 1</a></li>
-                <li><a href="#">Jogo 2</a></li>
-                <li><a href="#">Jogo 3</a></li>
-                <li><a href="#">Jogo 4</a></li>
+                <li><a href="#jogo1">Jogo 1</a></li>
+                <li><a href="#jogo2">Jogo 2</a></li>
+                <li><a href="#jogo3">Jogo 3</a></li>
+                <li><a href="#jogo4">Jogo 4</a></li>
             </ul>
         </menu>
 
@@ -47,7 +50,7 @@
             </p>
 
 
-            <h2>Jogo 2 - Espanha x Bélgica</h2>
+            <h2 id="jogo2">Jogo 2 - Espanha x Bélgica</h2>
             <p>A Espanha venceu a Bélgica por 2 a 1 no SoFi Stadium, em Los Angeles, pelas quartas de final da Copa do Mundo de 2026. Com um gol decisivo de Mikel Merino aos 43 minutos do segundo tempo, a seleção espanhola eliminou os belgas e avançou à semifinal (onde posteriormente derrotou a França)</p>
             <h3>Primeiro Tempo: Domínio e Fim de Recorde Histórico</h3>
             <p>
@@ -66,7 +69,7 @@
                 </ul>
             </p>
 
-            <h2>Jogo 3 - Noruega x Inglaterra</h2>
+            <h2 id="jogo3">Jogo 3 - Noruega x Inglaterra</h2>
             <p>A Inglaterra venceu a Noruega por 2 a 1 na prorrogação no Hard Rock Stadium, em Miami, em um duelo dramático válido pelas quartas de final da Copa do Mundo de 2026. Com dois gols do camisa 10 Jude Bellingham, a seleção inglesa avançou para a semifinal (onde enfrenta a Argentina) e conseguiu neutralizar o artilheiro Erling Haaland, que jogou debilitado por uma virose.</p>
             <h3>Primeiro Tempo: Golaço Escandinavo e Empate no Fim</h3>
             <p>
@@ -92,7 +95,7 @@
                 </ul>
             </p>
 
-            <h2>Jogo 4 - Argentina x Suíça</h2>
+            <h2 id="jogo4">Jogo 4 - Argentina x Suíça</h2>
             <p>A Argentina venceu a Suíça por 3 a 1 na prorrogação no Arrowhead Stadium, em Kansas City, pelas quartas de final da Copa do Mundo de 2026. Após o empate por 1 a 1 no tempo regulamentar, a seleção argentina aproveitou a vantagem numérica, decorrente da expulsão do atacante suíço Breel Embolo, para balançar as redes duas vezes no tempo extra e avançar à semifinal contra a Inglaterra.</p>
             <h3>Primeiro Tempo: Gol Relâmpago e Controle</h3>
             <p>
@@ -122,5 +125,23 @@
 
         </article>
     </main>
+
+    <script>
+        function clickMenu() {
+            if (menu.style.display == 'block') {
+                menu.style.display = 'none';
+                burguer.style.backgroundColor = 'rgb(78, 78, 78)';
+                burguer.style.color = 'white';
+                
+            } 
+            
+            else {
+                menu.style.display = 'block';
+                burguer.style.backgroundColor = 'lightgray';
+                burguer.style.color = 'black';
+            }
+        }
+    </script>
+
 </body>
 </html>
