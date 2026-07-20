@@ -11,12 +11,15 @@ html {
 }
 
 header {
-    background-color: gray;
+    background-color: lightgray;
 }
 
 header > h1 {
     text-align: left;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
+    font-size: 1.8em;
+    line-height: 1.4em;
+    width: 80vw;
 }
 
 header > menu {
@@ -43,13 +46,26 @@ header a:hover {
 }
 
 main {
-    width: 85vw;
     margin: auto;
     line-height: 1.3em;
+    background-color: white;
+    padding: 1rem;
 }
 
 main h2, main h3, main li {
     margin: 1em 0;
+}
+
+main h3 {
+    margin-top: 1.8em;
+}
+
+main h2 {
+    margin-top: 2em;
+}
+
+main h2#jogo1 {
+    margin-top: 1em;
 }
 
 main li {
