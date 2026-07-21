@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/others.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
     <title>Quartas de Final Copa do Mundo 2026</title>
 </head>
-<body>
+<body onresize="mudouTamanho()">
     <header>
 
         <h1>O que aconteceu nas Quartas de Final Copa do Mundo 2026?</h1>
@@ -127,6 +128,17 @@
     </main>
 
     <script>
+
+        function mudouTamanho() {
+            if (window.innerWidth >= 607) {
+                menu.style.display = 'block'
+            }
+
+            else {
+                menu.style.display = 'none'
+            }
+        }
+
         function clickMenu() {
             if (menu.style.display == 'block') {
                 menu.style.display = 'none';
