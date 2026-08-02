@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Jogadores</title>
+
+    <style>
+
+        div.conteiner {
+            background-color: rgb(163, 123, 190);
+            display: flex;
+            margin-top: 150px;
+        }
+
+        div.item {
+            background-color: lightgray;
+            border: 1px solid black;
+            flex-basis: 200px;
+            text-align: center;
+            flex-shrink: 1;
+            flex-grow: 1;
+        }
+
+        div#adeyemi {
+            flex: 0 2 200px;
+        }
+
+        div#bellingham {
+            flex: 2 0 200px;
+        }
+
+        div#casemiro {
+            flex: 1 1 200px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="conteiner">
+        <div class="item" id="adeyemi">Adeyemi</div>
+        <div class="item" id="bellingham">Bellingham</div>
+        <div class="item" id="casemiro">Casemiro</div>
+    </div>
+</body>
+</html>
