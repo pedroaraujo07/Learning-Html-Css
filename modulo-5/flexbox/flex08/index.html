@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Jogadores</title>
+
+    <style>
+
+        div.conteiner {
+            background-color: rgb(163, 123, 190);
+            display: flex;
+            height: 100px;
+            flex: auto;
+            margin-top: 200px;
+        }
+
+        div.item {
+            background-color: lightgray;
+            border: 1px solid black;
+            flex: auto;
+            text-align: center;
+        }
+
+        div#adeyemi {
+            order: 4; 
+            align-self: center;
+        }
+        div#bellingham {
+            order: 2; 
+            align-self: flex-start;
+        }
+        div#casemiro {
+            order: 5; 
+            align-self: center;
+        }
+        div#danilo {
+            order: 7; 
+            align-self: flex-end;
+        }
+        div#estevao {
+            order: 3; 
+            align-self: flex-start;
+        }
+        div#fernandinho {
+            order: 8; 
+            align-self: flex-end;
+        }
+        div#griezmann {
+            order: 6; 
+            align-self: center;
+        }
+        div#haaland {
+            order: 1; 
+            align-self: flex-start;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="conteiner">
+        <div class="item" id="adeyemi">Adeyemi</div>
+        <div class="item" id="bellingham">Bellingham</div>
+        <div class="item" id="casemiro">Casemiro</div>
+        <div class="item" id="danilo">Danilo</div>
+        <div class="item" id="estevao">Estevão</div>
+        <div class="item" id="fernandinho">Fernandinho</div>
+        <div class="item" id="griezmann">Griezmann</div>
+        <div class="item" id="haaland">Haaland</div>
+    </div>
+</body>
+</html>
