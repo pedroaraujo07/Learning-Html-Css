@@ -1,0 +1,104 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Ink:wght@100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(imgs/IHC.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 40%;
+    height: 100vh;
+    background-attachment: fixed;
+}
+
+header {
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    font-family: "Bitcount Ink";
+    font-size: 1.3em;
+    overflow: hidden;
+    text-align: center;
+}
+
+h1 {
+    transition: 0.4s ease;
+}
+
+h1:hover {
+    transform: scale(1.08);
+}
+
+main {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 20px;
+    background-color: white;
+    width: clamp(0px, 90vw, 800px);
+    margin: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.37);
+}
+
+main .h2margin{
+    margin-top: 20px
+}
+
+main h2, h3, p, li {
+    margin-bottom: 5px;
+}
+
+main li {
+    margin-left: 23px;
+}
+
+main img {
+    height: 200px;
+    width: 370px;
+}
+
+section {
+    display: grid;
+    margin-bottom: 50px;
+    grid-template: 60px 100px / 1fr 1fr;
+    gap: 5px;
+}
+
+.bloco1 {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.bloco2 {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.bloco3 {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    padding: 8px 5px 5px 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+#nome {
+    font-weight: bold;
+}
