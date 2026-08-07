@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Layout Football Teams</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        div.container {
+            border: 2px solid darkblue;
+            display: grid;
+            height: 300px;
+            grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+            gap: 15px;
+            place-items: center center;
+            place-content: space-evenly space-evenly;
+        }
+
+        div.item {
+            border: 1px dashed darkred;
+            padding: 5px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="item">Arsenal</div>
+        <div class="item">Barcelona</div>
+        <div class="item">Chelsea</div>
+        <div class="item">Dortmund</div>
+        <div class="item">Espanyol</div>
+        <div class="item">Flamengo</div>
+        <div class="item">Galatasaray</div>
+        <div class="item">Huracán</div>
+    </div>
+</body>
+</html>
