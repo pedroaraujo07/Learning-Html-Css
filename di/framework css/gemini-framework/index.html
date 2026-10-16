@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC CENTRAL | Fan Hub Official Portal</title>
+    
+    <!-- Google Fonts: Inter & Oswald -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ufc: {
+                            red: '#dc2626',
+                            redHover: '#b91c1c',
+                            gold: '#f59e0b',
+                            goldDark: '#d97706',
+                            darkBg: '#0f172a',
+                            cardBg: '#1e293b',
+                            accentBg: '#111827'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        oswald: ['Oswald', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+        .font-oswald {
+            font-family: 'Oswald', sans-serif;
+        }
+        /* Custom Bootstrap Styles Adjustments for Dark Theme */
+        .table-dark-custom {
+            --bs-table-bg: #1e293b;
+            --bs-table-color: #f8fafc;
+            --bs-table-border-color: #334155;
+            --bs-table-hover-bg: #334155;
+        }
+        .modal-content-dark {
+            background-color: #1e293b;
+            color: #f8fafc;
+            border: 1px solid #334155;
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        .red-gradient {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+        }
+        .text-gold {
+            color: #f59e0b;
+        }
+        .border-gold {
+            border-color: #f59e0b;
+        }
+        /* Hide scrollbars for slick look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-ufc-darkBg text-slate-100 antialiased selection:bg-red-600 selection:text-white">
+
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-50 bg-ufc-accentBg/95 backdrop-blur-md border-b border-slate-800 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <a href="#hero" class="flex items-center gap-2 group">
+                        <span class="bg-red-600 text-white font-oswald text-2xl font-black px-3 py-1 italic tracking-wider rounded transform -skew-x-12 group-hover:bg-red-700 transition">UFC</span>
+                        <span class="font-oswald text-xl font-bold tracking-widest text-slate-100 uppercase hidden sm:inline-block">CENTRAL <span class="text-amber-500 font-normal">HUB</span></span>
+                    </a>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center space-x-6 text-sm font-semibold uppercase tracking-wider">
+                    <a href="#hero" class="text-slate-300 hover:text-red-500 transition-colors py-2">Evento</a>
+                    <a href="#campeoes" class="text-slate-300 hover:text-red-500 transition-colors py-2">Campeões</a>
+                    <a href="#rankings" class="text-slate-300 hover:text-red-500 transition-colors py-2">Rankings P4P</a>
+                    <a href="#historicas" class="text-slate-300 hover:text-red-500 transition-colors py-2">Lutas Lendárias</a>
+                    <a href="#invictos" class="text-slate-300 hover:text-red-500 transition-colors py-2">Promessas</a>
+                    <a href="#estatisticas" class="text-slate-300 hover:text-red-500 transition-colors py-2">Records</a>
+                </div>
+
+                <!-- Live Search Box -->
+                <div class="relative flex items-center">
+                    <div class="relative w-40 sm:w-64">
+                        <input type="text" id="navbarSearch" placeholder="Buscar atleta ou categoria..." 
+                            class="w-full bg-slate-800 text-slate-100 text-xs sm:text-sm rounded-full pl-9 pr-4 py-2 border border-slate-700 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-slate-400">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs sm:text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="text-slate-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2 uppercase font-oswald text-sm">
+            <a href="#hero" class="block py-2 text-slate-300 hover:text-red-500">Próximo Evento</a>
+            <a href="#campeoes" class="block py-2 text-slate-300 hover:text-red-500">Atuais Campeões</a>
+            <a href="#rankings" class="block py-2 text-slate-300 hover:text-red-500">Rankings P4P</a>
+            <a href="#historicas" class="block py-2 text-slate-300 hover:text-red-500">Lutas Históricas</a>
+            <a href="#invictos" class="block py-2 text-slate-300 hover:text-red-500">Invictos & Promessas</a>
+            <a href="#estatisticas" class="block py-2 text-slate-300 hover:text-red-500">Estatísticas & Records</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION: PRÓXIMO EVENTO & TIMER JS -->
+    <section id="hero" class="relative bg-cover bg-center py-16 lg:py-24 overflow-hidden border-b border-slate-800" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.98)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1600&auto=format&fit=crop');">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="inline-flex items-center gap-2 bg-red-600/20 text-red-400 border border-red-600/40 text-xs uppercase font-bold tracking-widest px-4 py-1.5 rounded-full mb-4">
+                    <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> Transmissão Ao Vivo
+                </span>
+                <h1 class="font-oswald text-5xl sm:text-7xl font-extrabold uppercase tracking-tight text-white mb-2">
+                    UFC <span class="text-red-600">311</span>
+                </h1>
+                <p class="font-oswald text-xl sm:text-2xl font-medium text-amber-400 uppercase tracking-wide mb-6">
+                    DISPUTA DE CINTURÃO MEIO-PESADO
+                </p>
+                
+                <!-- Main Matchup Banner -->
+                <div class="bg-slate-900/80 backdrop-blur border border-slate-700/60 rounded-2xl p-6 mb-8 shadow-2xl">
+                    <div class="grid grid-cols-1 md:grid-cols-11 items-center gap-4">
+                        <!-- Fighter 1 -->
+                        <div class="md:col-span-5 text-center md:text-right">
+                            <h2 class="font-oswald text-3xl sm:text-4xl font-bold uppercase text-white">Alex Pereira</h2>
+                            <p class="text-red-500 font-semibold text-sm">"Poatan" • Campeão Linear</p>
+                            <p class="text-slate-400 text-xs mt-1">Brasil • 12-2-0</p>
+                        </div>
+                        <!-- VS Badge -->
+                        <div class="md:col-span-1 flex justify-center">
+                            <span class="bg-red-600 text-white font-oswald text-xl font-extrabold italic rounded-full w-12 h-12 flex items-center justify-center shadow-lg border-2 border-amber-400">
+                                VS
+                            </span>
+                        </div>
+                        <!-- Fighter 2 -->
+                        <div class="md:col-span-5 text-center md:text-left">
+                            <h2 class="font-oswald text-3xl sm:text-4xl font-bold uppercase text-white">Magomed Ankalaev</h2>
+                            <p class="text-amber-400 font-semibold text-sm">Desafiante #1</p>
+                            <p class="text-slate-400 text-xs mt-1">Rússia • 19-1-1</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COUNTDOWN TIMER JS -->
+                <p class="text-xs uppercase tracking-widest text-slate-400 mb-3 font-semibold">A LUTA COMEÇA EM:</p>
+                <div class="grid grid-cols-4 gap-3 max-w-md mx-auto mb-8 text-center">
+                    <div class="bg-slate-800/90 border border-slate-700 p-3 rounded-xl shadow-inner">
+                        <span id="timerDays" class="font-oswald text-3xl sm:text-4xl font-bold text-amber-400">00</span>
+                        <span class="block text-[10px] uppercase text-slate-400 tracking-wider">Dias</span>
+                    </div>
+                    <div class="bg-slate-800/90 border border-slate-700 p-3 rounded-xl shadow-inner">
+                        <span id="timerHours" class="font-oswald text-3xl sm:text-4xl font-bold text-white">00</span>
+                        <span class="block text-[10px] uppercase text-slate-400 tracking-wider">Horas</span>
+                    </div>
+                    <div class="bg-slate-800/90 border border-slate-700 p-3 rounded-xl shadow-inner">
+                        <span id="timerMinutes" class="font-oswald text-3xl sm:text-4xl font-bold text-white">00</span>
+                        <span class="block text-[10px] uppercase text-slate-400 tracking-wider">Minutos</span>
+                    </div>
+                    <div class="bg-slate-800/90 border border-slate-700 p-3 rounded-xl shadow-inner">
+                        <span id="timerSeconds" class="font-oswald text-3xl sm:text-4xl font-bold text-red-500">00</span>
+                        <span class="block text-[10px] uppercase text-slate-400 tracking-wider">Segundos</span>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#campeoes" class="bg-red-600 hover:bg-red-700 text-white font-oswald text-lg font-bold uppercase px-8 py-3 rounded-xl transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-ticket"></i> Comprar Ingressos PPV
+                    </a>
+                    <a href="#rankings" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-oswald text-lg font-bold uppercase px-8 py-3 rounded-xl transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-list-ol"></i> Ver Card Completo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ATUAIS CAMPEÕES (GRID TAILWIND + REAL-TIME FILTER) -->
+    <section id="campeoes" class="py-16 bg-slate-900/60 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-red-500 font-oswald text-sm font-bold uppercase tracking-wider">Elite do Octógono</span>
+                    <h2 class="font-oswald text-3xl sm:text-4xl font-extrabold text-white uppercase">Atuais Campeões do UFC</h2>
+                </div>
+                <div class="mt-4 md:mt-0 flex gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryFilterBtns">
+                    <button class="filter-btn active bg-red-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-lg transition" data-category="all">Todos</button>
+                    <button class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold uppercase px-4 py-2 rounded-lg transition" data-category="Masculino">Masculino</button>
+                    <button class="filter-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold uppercase px-4 py-2 rounded-lg transition" data-category="Feminino">Feminino</button>
+                </div>
+            </div>
+
+            <!-- Champions Grid -->
+            <div id="championsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Cards will be populated dynamically or static with data-attributes for filtering -->
+            </div>
+        </div>
+    </section>
+
+    <!-- RANKINGS POUND-FOR-POUND (BOOTSTRAP TABELAS ESTILIZADAS) -->
+    <section id="rankings" class="py-16 bg-ufc-darkBg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-amber-500 font-oswald text-sm font-bold uppercase tracking-wider">Absolutos Peso por Peso</span>
+                <h2 class="font-oswald text-3xl sm:text-4xl font-extrabold text-white uppercase">Rankings P4P Oficial UFC</h2>
+                <p class="text-slate-400 text-sm mt-2">Classificação atualizada independentemente da divisão de peso.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Table Masculino -->
+                <div class="bg-slate-800/60 rounded-2xl border border-slate-700 p-6 shadow-xl">
+                    <div class="flex items-center justify-between mb-4 border-b border-slate-700 pb-3">
+                        <h3 class="font-oswald text-xl font-bold uppercase text-white flex items-center gap-2">
+                            <i class="fa-solid fa-mars text-blue-500"></i> P4P Masculino
+                        </h3>
+                        <span class="text-xs text-amber-400 font-semibold bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/30">Top 5</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-dark-custom align-middle text-sm mb-0">
+                            <thead>
+                                <tr class="text-xs uppercase text-slate-400 border-b border-slate-700">
+                                    <th style="width: 50px;">Pos</th>
+                                    <th>Lutador</th>
+                                    <th>Categoria</th>
+                                    <th class="text-end">Cartel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-amber-400 text-base">1</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-amber-400" alt="Islam">
+                                        Islam Makhachev
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Peso Leve</td>
+                                    <td class="text-end font-mono text-slate-300">26-1-0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-slate-300 text-base">2</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-slate-600" alt="Jon Jones">
+                                        Jon Jones
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Peso Pesado</td>
+                                    <td class="text-end font-mono text-slate-300">28-1-0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-slate-300 text-base">3</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-slate-600" alt="Poatan">
+                                        Alex Pereira
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Meio-Pesado</td>
+                                    <td class="text-end font-mono text-slate-300">12-2-0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-slate-300 text-base">4</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-slate-600" alt="Ilia Topuria">
+                                        Ilia Topuria
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Peso Pena</td>
+                                    <td class="text-end font-mono text-slate-300">16-0-0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-slate-300 text-base">5</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-slate-600" alt="Belal">
+                                        Belal Muhammad
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Meio-Médio</td>
+                                    <td class="text-end font-mono text-slate-300">24-3-0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Table Feminino -->
+                <div class="bg-slate-800/60 rounded-2xl border border-slate-700 p-6 shadow-xl">
+                    <div class="flex items-center justify-between mb-4 border-b border-slate-700 pb-3">
+                        <h3 class="font-oswald text-xl font-bold uppercase text-white flex items-center gap-2">
+                            <i class="fa-solid fa-venus text-pink-500"></i> P4P Feminino
+                        </h3>
+                        <span class="text-xs text-amber-400 font-semibold bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/30">Top 5</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-dark-custom align-middle text-sm mb-0">
+                            <thead>
+                                <tr class="text-xs uppercase text-slate-400 border-b border-slate-700">
+                                    <th style="width: 50px;">Pos</th>
+                                    <th>Lutadora</th>
+                                    <th>Categoria</th>
+                                    <th class="text-end">Cartel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-amber-400 text-base">1</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-amber-400" alt="Zhang">
+                                        Zhang Weili
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Peso Palha</td>
+                                    <td class="text-end font-mono text-slate-300">25-3-0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-slate-300 text-base">2</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-slate-600" alt="Alexa">
+                                        Alexa Grasso
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Peso Mosca</td>
+                                    <td class="text-end font-mono text-slate-300">16-4-1</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-slate-300 text-base">3</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-slate-600" alt="Valentina">
+                                        Valentina Shevchenko
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Peso Mosca</td>
+                                    <td class="text-end font-mono text-slate-300">24-4-1</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-slate-300 text-base">4</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-slate-600" alt="Julianna">
+                                        Julianna Peña
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Peso Galo</td>
+                                    <td class="text-end font-mono text-slate-300">12-5-0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-700/50 transition">
+                                    <td class="font-oswald font-bold text-slate-300 text-base">5</td>
+                                    <td class="font-semibold flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=120&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover border border-slate-600" alt="Manon">
+                                        Manon Fiorot
+                                    </td>
+                                    <td class="text-slate-300 text-xs">Peso Mosca</td>
+                                    <td class="text-end font-mono text-slate-300">12-1-0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIORES DA HISTÓRIA & MELHORES LUTAS (CARROSSEL BOOTSTRAP 5) -->
+    <section id="historicas" class="py-16 bg-slate-900 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-red-500 font-oswald text-sm font-bold uppercase tracking-wider">Momentos Épicos</span>
+                <h2 class="font-oswald text-3xl sm:text-4xl font-extrabold text-white uppercase">Combates Lendários do UFC</h2>
+            </div>
+
+            <!-- Bootstrap Carousel -->
+            <div id="ufcHistoryCarousel" class="carousel slide shadow-2xl rounded-2xl overflow-hidden border border-slate-700" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#ufcHistoryCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#ufcHistoryCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#ufcHistoryCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+
+                <div class="carousel-inner">
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active relative" data-bs-interval="6000">
+                        <img src="https://images.unsplash.com/photo-1517649763962-0c623266ddc0?q=80&w=1400&auto=format&fit=crop" class="d-block w-full h-[450px] sm:h-[550px] object-cover filter brightness-50" alt="Khabib vs McGregor">
+                        <div class="carousel-caption d-md-block text-start bg-slate-950/80 p-6 sm:p-8 rounded-2xl border border-slate-700/80 backdrop-blur max-w-2xl bottom-8 left-4 sm:left-12 right-4">
+                            <span class="bg-red-600 text-white font-oswald text-xs uppercase px-2.5 py-1 rounded font-bold mb-2 inline-block">UFC 229 • Outubro 2018</span>
+                            <h3 class="font-oswald text-2xl sm:text-4xl font-bold uppercase text-white mb-2">Khabib Nurmagomedov vs Conor McGregor</h3>
+                            <p class="text-slate-300 text-xs sm:text-sm mb-4">A maior rivalidade da história do MMA culminou em uma vitória por finalização de Khabib no 4º round. O evento quebrou todos os recordes de Pay-Per-View.</p>
+                            <div class="grid grid-cols-3 gap-2 border-t border-slate-700 pt-3 text-center text-xs">
+                                <div><span class="block font-bold text-amber-400">2.4 Milhões</span><span class="text-slate-400">Vendas PPV</span></div>
+                                <div><span class="block font-bold text-white">Mata-Leão</span><span class="text-slate-400">Método (R4)</span></div>
+                                <div><span class="block font-bold text-red-500">Cinturão Leve</span><span class="text-slate-400">Em Disputa</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="carousel-item relative" data-bs-interval="6000">
+                        <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=1400&auto=format&fit=crop" class="d-block w-full h-[450px] sm:h-[550px] object-cover filter brightness-50" alt="Lawler vs MacDonald 2">
+                        <div class="carousel-caption d-md-block text-start bg-slate-950/80 p-6 sm:p-8 rounded-2xl border border-slate-700/80 backdrop-blur max-w-2xl bottom-8 left-4 sm:left-12 right-4">
+                            <span class="bg-amber-500 text-black font-oswald text-xs uppercase px-2.5 py-1 rounded font-bold mb-2 inline-block">UFC 189 • Julho 2015</span>
+                            <h3 class="font-oswald text-2xl sm:text-4xl font-bold uppercase text-white mb-2">Robbie Lawler vs Rory MacDonald 2</h3>
+                            <p class="text-slate-300 text-xs sm:text-sm mb-4">Considerada por muitos especialistas a maior e mais sangrenta batalha da história dos Meio-Médios. Nocaute épico no 5º round.</p>
+                            <div class="grid grid-cols-3 gap-2 border-t border-slate-700 pt-3 text-center text-xs">
+                                <div><span class="block font-bold text-amber-400">148-111</span><span class="text-slate-400">Golpes Conectados</span></div>
+                                <div><span class="block font-bold text-white">TKO (Golpes)</span><span class="text-slate-400">Método (R5)</span></div>
+                                <div><span class="block font-bold text-red-500">Hall da Fama</span><span class="text-slate-400">Status</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="carousel-item relative" data-bs-interval="6000">
+                        <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1400&auto=format&fit=crop" class="d-block w-full h-[450px] sm:h-[550px] object-cover filter brightness-50" alt="Jones vs Gustafsson">
+                        <div class="carousel-caption d-md-block text-start bg-slate-950/80 p-6 sm:p-8 rounded-2xl border border-slate-700/80 backdrop-blur max-w-2xl bottom-8 left-4 sm:left-12 right-4">
+                            <span class="bg-red-600 text-white font-oswald text-xs uppercase px-2.5 py-1 rounded font-bold mb-2 inline-block">UFC 165 • Setembro 2013</span>
+                            <h3 class="font-oswald text-2xl sm:text-4xl font-bold uppercase text-white mb-2">Jon Jones vs Alexander Gustafsson 1</h3>
+                            <p class="text-slate-300 text-xs sm:text-sm mb-4">Uma guerra de 5 rounds pelo cinturão Meio-Pesado que colocou o domínio de Jon Jones à prova em uma virada inesquecível.</p>
+                            <div class="grid grid-cols-3 gap-2 border-t border-slate-700 pt-3 text-center text-xs">
+                                <div><span class="block font-bold text-amber-400">244</span><span class="text-slate-400">Golpes Totais</span></div>
+                                <div><span class="block font-bold text-white">Decisão Unânime</span><span class="text-slate-400">Método (5R)</span></div>
+                                <div><span class="block font-bold text-red-500">Luta do Ano</span><span class="text-slate-400">Prêmio 2013</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#ufcHistoryCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon p-3 rounded-full bg-slate-900/60" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#ufcHistoryCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon p-3 rounded-full bg-slate-900/60" aria-hidden="true"></span>
+                    <span class="visually-hidden">Próximo</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- LUTADORES INVICTOS & PROMESSAS (COM TAILWIND PROGRESS BARS) -->
+    <section id="invictos" class="py-16 bg-ufc-darkBg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-amber-500 font-oswald text-sm font-bold uppercase tracking-wider">Futuro do Octógono</span>
+                <h2 class="font-oswald text-3xl sm:text-4xl font-extrabold text-white uppercase">Invictos & Promessas do UFC</h2>
+                <p class="text-slate-400 text-sm mt-2">Lutadores que mantêm cartéis perfeitos ou sequências impressionantes de vitórias.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Prospect 1 -->
+                <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-amber-500/50 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-xl object-cover border-2 border-amber-400" alt="Shavkat">
+                        <div>
+                            <h3 class="font-oswald text-lg font-bold text-white uppercase">Shavkat Rakhmonov</h3>
+                            <span class="text-xs text-amber-400 font-semibold bg-amber-400/10 px-2 py-0.5 rounded">Meio-Médio</span>
+                            <p class="text-slate-400 text-xs mt-1">Cartel: <span class="text-white font-mono font-bold">18-0-0</span></p>
+                        </div>
+                    </div>
+                    <!-- Stats Bars -->
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <div class="flex justify-between text-slate-300 mb-1">
+                                <span>Taxa de Interrupção (KO/SUB)</span>
+                                <span class="font-bold text-amber-400">100%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-amber-400 h-2 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-slate-300 mb-1">
+                                <span>Vitórias por Finalização</span>
+                                <span class="font-bold text-slate-200">55%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 55%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prospect 2 -->
+                <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-amber-500/50 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-xl object-cover border-2 border-amber-400" alt="Khamzat">
+                        <div>
+                            <h3 class="font-oswald text-lg font-bold text-white uppercase">Khamzat Chimaev</h3>
+                            <span class="text-xs text-amber-400 font-semibold bg-amber-400/10 px-2 py-0.5 rounded">Peso Médio</span>
+                            <p class="text-slate-400 text-xs mt-1">Cartel: <span class="text-white font-mono font-bold">14-0-0</span></p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <div class="flex justify-between text-slate-300 mb-1">
+                                <span>Taxa de Interrupção</span>
+                                <span class="font-bold text-amber-400">85%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-amber-400 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-slate-300 mb-1">
+                                <span>Dominância no 1º Round</span>
+                                <span class="font-bold text-slate-200">78%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prospect 3 -->
+                <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-amber-500/50 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-xl object-cover border-2 border-amber-400" alt="Umar">
+                        <div>
+                            <h3 class="font-oswald text-lg font-bold text-white uppercase">Umar Nurmagomedov</h3>
+                            <span class="text-xs text-amber-400 font-semibold bg-amber-400/10 px-2 py-0.5 rounded">Peso Galo</span>
+                            <p class="text-slate-400 text-xs mt-1">Cartel: <span class="text-white font-mono font-bold">18-0-0</span></p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <div class="flex justify-between text-slate-300 mb-1">
+                                <span>Precisão de Quedas</span>
+                                <span class="font-bold text-amber-400">62%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-amber-400 h-2 rounded-full" style="width: 62%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-slate-300 mb-1">
+                                <span>Golpes sem Resposta</span>
+                                <span class="font-bold text-slate-200">88%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prospect 4 -->
+                <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-amber-500/50 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-xl object-cover border-2 border-amber-400" alt="Ian Garry">
+                        <div>
+                            <h3 class="font-oswald text-lg font-bold text-white uppercase">Ian Machado Garry</h3>
+                            <span class="text-xs text-amber-400 font-semibold bg-amber-400/10 px-2 py-0.5 rounded">Meio-Médio</span>
+                            <p class="text-slate-400 text-xs mt-1">Cartel: <span class="text-white font-mono font-bold">15-0-0</span></p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <div class="flex justify-between text-slate-300 mb-1">
+                                <span>Precisão de Golpes em Pé</span>
+                                <span class="font-bold text-amber-400">56%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-amber-400 h-2 rounded-full" style="width: 56%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-slate-300 mb-1">
+                                <span>Defesa de Quedas</span>
+                                <span class="font-bold text-slate-200">75%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESTATÍSTICAS RÁPIDAS & RECORDS (DASHBOARD CARDS) -->
+    <section id="estatisticas" class="py-16 bg-slate-900 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-red-500 font-oswald text-sm font-bold uppercase tracking-wider">História em Números</span>
+                <h2 class="font-oswald text-3xl sm:text-4xl font-extrabold text-white uppercase">Records Históricos do UFC</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Stat Card 1 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl text-center relative overflow-hidden group hover:border-red-600/50 transition">
+                    <div class="absolute -right-4 -bottom-4 text-slate-700/30 text-7xl font-black font-oswald group-hover:text-red-600/10 transition">15</div>
+                    <i class="fa-solid fa-trophy text-amber-400 text-3xl mb-3"></i>
+                    <h3 class="font-oswald text-3xl font-extrabold text-white">15 Vitórias</h3>
+                    <p class="text-red-500 font-semibold text-xs uppercase tracking-wider mt-1">Disputas de Cinturão</p>
+                    <p class="text-slate-400 text-xs mt-2">Dono do Recorde: <strong class="text-slate-200">Jon Jones</strong></p>
+                </div>
+
+                <!-- Stat Card 2 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl text-center relative overflow-hidden group hover:border-red-600/50 transition">
+                    <div class="absolute -right-4 -bottom-4 text-slate-700/30 text-7xl font-black font-oswald group-hover:text-red-600/10 transition">15</div>
+                    <i class="fa-solid fa-hand-fist text-red-500 text-3xl mb-3"></i>
+                    <h3 class="font-oswald text-3xl font-extrabold text-white">15 Nocautes</h3>
+                    <p class="text-red-500 font-semibold text-xs uppercase tracking-wider mt-1">Maior Número de KO/TKO</p>
+                    <p class="text-slate-400 text-xs mt-2">Dono do Recorde: <strong class="text-slate-200">Derrick Lewis</strong></p>
+                </div>
+
+                <!-- Stat Card 3 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl text-center relative overflow-hidden group hover:border-red-600/50 transition">
+                    <div class="absolute -right-4 -bottom-4 text-slate-700/30 text-7xl font-black font-oswald group-hover:text-red-600/10 transition">5s</div>
+                    <i class="fa-solid fa-stopwatch text-amber-400 text-3xl mb-3"></i>
+                    <h3 class="font-oswald text-3xl font-extrabold text-white">5 Segundos</h3>
+                    <p class="text-red-500 font-semibold text-xs uppercase tracking-wider mt-1">Nocaute Mais Rápido</p>
+                    <p class="text-slate-400 text-xs mt-2">Jorge Masvidal vs Ben Askren (2019)</p>
+                </div>
+
+                <!-- Stat Card 4 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl text-center relative overflow-hidden group hover:border-red-600/50 transition">
+                    <div class="absolute -right-4 -bottom-4 text-slate-700/30 text-7xl font-black font-oswald group-hover:text-red-600/10 transition">11</div>
+                    <i class="fa-solid fa-shield-halved text-blue-400 text-3xl mb-3"></i>
+                    <h3 class="font-oswald text-3xl font-extrabold text-white">11 Defesas</h3>
+                    <p class="text-red-500 font-semibold text-xs uppercase tracking-wider mt-1">Defesas Consecutivas</p>
+                    <p class="text-slate-400 text-xs mt-2">Dono do Recorde: <strong class="text-slate-200">Demetrious Johnson</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER PROFISSIONAL & NEWSLETTER -->
+    <footer class="bg-slate-950 text-slate-400 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-slate-800">
+                <!-- Coluna 1: Sobre -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="bg-red-600 text-white font-oswald text-xl font-black px-2 py-0.5 italic rounded -skew-x-12">UFC</span>
+                        <span class="font-oswald text-lg font-bold text-slate-100 uppercase">CENTRAL HUB</span>
+                    </div>
+                    <p class="text-xs leading-relaxed text-slate-400 mb-4">
+                        O seu portal definitivo de estatísticas, notícias, rankings e cobertura ao vivo das artes marciais mistas (MMA).
+                    </p>
+                    <div class="flex space-x-3 text-slate-400">
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Coluna 2: Navegação Rápida -->
+                <div>
+                    <h4 class="font-oswald text-sm font-bold text-white uppercase tracking-wider mb-4">Navegação</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#hero" class="hover:text-red-500 transition">Próximos Eventos</a></li>
+                        <li><a href="#campeoes" class="hover:text-red-500 transition">Atuais Campeões</a></li>
+                        <li><a href="#rankings" class="hover:text-red-500 transition">Rankings Masculino e Feminino</a></li>
+                        <li><a href="#historicas" class="hover:text-red-500 transition">Lutas Lendárias</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 3: Categorias -->
+                <div>
+                    <h4 class="font-oswald text-sm font-bold text-white uppercase tracking-wider mb-4">Divisões de Peso</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" class="hover:text-red-500 transition">Peso Pesado (120kg)</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">Meio-Pesado (93kg)</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">Peso Médio (84kg)</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition">Peso Leve (70kg)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 4: Newsletter Form -->
+                <div>
+                    <h4 class="font-oswald text-sm font-bold text-white uppercase tracking-wider mb-4">UFC Fight Club News</h4>
+                    <p class="text-xs mb-3">Receba resultados ao vivo e alertas de eventos no seu e-mail.</p>
+                    <form id="newsletterForm" onsubmit="handleNewsletter(event)" class="space-y-2">
+                        <input type="email" id="newsletterEmail" required placeholder="Seu melhor e-mail..." 
+                            class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-red-600">
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-oswald text-xs uppercase font-bold py-2 rounded-lg transition">
+                            Inscrever-se
+                        </button>
+                    </form>
+                    <div id="newsletterSuccess" class="hidden text-xs text-emerald-400 mt-2">
+                        <i class="fa-solid fa-circle-check"></i> Inscrição realizada com sucesso!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright & Disclaimer -->
+            <div class="pt-8 text-center text-[11px] text-slate-500 space-y-2">
+                <p>&copy; 2026 UFC CENTRAL FAN HUB. Projeto demonstrativo desenvolvido para fins de portfólio Front-End.</p>
+                <p>UFC e Ultimate Fighting Championship são marcas registradas da Zuffa, LLC. Este site não possui afiliação oficial com a Zuffa/UFC.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL DE DETALHES DO ATLETA (BOOTSTRAP MODAL INTEGRADO) -->
+    <div class="modal fade" id="fighterModal" tabindex="-1" aria-labelledby="fighterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-dark rounded-2xl shadow-2xl">
+                <div class="modal-header border-b border-slate-700">
+                    <h5 class="modal-title font-oswald text-xl uppercase font-bold text-white" id="fighterModalLabel">Detalhes do Atleta</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-6 text-slate-300" id="fighterModalBody">
+                    <!-- Populated via JS -->
+                </div>
+                <div class="modal-footer border-t border-slate-700">
+                    <button type="button" class="btn btn-secondary text-xs uppercase font-bold" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOTSTRAP 5 JS BUNDLE CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JAVASCRIPT PERSONALIZADO -->
+    <script>
+        // DATA SET DE CAMPEÕES PARA RENDERIZAÇÃO E FILTRAGEM
+        const championsData = [
+            {
+                id: 1,
+                name: "Jon Jones",
+                nickname: "Bones",
+                category: "Peso Pesado",
+                gender: "Masculino",
+                record: "28-1-0 (1 NC)",
+                defenses: 1,
+                status: "Campeão Linear",
+                image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=400&auto=format&fit=crop",
+                bio: "Considerado por muitos o maior lutador da história do MMA, dominou a divisão Meio-Pesado por uma década antes de conquistar o cinturão dos Pesados."
+            },
+            {
+                id: 2,
+                name: "Alex Pereira",
+                nickname: "Poatan",
+                category: "Meio-Pesado",
+                gender: "Masculino",
+                record: "12-2-0",
+                defenses: 3,
+                status: "Campeão Linear",
+                image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=400&auto=format&fit=crop",
+                bio: "Fenômeno do Kickboxing e do UFC, campeão em duas divisões com poder de nocaute devastador na mão esquerda."
+            },
+            {
+                id: 3,
+                name: "Dricus Du Plessis",
+                nickname: "Stillknocks",
+                category: "Peso Médio",
+                gender: "Masculino",
+                record: "22-2-0",
+                defenses: 1,
+                status: "Campeão Linear",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
+                bio: "Primeiro campeão sul-africano do UFC, conhecido por seu estilo não ortodoxo e ritmo agressivo no octógono."
+            },
+            {
+                id: 4,
+                name: "Islam Makhachev",
+                nickname: "The Eagle Pupil",
+                category: "Peso Leve",
+                gender: "Masculino",
+                record: "26-1-0",
+                defenses: 3,
+                status: "Campeão & #1 P4P",
+                image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=400&auto=format&fit=crop",
+                bio: "Especialista em Sambo e Wrestling do Daguestão, atual líder do ranking Peso por Peso do UFC."
+            },
+            {
+                id: 5,
+                name: "Ilia Topuria",
+                nickname: "El Matador",
+                category: "Peso Pena",
+                gender: "Masculino",
+                record: "16-0-0",
+                defenses: 1,
+                status: "Campeão Invicto",
+                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop",
+                bio: "Representante da Espanha e Geórgia com boxe afiado e jogo de chão completo."
+            },
+            {
+                id: 6,
+                name: "Alexandre Pantoja",
+                nickname: "The Cannibal",
+                category: "Peso Mosca",
+                gender: "Masculino",
+                record: "28-5-0",
+                defenses: 2,
+                status: "Campeão Linear",
+                image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop",
+                bio: "Guerreiro brasileiro com Jiu-Jitsu refinado e coração incansável na divisão dos moscas."
+            },
+            {
+                id: 7,
+                name: "Zhang Weili",
+                nickname: "Magnum",
+                category: "Peso Palha",
+                gender: "Feminino",
+                record: "25-3-0",
+                defenses: 2,
+                status: "Campeã Linear",
+                image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop",
+                bio: "Primeira campeã chinesa do UFC, conhecida por seu condicionamento físico extremo e trocação explosiva."
+            },
+            {
+                id: 8,
+                name: "Alexa Grasso",
+                nickname: "Lethal",
+                category: "Peso Mosca",
+                gender: "Feminino",
+                record: "16-4-1",
+                defenses: 1,
+                status: "Campeã Linear",
+                image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop",
+                bio: "Orgulho do México, chocando o mundo ao finalizar Valentina Shevchenko para conquistar o ouro."
+            }
+        ];
+
+        // 1. RENDERIZAÇÃO DOS CARDS DOS CAMPEÕES
+        function renderChampions(data) {
+            const grid = document.getElementById('championsGrid');
+            grid.innerHTML = '';
+
+            if (data.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-slate-400">
+                        <i class="fa-solid fa-user-slash text-4xl mb-3"></i>
+                        <p class="text-sm">Nenhum atleta encontrado com os termos de busca.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            data.forEach(champion => {
+                const badgeColor = champion.status.includes('Invicto') || champion.status.includes('#1 P4P') ? 'bg-amber-500 text-black' : 'bg-red-600 text-white';
+                
+                const cardHTML = `
+                    <div class="champion-card bg-slate-800/80 rounded-2xl overflow-hidden border border-slate-700 hover:border-red-600/60 transition duration-300 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="relative h-52 overflow-hidden">
+                                <img src="${champion.image}" alt="${champion.name}" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 right-3 text-[10px] font-oswald font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow ${badgeColor}">
+                                    ${champion.status}
+                                </span>
+                            </div>
+                            <div class="p-5">
+                                <span class="text-xs text-amber-400 font-semibold uppercase tracking-wider">${champion.category}</span>
+                                <h3 class="font-oswald text-xl font-bold text-white uppercase mt-0.5">${champion.name}</h3>
+                                <p class="text-slate-400 text-xs italic mb-3">"${champion.nickname}"</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 text-xs bg-slate-900/60 p-3 rounded-xl border border-slate-700/50">
+                                    <div>
+                                        <span class="block text-slate-400 text-[10px] uppercase">Cartel</span>
+                                        <span class="font-mono font-bold text-slate-200">${champion.record}</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-slate-400 text-[10px] uppercase">Defesas</span>
+                                        <span class="font-mono font-bold text-amber-400">${champion.defenses}x com sucesso</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 pt-0">
+                            <button onclick="openFighterModal(${champion.id})" class="w-full bg-slate-700 hover:bg-red-600 text-slate-100 font-oswald text-xs uppercase font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-chart-simple"></i> Ver Estatísticas
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
+
+        // 2. MODAL INTERATIVO DO ATLETA (BOOTSTRAP JS)
+        function openFighterModal(championId) {
+            const champion = championsData.find(c => c.id === championId);
+            if (!champion) return;
+
+            const modalBody = document.getElementById('fighterModalBody');
+            document.getElementById('fighterModalLabel').innerText = `${champion.name} ("${champion.nickname}")`;
+
+            modalBody.innerHTML = `
+                <div class="flex flex-col sm:flex-row gap-4 items-center mb-4">
+                    <img src="${champion.image}" class="w-24 h-24 rounded-2xl object-cover border-2 border-amber-400 shadow-md" alt="${champion.name}">
+                    <div>
+                        <span class="text-xs bg-amber-400/20 text-amber-400 font-bold px-2.5 py-1 rounded-full uppercase">${champion.category}</span>
+                        <h4 class="font-oswald text-2xl font-bold text-white uppercase mt-1">${champion.name}</h4>
+                        <p class="text-xs text-slate-400">Cartel Profissional: <strong class="text-white">${champion.record}</strong></p>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed mb-4 bg-slate-900/60 p-3 rounded-xl border border-slate-700">
+                    ${champion.bio}
+                </p>
+                <div class="grid grid-cols-2 gap-3 text-center text-xs">
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-700">
+                        <span class="block text-slate-400 text-[10px] uppercase">Gênero</span>
+                        <span class="font-bold text-slate-200">${champion.gender}</span>
+                    </div>
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-700">
+                        <span class="block text-slate-400 text-[10px] uppercase">Status de Cinturão</span>
+                        <span class="font-bold text-amber-400">${champion.status}</span>
+                    </div>
+                </div>
+            `;
+
+            const modal = new bootstrap.Modal(document.getElementById('fighterModal'));
+            modal.show();
+        }
+
+        // 3. TIMER REVERSO JS (HERO SECTION)
+        function startCountdown() {
+            // Define data do próximo evento (30 dias a partir do momento do carregamento)
+            const targetDate = new Date().getTime() + (28 * 24 * 60 * 60 * 1000) + (14 * 60 * 60 * 1000);
+
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    document.getElementById('timerDays').innerText = '00';
+                    document.getElementById('timerHours').innerText = '00';
+                    document.getElementById('timerMinutes').innerText = '00';
+                    document.getElementById('timerSeconds').innerText = '00';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('timerDays').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('timerHours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('timerMinutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('timerSeconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            }, 1000);
+        }
+
+        // 4. BUSCA EM TEMPO REAL NOS CAMPEÕES
+        document.getElementById('navbarSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = championsData.filter(champion => 
+                champion.name.toLowerCase().includes(searchTerm) || 
+                champion.category.toLowerCase().includes(searchTerm) ||
+                champion.nickname.toLowerCase().includes(searchTerm)
+            );
+            renderChampions(filtered);
+        });
+
+        // 5. FILTRO POR CATEGORIA (BOTOES MASCULINO/FEMININO)
+        document.querySelectorAll('#categoryFilterBtns .filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('#categoryFilterBtns .filter-btn').forEach(b => {
+                    b.classList.remove('bg-red-600', 'text-white', 'active');
+                    b.classList.add('bg-slate-800', 'text-slate-300');
+                });
+                this.classList.add('bg-red-600', 'text-white', 'active');
+                this.classList.remove('bg-slate-800', 'text-slate-300');
+
+                const cat = this.getAttribute('data-category');
+                if (cat === 'all') {
+                    renderChampions(championsData);
+                } else {
+                    const filtered = championsData.filter(c => c.gender === cat);
+                    renderChampions(filtered);
+                }
+            });
+        });
+
+        // 6. MENU MOBILE TOGGLE
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // 7. VALIDAÇÃO NEWSLETTER
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('newsletterEmail');
+            if (emailInput.value) {
+                document.getElementById('newsletterSuccess').classList.remove('hidden');
+                emailInput.value = '';
+                setTimeout(() => {
+                    document.getElementById('newsletterSuccess').classList.add('hidden');
+                }, 4000);
+            }
+        }
+
+        // INICIALIZAÇÃO NA CARGA DA PÁGINA
+        window.addEventListener('DOMContentLoaded', () => {
+            renderChampions(championsData);
+            startCountdown();
+        });
+    </script>
+</body>
+</html>

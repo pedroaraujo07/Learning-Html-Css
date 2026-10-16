@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC HUB | O Portal Definitivo das Artes Marciais Mistas</title>
+    <!-- Fonts Google: Montserrat & Bebas Neue -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. VARIÁVEIS CSS (:root) & RESET
+           ========================================================================== */
+        :root {
+            --bg-darker: #070708;
+            --bg-dark: #0b0b0d;
+            --bg-card: #151518;
+            --bg-card-hover: #1e1e23;
+            --border-color: #2a2a30;
+            
+            --ufc-red: #d20a0a;
+            --ufc-red-hover: #ff1e1e;
+            --ufc-gold: #e5a93c;
+            --ufc-gold-hover: #fcd068;
+            
+            --text-main: #f0f0f2;
+            --text-muted: #a0a0ab;
+            --text-dim: #60606a;
+            
+            --font-title: 'Bebas Neue', cursive, sans-serif;
+            --font-body: 'Montserrat', sans-serif;
+            
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-glow-red: 0 0 20px rgba(210, 10, 10, 0.35);
+            --shadow-glow-gold: 0 0 20px rgba(229, 169, 60, 0.35);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--ufc-red);
+        }
+
+        /* Container Padrão */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Tipografia */
+        h1, h2, h3, h4, .title-font {
+            font-family: var(--font-title);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            color: #fff;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-header h2 span {
+            color: var(--ufc-red);
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--ufc-red), var(--ufc-gold));
+            margin: 0.75rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* Botões Estilizados */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 1.75rem;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: var(--radius-sm);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            text-decoration: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--ufc-red), #900606);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(210, 10, 10, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--ufc-red-hover), var(--ufc-red));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow-red);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--ufc-gold);
+            color: var(--ufc-gold);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--ufc-gold), #b37d20);
+            color: #000;
+            font-weight: 800;
+        }
+
+        .btn-gold:hover {
+            background: linear-gradient(135deg, var(--ufc-gold-hover), var(--ufc-gold));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        /* ==========================================================================
+           2. NAVBAR / CABEÇALHO
+           ========================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(7, 7, 8, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-normal);
+        }
+
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 75px;
+        }
+
+        .logo {
+            font-family: var(--font-title);
+            font-size: 2.2rem;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .logo span.badge-hub {
+            background: var(--ufc-red);
+            color: #fff;
+            padding: 0.1rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 1.4rem;
+            margin-left: 0.3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.8rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition-fast);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-main);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--ufc-red);
+            transition: var(--transition-normal);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box input {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem 0.5rem 2.2rem;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.85rem;
+            width: 180px;
+            transition: var(--transition-normal);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            width: 240px;
+            border-color: var(--ufc-gold);
+            box-shadow: 0 0 10px rgba(229, 169, 60, 0.2);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 0.75rem;
+            width: 16px;
+            height: 16px;
+            fill: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: var(--transition-fast);
+        }
+
+        /* ==========================================================================
+           3. HERO SECTION (OCTÓGONO & MÉTRICAS)
+           ========================================================================== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            padding-top: 100px;
+            display: flex;
+            align-items: center;
+            background: radial-gradient(circle at center, rgba(210, 10, 10, 0.15) 0%, rgba(11, 11, 13, 1) 70%),
+                        linear-gradient(rgba(11, 11, 13, 0.85), rgba(11, 11, 13, 0.95)),
+                        url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 30%, var(--bg-dark) 90%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(229, 169, 60, 0.15);
+            border: 1px solid var(--ufc-gold);
+            color: var(--ufc-gold);
+            padding: 0.35rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero h1 span.gold {
+            color: var(--ufc-gold);
+        }
+
+        .hero h1 span.red {
+            color: var(--ufc-red);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            background: rgba(21, 21, 24, 0.7);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-title);
+            font-size: 2.8rem;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-number span {
+            color: var(--ufc-gold);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.25rem;
+        }
+
+        /* ==========================================================================
+           4. SEÇÃO: ATUAIS CAMPEÕES (GRID & FILTRO)
+           ========================================================================== */
+        .section-champions {
+            padding: 6rem 0;
+            background: var(--bg-darker);
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--ufc-red);
+            border-color: var(--ufc-red);
+            color: #fff;
+            box-shadow: var(--shadow-glow-red);
+        }
+
+        .champions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .champion-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition-normal);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .champion-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--ufc-gold);
+            box-shadow: 0 10px 30px rgba(229, 169, 60, 0.15);
+        }
+
+        .card-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background: radial-gradient(circle at top, #2a2a35, var(--bg-card));
+            overflow: hidden;
+        }
+
+        .card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: var(--transition-normal);
+        }
+
+        .champion-card:hover .card-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .belt-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, var(--ufc-gold), #8a5e00);
+            color: #000;
+            font-family: var(--font-title);
+            font-size: 0.9rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: var(--radius-sm);
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-category {
+            font-size: 0.75rem;
+            color: var(--ufc-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .card-record {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* ==========================================================================
+           5. SEÇÃO: RANKINGS P4P (POUND-FOR-POUND TABS)
+           ========================================================================== */
+        .section-rankings {
+            padding: 6rem 0;
+            background: var(--bg-dark);
+        }
+
+        .p4p-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .p4p-tab-btn {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.8rem 2rem;
+            font-family: var(--font-title);
+            font-size: 1.3rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .p4p-tab-btn.active {
+            border-color: var(--ufc-gold);
+            color: var(--ufc-gold);
+            background: rgba(229, 169, 60, 0.08);
+        }
+
+        .p4p-content {
+            display: none;
+        }
+
+        .p4p-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .p4p-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .p4p-item {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+        }
+
+        .p4p-item:hover {
+            border-color: var(--text-dim);
+            transform: translateX(5px);
+            background: var(--bg-card-hover);
+        }
+
+        .p4p-rank {
+            font-family: var(--font-title);
+            font-size: 2.2rem;
+            width: 50px;
+            color: var(--ufc-gold);
+            text-align: center;
+        }
+
+        .p4p-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 1.5rem;
+            border: 2px solid var(--border-color);
+        }
+
+        .p4p-details {
+            flex-grow: 1;
+        }
+
+        .p4p-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .p4p-division {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .p4p-record {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-right: 1.5rem;
+        }
+
+        .p4p-trend {
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        .trend-up { color: #22c55e; background: rgba(34, 197, 94, 0.1); }
+        .trend-same { color: var(--text-muted); background: rgba(160, 160, 171, 0.1); }
+
+        /* ==========================================================================
+           6. SEÇÃO: LENDAS & HALL DA FAMA (3D GLOW CARDS)
+           ========================================================================== */
+        .section-legends {
+            padding: 6rem 0;
+            background: var(--bg-darker);
+        }
+
+        .legends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .legend-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .legend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--ufc-gold), var(--ufc-red));
+            opacity: 0.5;
+            transition: var(--transition-normal);
+        }
+
+        .legend-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--ufc-gold);
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        .legend-card:hover::before {
+            opacity: 1;
+        }
+
+        .legend-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.2rem;
+            border: 3px solid var(--ufc-gold);
+            box-shadow: 0 0 15px rgba(229, 169, 60, 0.2);
+        }
+
+        .legend-name {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+
+        .legend-nickname {
+            font-size: 0.85rem;
+            color: var(--ufc-gold);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .legend-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        /* ==========================================================================
+           7. SEÇÃO: MELHORES LUTAS DA HISTÓRIA
+           ========================================================================== */
+        .section-fights {
+            padding: 6rem 0;
+            background: var(--bg-dark);
+        }
+
+        .fights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .fight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .fight-card:hover {
+            border-color: var(--ufc-red);
+            transform: scale(1.02);
+            box-shadow: var(--shadow-glow-red);
+        }
+
+        .fight-banner {
+            position: relative;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fight-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+        }
+
+        .fight-vs {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .fight-vs-title {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .fight-event-badge {
+            display: inline-block;
+            background: var(--ufc-red);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            margin-bottom: 0.4rem;
+        }
+
+        .fight-body {
+            padding: 1.5rem;
+        }
+
+        .fight-meta-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .fight-summary {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           8. SEÇÃO: LUTADORES INVICTOS & PROSPECTOS
+           ========================================================================== */
+        .section-undefeated {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, var(--bg-darker) 0%, #120e06 100%);
+            border-top: 1px solid rgba(229, 169, 60, 0.2);
+            border-bottom: 1px solid rgba(229, 169, 60, 0.2);
+        }
+
+        .undefeated-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .undefeated-card {
+            background: rgba(21, 21, 24, 0.8);
+            border: 1px solid rgba(229, 169, 60, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: var(--transition-normal);
+        }
+
+        .undefeated-card:hover {
+            border-color: var(--ufc-gold);
+            background: var(--bg-card-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow-gold);
+        }
+
+        .undefeated-img {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--ufc-gold);
+            flex-shrink: 0;
+        }
+
+        .undefeated-info h4 {
+            font-size: 1.4rem;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 0.2rem;
+        }
+
+        .undefeated-info .division {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .undefeated-record {
+            display: inline-block;
+            background: rgba(229, 169, 60, 0.15);
+            color: var(--ufc-gold);
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* ==========================================================================
+           9. SEÇÃO: PREVISÕES & FUTURO (COUNTDOWN + VOTAÇÃO)
+           ========================================================================== */
+        .section-future {
+            padding: 6rem 0;
+            background: var(--bg-dark);
+        }
+
+        .future-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        /* Card do Próximo Evento / Countdown */
+        .next-event-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .next-event-card::after {
+            content: 'UFC';
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-family: var(--font-title);
+            font-size: 10rem;
+            color: rgba(255, 255, 255, 0.02);
+            pointer-events: none;
+        }
+
+        .event-badge-live {
+            color: var(--ufc-red);
+            font-weight: bold;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-badge-live::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--ufc-red);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--ufc-red);
+            animation: pulse 1.5s infinite;
+        }
+
+        .event-main-title {
+            font-size: 2.8rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-location {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Countdown Grid */
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .count-box {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+
+        .count-num {
+            font-family: var(--font-title);
+            font-size: 2.2rem;
+            color: var(--ufc-gold);
+            line-height: 1;
+        }
+
+        .count-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.3rem;
+        }
+
+        /* Enquete / Votação Interativa */
+        .poll-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+        }
+
+        .poll-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .poll-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .poll-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .poll-option {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-fast);
+        }
+
+        .poll-option:hover {
+            border-color: var(--ufc-gold);
+        }
+
+        .poll-option-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 0%;
+            background: rgba(229, 169, 60, 0.15);
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .poll-option-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .poll-percent {
+            font-weight: 800;
+            color: var(--ufc-gold);
+            display: none;
+        }
+
+        .poll-voted .poll-percent {
+            display: block;
+        }
+
+        /* ==========================================================================
+           10. RODAPÉ (FOOTER MODERN)
+           ========================================================================== */
+        .footer {
+            background: var(--bg-darker);
+            border-top: 1px solid var(--border-color);
+            padding: 5rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            max-width: 320px;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--ufc-gold);
+            padding-left: 5px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .newsletter-form input {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 0.85rem;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--ufc-gold);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* ==========================================================================
+           11. MODAL DE DETALHES DO LUTADOR
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition-normal);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            max-width: 750px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: var(--transition-normal);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            background: var(--ufc-red);
+            border-color: var(--ufc-red);
+        }
+
+        .modal-header-bg {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .modal-header-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, var(--bg-card) 0%, rgba(21, 21, 24, 0.4) 100%);
+        }
+
+        .modal-header-info {
+            position: relative;
+            z-index: 2;
+        }
+
+        .modal-header-info h2 {
+            font-size: 2.5rem;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .modal-header-info p {
+            color: var(--ufc-gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            background: var(--bg-darker);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .modal-stat-value {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .modal-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .modal-section-title {
+            font-size: 1.2rem;
+            color: var(--ufc-gold);
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.4rem;
+        }
+
+        .modal-bio {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* ==========================================================================
+           12. DESIGN RESPONSIVO (MEDIA QUERIES)
+           ========================================================================== */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 3.5rem; }
+            .future-wrapper { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            
+            .nav-links {
+                position: fixed;
+                top: 75px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 75px);
+                background: var(--bg-darker);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: var(--transition-normal);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links a { font-size: 1.2rem; }
+
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 0.95rem; }
+            .hero-stats { grid-template-columns: 1fr; gap: 1rem; }
+            
+            .section-header h2 { font-size: 2.2rem; }
+            .countdown { grid-template-columns: repeat(2, 1fr); }
+            
+            .footer-grid { grid-template-columns: 1fr; }
+            .modal-stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .hero-btns { flex-direction: column; }
+            .search-box input { width: 130px; }
+            .search-box input:focus { width: 170px; }
+            .p4p-item { padding: 0.8rem; }
+            .p4p-avatar { margin: 0 0.8rem; width: 45px; height: 45px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================================================
+       NAVBAR / CABEÇALHO
+       ========================================================================== -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="#" class="logo">
+                UFC <span class="badge-hub">HUB</span>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero" class="active">Início</a></li>
+                <li><a href="#champions">Campeões</a></li>
+                <li><a href="#rankings">Rankings P4P</a></li>
+                <li><a href="#legends">Lendas</a></li>
+                <li><a href="#fights">Melhores Lutas</a></li>
+                <li><a href="#undefeated">Invictos</a></li>
+                <li><a href="#future">Futuro & Eventos</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input type="text" id="globalSearch" placeholder="Buscar lutador...">
+                </div>
+
+                <button class="hamburger" id="hamburgerBtn" aria-label="Abrir Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+    <section class="hero" id="hero">
+        <div class="container hero-content">
+            <span class="hero-tag">A Maior Organização de MMA do Planeta</span>
+            <h1>O MUNDO DAS ARTES MARCIAIS MISTAS EM <span class="gold">UM SÓ</span> <span class="red">LUGAR</span></h1>
+            <p>Acompanhe atualizações de campeões, dados P4P, legados do Hall da Fama e as lutas épicas que moldaram a história do Octógono.</p>
+            
+            <div class="hero-btns">
+                <a href="#champions" class="btn btn-primary">Ver Campeões Nacionais & Globais</a>
+                <a href="#future" class="btn btn-outline">Próximos Eventos</a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Categorias de Peso</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">600<span>+</span></div>
+                    <div class="stat-label">Atletas no Plantel</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">30<span>+</span></div>
+                    <div class="stat-label">Anos de História Épica</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       ATUAIS CAMPEÕES (GRID & FILTROS)
+       ========================================================================== -->
+    <section class="section-champions" id="champions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Atuais <span>Campeões</span></h2>
+                <p>Os detentores do cinturão dourado nas principais divisões de peso do UFC.</p>
+            </div>
+
+            <!-- Filtros de Categoria -->
+            <div class="filter-container" id="categoryFilters">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="peso-pesado">Peso-Pesado</button>
+                <button class="filter-btn" data-filter="meio-pesado">Meio-Pesado</button>
+                <button class="filter-btn" data-filter="peso-medio">Peso-Médio</button>
+                <button class="filter-btn" data-filter="meio-medio">Meio-Médio</button>
+                <button class="filter-btn" data-filter="peso-leve">Peso-Leve</button>
+                <button class="filter-btn" data-filter="peso-pena">Peso-Pena</button>
+                <button class="filter-btn" data-filter="peso-galo">Peso-Galo</button>
+                <button class="filter-btn" data-filter="feminino">Feminino</button>
+            </div>
+
+            <!-- Grid dos Campeões -->
+            <div class="champions-grid" id="championsGrid">
+                <!-- Inserido dinamicamente via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       RANKINGS P4P (POUND-FOR-POUND)
+       ========================================================================== -->
+    <section class="section-rankings" id="rankings">
+        <div class="container">
+            <div class="section-header">
+                <h2>Rankings <span>Pound-for-Pound</span></h2>
+                <p>Os melhores lutadores peso-por-peso do mundo independente da divisão.</p>
+            </div>
+
+            <!-- Abas (Tabs) -->
+            <div class="p4p-tabs">
+                <button class="p4p-tab-btn active" onclick="switchP4P('masculino')">Masculino Top 10</button>
+                <button class="p4p-tab-btn" onclick="switchP4P('feminino')">Feminino Top 10</button>
+            </div>
+
+            <!-- Lista Masculino -->
+            <div class="p4p-content active" id="p4p-masculino">
+                <div class="p4p-list" id="p4pMaleList">
+                    <!-- Inserido dinamicamente via JS -->
+                </div>
+            </div>
+
+            <!-- Lista Feminino -->
+            <div class="p4p-content" id="p4p-feminino">
+                <div class="p4p-list" id="p4pFemaleList">
+                    <!-- Inserido dinamicamente via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       LENDAS & HALL DA FAMA
+       ========================================================================== -->
+    <section class="section-legends" id="legends">
+        <div class="container">
+            <div class="section-header">
+                <h2>Lendas & <span>Hall da Fama</span></h2>
+                <p>Ícones imortais que construíram a reputação e o legado das Artes Marciais Mistas.</p>
+            </div>
+
+            <div class="legends-grid" id="legendsGrid">
+                <!-- Inserido dinamicamente via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       MELHORES LUTAS DA HISTÓRIA
+       ========================================================================== -->
+    <section class="section-fights" id="fights">
+        <div class="container">
+            <div class="section-header">
+                <h2>Guerras Épicas: <span>Melhores Lutas</span></h2>
+                <p>Confrontos inesquecíveis marcados por garra, técnica e emoção do início ao fim.</p>
+            </div>
+
+            <div class="fights-grid" id="fightsGrid">
+                <!-- Inserido dinamicamente via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       LUTADORES INVICTOS & PROSPECTOS
+       ========================================================================== -->
+    <section class="section-undefeated" id="undefeated">
+        <div class="container">
+            <div class="section-header">
+                <h2>Mestres da <span>Invencibilidade</span></h2>
+                <p>Atletas com cartéis perfeitos que representam a nova era de dominância no octógono.</p>
+            </div>
+
+            <div class="undefeated-grid" id="undefeatedGrid">
+                <!-- Inserido dinamicamente via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       PREVISÕES & FUTURO DO UFC (COUNTDOWN + VOTAÇÃO)
+       ========================================================================== -->
+    <section class="section-future" id="future">
+        <div class="container">
+            <div class="future-wrapper">
+                
+                <!-- Countdown do Próximo Evento -->
+                <div class="next-event-card">
+                    <div class="event-badge-live">Próximo Grande Evento</div>
+                    <h3 class="event-main-title">UFC 315: RIVALRY REIGN</h3>
+                    <p class="event-location">📍 T-Mobile Arena, Las Vegas - Nevada</p>
+
+                    <div class="countdown">
+                        <div class="count-box">
+                            <div class="count-num" id="cd-days">14</div>
+                            <div class="count-label">Dias</div>
+                        </div>
+                        <div class="count-box">
+                            <div class="count-num" id="cd-hours">08</div>
+                            <div class="count-label">Horas</div>
+                        </div>
+                        <div class="count-box">
+                            <div class="count-num" id="cd-mins">42</div>
+                            <div class="count-label">Minutos</div>
+                        </div>
+                        <div class="count-box">
+                            <div class="count-num" id="cd-secs">19</div>
+                            <div class="count-label">Segundos</div>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                        <strong>Card Principal:</strong> Disputa do Cinturão Peso-Meio-Pesado + Co-main Event de Contendores no Peso-Leve.
+                    </p>
+
+                    <button class="btn btn-gold" onclick="alert('Lembrete ativado para o UFC 315!')">Garantir Lembrete de Transmissão</button>
+                </div>
+
+                <!-- Enquete Interativa -->
+                <div class="poll-card">
+                    <div class="poll-question">Enquete dos Fãs: Quem Vence a Próxima Superluta?</div>
+                    <div class="poll-sub">Vote para revelar as estatísticas em tempo real da comunidade UFC Hub.</div>
+
+                    <div class="poll-options" id="pollOptions">
+                        <div class="poll-option" onclick="votePoll(0)">
+                            <div class="poll-option-bg" id="poll-bg-0"></div>
+                            <div class="poll-option-content">
+                                <span>Jon "Bones" Jones</span>
+                                <span class="poll-percent" id="poll-pct-0">62%</span>
+                            </div>
+                        </div>
+
+                        <div class="poll-option" onclick="votePoll(1)">
+                            <div class="poll-option-bg" id="poll-bg-1"></div>
+                            <div class="poll-option-content">
+                                <span>Alex "Poatan" Pereira</span>
+                                <span class="poll-percent" id="poll-pct-1">38%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       RODAPÉ (FOOTER)
+       ========================================================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">UFC <span class="badge-hub">HUB</span></a>
+                    <p>O UFC Hub é um portal de fãs dedicado a compilar estatísticas, históricos, perfis e a cobertura do maior evento de lutas do planeta.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Navegação</h4>
+                    <ul class="footer-links">
+                        <li><a href="#champions">Atuais Campeões</a></li>
+                        <li><a href="#rankings">Rankings P4P</a></li>
+                        <li><a href="#legends">Lendas do Esporte</a></li>
+                        <li><a href="#fights">Lutas Históricas</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Categorias</h4>
+                    <ul class="footer-links">
+                        <li><a href="#champions">Peso-Pesado</a></li>
+                        <li><a href="#champions">Meio-Pesado</a></li>
+                        <li><a href="#champions">Peso-Médio</a></li>
+                        <li><a href="#champions">Divisões Femininas</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Boletim de Notícias</h4>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.8rem;">Receba alertas de novos cards de lutas:</p>
+                    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Inscrição confirmada no UFC Hub!');">
+                        <input type="email" placeholder="Seu e-mail principal" required>
+                        <button type="submit" class="btn btn-primary" style="padding: 0.6rem;">Inscrever-se</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 UFC HUB Portal Independente de MMA. Todas as marcas e imagens registradas pertencem aos seus respectivos proprietários (Zuffa, LLC / UFC).</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+       MODAL DE DETALHES DO LUTADOR
+       ========================================================================== -->
+    <div class="modal-overlay" id="fighterModal">
+        <div class="modal-card">
+            <button class="modal-close" id="modalCloseBtn">&times;</button>
+            <div class="modal-header-bg" id="modalBg">
+                <div class="modal-header-info">
+                    <p id="modalCategory">Categoria</p>
+                    <h2 id="modalName">Nome do Lutador</h2>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats-grid">
+                    <div>
+                        <div class="modal-stat-value" id="modalRecord">0-0-0</div>
+                        <div class="modal-stat-label">Cartel</div>
+                    </div>
+                    <div>
+                        <div class="modal-stat-value" id="modalCountry">País</div>
+                        <div class="modal-stat-label">Nacionalidade</div>
+                    </div>
+                    <div>
+                        <div class="modal-stat-value" id="modalStyle">Estilo</div>
+                        <div class="modal-stat-label">Estilo Base</div>
+                    </div>
+                    <div>
+                        <div class="modal-stat-value" id="modalKo">0</div>
+                        <div class="modal-stat-label">Nocautes</div>
+                    </div>
+                </div>
+
+                <h4 class="modal-section-title">Biografia & Resumo da Carreira</h4>
+                <p class="modal-bio" id="modalBio">Descrição detalhada do lutador...</p>
+
+                <h4 class="modal-section-title">Principais Feitos no UFC</h4>
+                <p class="modal-bio" id="modalAchievements">Feitos notáveis...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       JAVASCRIPT FUNCIONAL NATIVO
+       ========================================================================== -->
+    <script>
+        /* ==========================================================================
+           1. BASE DE DADOS (DATA)
+           ========================================================================== */
+        const CHAMPIONS_DATA = [
+            {
+                id: 'jones',
+                name: 'Jon Jones',
+                nickname: 'Bones',
+                category: 'peso-pesado',
+                categoryLabel: 'Peso-Pesado',
+                record: '27-1-0 (1 NC)',
+                country: '🇺🇸 Estados Unidos',
+                style: 'Wrestling / MMA Completo',
+                koCount: '10 KOs',
+                image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=800&auto=format&fit=crop',
+                bio: 'Considerado por muitos o maior lutador de MMA de todos os tempos. Jon Jones dominou a categoria dos meio-pesados por quase uma década antes de subir de peso e conquistar o cinturão peso-pesado do UFC.',
+                achievements: 'Campeão Peso-Pesado, Ex-Campeão Meio-Pesado Mais Jovem da História do UFC, Maior número de defesas de cinturão nos meio-pesados.'
+            },
+            {
+                id: 'poatan',
+                name: 'Alex Pereira',
+                nickname: 'Poatan',
+                category: 'meio-pesado',
+                categoryLabel: 'Meio-Pesado',
+                record: '12-2-0',
+                country: '🇧🇷 Brasil',
+                style: 'Kickboxing / Mão Esquerda Letal',
+                koCount: '10 KOs',
+                image: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=800&auto=format&fit=crop',
+                bio: 'Fenômeno brasileiro com um poder de nocaute assustador. Poatan fez história ao se tornar campeão em duas divisões (Médio e Meio-Pesado) no UFC com tempo recorde na organização.',
+                achievements: 'Duplo Campeão do UFC (Médio e Meio-Pesado), Hall da Fama do Kickboxing Glory, Nocautes devastadores.'
+            },
+            {
+                id: 'duplessis',
+                name: 'Dricus Du Plessis',
+                nickname: 'Stillknocks',
+                category: 'peso-medio',
+                categoryLabel: 'Peso-Médio',
+                record: '22-2-0',
+                country: '🇿🇦 África do Sul',
+                style: 'Kickboxing Unortodoxo / Kickboxer',
+                koCount: '9 KOs',
+                image: 'https://images.unsplash.com/photo-1517438322307-e67111335449?q=80&w=800&auto=format&fit=crop',
+                bio: 'O primeiro campeão sul-africano da história do UFC. Dricus impressiona com seu ritmo incansável e pressão física constante do primeiro ao último round.',
+                achievements: 'Campeão Peso-Médio do UFC, vitórias sobre ex-campeões como Israel Adesanya e Sean Strickland.'
+            },
+            {
+                id: 'belal',
+                name: 'Belal Muhammad',
+                nickname: 'Remember the Name',
+                category: 'meio-medio',
+                categoryLabel: 'Meio-Médio',
+                record: '24-3-0',
+                country: '🇵🇸 Palestina / 🇺🇸 EUA',
+                style: 'Wrestling de Pressão',
+                koCount: '5 KOs',
+                image: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=800&auto=format&fit=crop',
+                bio: 'Atleta com incrível ritmo de luta e controle no wrestling. Conquistou o cinturão dos meio-médios ao impor um volume tático impecável.',
+                achievements: 'Campeão Peso Meio-Médio do UFC, sequência invicta de mais de 10 lutas na divisão.'
+            },
+            {
+                id: 'makhachev',
+                name: 'Islam Makhachev',
+                nickname: 'Eagle Disciple',
+                category: 'peso-leve',
+                categoryLabel: 'Peso-Leve',
+                record: '26-1-0',
+                country: '🇷🇺 Rússia',
+                style: 'Sambo / Wrestling',
+                koCount: '5 KOs / 12 Submissions',
+                image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=800&auto=format&fit=crop',
+                bio: 'Pupilo de Abdulmanap e Khabib Nurmagomedov. Islam possui um jogo de solo de elite e uma trocação extremamente ajustada e estratégica.',
+                achievements: 'Campeão Peso-Leve, Atual #1 no Ranking Pound-for-Pound do UFC, múltiplas defesas com finalizações e nocautes.'
+            },
+            {
+                id: 'topuria',
+                name: 'Ilia Topuria',
+                nickname: 'El Matador',
+                category: 'peso-pena',
+                categoryLabel: 'Peso-Pena',
+                record: '16-0-0',
+                country: '🇪🇸 Espanha / 🇬🇪 Geórgia',
+                style: 'Boxe de Elite / Jiu-Jitsu',
+                koCount: '6 KOs',
+                image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=800&auto=format&fit=crop',
+                bio: 'Atleta invicto prodígio que chocou o mundo ao nocautear o lendário Alexander Volkanovski e reinar com autoridade absoluta nos penas.',
+                achievements: 'Campeão Peso-Pena Invicto do UFC, Nocauteou Alexander Volkanovski e Max Holloway em sequência histórica.'
+            },
+            {
+                id: 'dvalishvili',
+                name: 'Merab Dvalishvili',
+                nickname: 'The Machine',
+                category: 'peso-galo',
+                categoryLabel: 'Peso-Galo',
+                record: '18-4-0',
+                country: '🇬🇪 Geórgia',
+                style: 'Wrestling de Ritmo Infinito',
+                koCount: '3 KOs',
+                image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop',
+                bio: 'Famoso pelo condicionamento físico desumano e recordes de quedas no UFC. Dominou completamente a divisão até tomar o cinturão dos galos.',
+                achievements: 'Campeão Peso-Galo do UFC, Maior número de quedas aplicadas na história da divisão.'
+            },
+            {
+                id: 'weili',
+                name: 'Zhang Weili',
+                nickname: 'Magnum',
+                category: 'feminino',
+                categoryLabel: 'Peso-Palha Feminino',
+                record: '25-3-0',
+                country: '🇨🇳 China',
+                style: 'Sanda / Muay Thai',
+                koCount: '11 KOs',
+                image: 'https://images.unsplash.com/photo-1517438322307-e67111335449?q=80&w=800&auto=format&fit=crop',
+                bio: 'A maior lutadora asiática da história do MMA. Notável por sua explosão muscular, agressividade ininterrupta e técnica completa de trocação.',
+                achievements: 'Bicampeã Peso-Palha Feminino do UFC, Protagonista de uma das melhores lutas femininas da história (vs Joanna Jedrzejczyk).'
+            }
+        ];
+
+        const P4P_MALE = [
+            { rank: 1, name: 'Islam Makhachev', division: 'Peso-Leve', record: '26-1-0', trend: 'up', trendText: '—', img: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=200&auto=format&fit=crop' },
+            { rank: 2, name: 'Alex Pereira', division: 'Meio-Pesado', record: '12-2-0', trend: 'up', trendText: '▲ 1', img: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=200&auto=format&fit=crop' },
+            { rank: 3, name: 'Jon Jones', division: 'Peso-Pesado', record: '27-1-0', trend: 'same', trendText: '—', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=200&auto=format&fit=crop' },
+            { rank: 4, name: 'Ilia Topuria', division: 'Peso-Pena', record: '16-0-0', trend: 'up', trendText: '▲ 2', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=200&auto=format&fit=crop' },
+            { rank: 5, name: 'Belal Muhammad', division: 'Meio-Médio', record: '24-3-0', trend: 'same', trendText: '—', img: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=200&auto=format&fit=crop' },
+            { rank: 6, name: 'Dricus Du Plessis', division: 'Peso-Médio', record: '22-2-0', trend: 'same', trendText: '—', img: 'https://images.unsplash.com/photo-1517438322307-e67111335449?q=80&w=200&auto=format&fit=crop' },
+            { rank: 7, name: 'Merab Dvalishvili', division: 'Peso-Galo', record: '18-4-0', trend: 'up', trendText: '▲ 1', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=200&auto=format&fit=crop' },
+            { rank: 8, name: 'Max Holloway', division: 'Peso-Leve / Pena', record: '26-8-0', trend: 'same', trendText: '—', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=200&auto=format&fit=crop' },
+            { rank: 9, name: 'Alexander Volkanovski', division: 'Peso-Pena', record: '26-4-0', trend: 'same', trendText: '—', img: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=200&auto=format&fit=crop' },
+            { rank: 10, name: 'Tom Aspinall', division: 'Peso-Pesado (Interino)', record: '15-3-0', trend: 'up', trendText: '▲ 2', img: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=200&auto=format&fit=crop' }
+        ];
+
+        const P4P_FEMALE = [
+            { rank: 1, name: 'Zhang Weili', division: 'Peso-Palha', record: '25-3-0', trend: 'same', trendText: '—', img: 'https://images.unsplash.com/photo-1517438322307-e67111335449?q=80&w=200&auto=format&fit=crop' },
+            { rank: 2, name: 'Valentina Shevchenko', division: 'Peso-Mosca', record: '24-4-1', trend: 'up', trendText: '▲ 1', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=200&auto=format&fit=crop' },
+            { rank: 3, name: 'Julianna Peña', division: 'Peso-Galo', record: '12-5-0', trend: 'up', trendText: '▲ 1', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=200&auto=format&fit=crop' },
+            { rank: 4, name: 'Alexa Grasso', division: 'Peso-Mosca', record: '16-4-1', trend: 'same', trendText: '—', img: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=200&auto=format&fit=crop' },
+            { rank: 5, name: 'Manon Fiorot', division: 'Peso-Mosca', record: '12-1-0', trend: 'up', trendText: '▲ 2', img: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=200&auto=format&fit=crop' }
+        ];
+
+        const LEGENDS_DATA = [
+            {
+                name: 'Anderson Silva',
+                nickname: '"The Spider"',
+                desc: 'O gênio do Muay Thai. Manteve o reinado mais longo de títulos da história do UFC (2.457 dias) com performances antológicas e nocautes espetaculares.',
+                img: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=300&auto=format&fit=crop'
+            },
+            {
+                name: 'Georges St-Pierre',
+                nickname: '"GSP"',
+                desc: 'O símbolo máximo do atleta completo de MMA. Dominou a divisão dos meio-médios com inteligência tática, wrestling impecável e esportividade incomparável.',
+                img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=300&auto=format&fit=crop'
+            },
+            {
+                name: 'Khabib Nurmagomedov',
+                nickname: '"The Eagle"',
+                desc: 'Retirou-se do esporte invicto (29-0) como um dos lutadores mais dominantes de todos os tempos. Seu Sambo e controle no solo sufocaram qualquer oponente.',
+                img: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=300&auto=format&fit=crop'
+            },
+            {
+                name: 'Amanda Nunes',
+                nickname: '"The Lioness"',
+                desc: 'A maior lutadora de MMA da história humana. Primeira mulher com dois cinturões simultâneos no UFC, derrotou todas as ex-campeãs de sua era.',
+                img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=300&auto=format&fit=crop'
+            }
+        ];
+
+        const FIGHTS_DATA = [
+            {
+                title: 'Robbie Lawler vs. Rory MacDonald 2',
+                event: 'UFC 189',
+                year: '2015',
+                img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop',
+                summary: 'Considerada por Dana White a luta mais sangrenta e violenta da história do evento. Um verdadeiro teste de resistência de dois guerreiros nos meio-médios.'
+            },
+            {
+                title: 'Shogun Rua vs. Dan Henderson 1',
+                event: 'UFC 139',
+                year: '2011',
+                img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=800&auto=format&fit=crop',
+                summary: 'Cinco rounds ininterruptos de pura insanidade e reviravoltas no octógono. A Batalha de San Jose entrou no Hall da Fama no mesmo instante.'
+            },
+            {
+                title: 'Zhang Weili vs. Joanna Jędrzejczyk 1',
+                event: 'UFC 248',
+                year: '2020',
+                img: 'https://images.unsplash.com/photo-1517438322307-e67111335449?q=80&w=800&auto=format&fit=crop',
+                summary: 'Eleita a maior luta da história do MMA feminino. Ambas as atletas desferiram mais de 350 golpes significativos em 25 minutos de pura guerra.'
+            }
+        ];
+
+        const UNDEFEATED_DATA = [
+            { name: 'Shavkat Rakhmonov', record: '18-0-0', division: 'Meio-Médio', img: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=200&auto=format&fit=crop' },
+            { name: 'Ilia Topuria', record: '16-0-0', division: 'Peso-Pena', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=200&auto=format&fit=crop' },
+            { name: 'Movsar Evloev', record: '18-0-0', division: 'Peso-Pena', img: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=200&auto=format&fit=crop' },
+            { name: 'Umar Nurmagomedov', record: '18-0-0', division: 'Peso-Galo', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=200&auto=format&fit=crop' }
+        ];
+
+        /* ==========================================================================
+           2. INICIALIZAÇÃO & RENDERIZAÇÃO
+           ========================================================================== */
+        document.addEventListener('DOMContentLoaded', () => {
+            renderChampions(CHAMPIONS_DATA);
+            renderP4P();
+            renderLegends();
+            renderFights();
+            renderUndefeated();
+            setupEventListeners();
+            startCountdown();
+        });
+
+        /* Renderizar Campeões */
+        function renderChampions(data) {
+            const grid = document.getElementById('championsGrid');
+            grid.innerHTML = '';
+
+            if(data.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--text-muted);">Nenhum lutador encontrado com essa busca.</p>';
+                return;
+            }
+
+            data.forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'champion-card';
+                card.onclick = () => openFighterModal(c);
+                
+                card.innerHTML = `
+                    <div class="card-img-wrap">
+                        <span class="belt-badge">CAMPEÃO</span>
+                        <img src="${c.image}" alt="${c.name}" loading="lazy">
+                    </div>
+                    <div class="card-info">
+                        <div class="card-category">${c.categoryLabel}</div>
+                        <h3 class="card-title">${c.name}</h3>
+                        <div class="card-meta">
+                            <span>${c.country}</span>
+                            <span class="card-record">${c.record}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        /* Renderizar P4P */
+        function renderP4P() {
+            const maleList = document.getElementById('p4pMaleList');
+            const femaleList = document.getElementById('p4pFemaleList');
+
+            maleList.innerHTML = P4P_MALE.map(item => `
+                <div class="p4p-item">
+                    <div class="p4p-rank">#${item.rank}</div>
+                    <img class="p4p-avatar" src="${item.img}" alt="${item.name}">
+                    <div class="p4p-details">
+                        <div class="p4p-name">${item.name}</div>
+                        <div class="p4p-division">${item.division}</div>
+                    </div>
+                    <div class="p4p-record">${item.record}</div>
+                    <div class="p4p-trend ${item.trend === 'up' ? 'trend-up' : 'trend-same'}">${item.trendText}</div>
+                </div>
+            `).join('');
+
+            femaleList.innerHTML = P4P_FEMALE.map(item => `
+                <div class="p4p-item">
+                    <div class="p4p-rank">#${item.rank}</div>
+                    <img class="p4p-avatar" src="${item.img}" alt="${item.name}">
+                    <div class="p4p-details">
+                        <div class="p4p-name">${item.name}</div>
+                        <div class="p4p-division">${item.division}</div>
+                    </div>
+                    <div class="p4p-record">${item.record}</div>
+                    <div class="p4p-trend ${item.trend === 'up' ? 'trend-up' : 'trend-same'}">${item.trendText}</div>
+                </div>
+            `).join('');
+        }
+
+        /* Renderizar Lendas */
+        function renderLegends() {
+            const grid = document.getElementById('legendsGrid');
+            grid.innerHTML = LEGENDS_DATA.map(l => `
+                <div class="legend-card">
+                    <img class="legend-avatar" src="${l.img}" alt="${l.name}">
+                    <h3 class="legend-name">${l.name}</h3>
+                    <div class="legend-nickname">${l.nickname}</div>
+                    <p class="legend-desc">${l.desc}</p>
+                    <span style="font-size: 0.75rem; color: var(--ufc-gold); font-weight: bold; letter-spacing: 1px;">HALL DA FAMA UFC</span>
+                </div>
+            `).join('');
+        }
+
+        /* Renderizar Lutas */
+        function renderFights() {
+            const grid = document.getElementById('fightsGrid');
+            grid.innerHTML = FIGHTS_DATA.map(f => `
+                <div class="fight-card">
+                    <div class="fight-banner" style="background-image: url('${f.img}')">
+                        <div class="fight-vs">
+                            <span class="fight-event-badge">${f.event}</span>
+                            <div class="fight-vs-title">${f.title}</div>
+                        </div>
+                    </div>
+                    <div class="fight-body">
+                        <div class="fight-meta-info">
+                            <span>Ano: ${f.year}</span>
+                            <span>5 Rounds de Pura Ação</span>
+                        </div>
+                        <p class="fight-summary">${f.summary}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* Renderizar Invictos */
+        function renderUndefeated() {
+            const grid = document.getElementById('undefeatedGrid');
+            grid.innerHTML = UNDEFEATED_DATA.map(u => `
+                <div class="undefeated-card">
+                    <img class="undefeated-img" src="${u.img}" alt="${u.name}">
+                    <div class="undefeated-info">
+                        <h4>${u.name}</h4>
+                        <div class="division">${u.division}</div>
+                        <div class="undefeated-record">INVICTO: ${u.record}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* ==========================================================================
+           3. INTERAÇÕES & FILTROS
+           ========================================================================== */
+        function setupEventListeners() {
+            // Menu Mobile Hamburger
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const navLinks = document.getElementById('navLinks');
+
+            hamburgerBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Fechar menu mobile ao clicar em um link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // Filtros de Categoria
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.getAttribute('data-filter');
+                    if (filter === 'all') {
+                        renderChampions(CHAMPIONS_DATA);
+                    } else {
+                        const filtered = CHAMPIONS_DATA.filter(c => c.category === filter);
+                        renderChampions(filtered);
+                    }
+                });
+            });
+
+            // Barra de Busca Global / Instantânea
+            const searchInput = document.getElementById('globalSearch');
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                const filtered = CHAMPIONS_DATA.filter(c => 
+                    c.name.toLowerCase().includes(query) || 
+                    c.categoryLabel.toLowerCase().includes(query) ||
+                    c.country.toLowerCase().includes(query)
+                );
+                renderChampions(filtered);
+            });
+
+            // Modal Controls
+            document.getElementById('modalCloseBtn').onclick = closeModal;
+            document.getElementById('fighterModal').onclick = (e) => {
+                if(e.target === document.getElementById('fighterModal')) closeModal();
+            };
+        }
+
+        /* Alternar Abas P4P */
+        function switchP4P(type) {
+            document.querySelectorAll('.p4p-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.p4p-content').forEach(content => content.classList.remove('active'));
+
+            if(type === 'masculino') {
+                event.target.classList.add('active');
+                document.getElementById('p4p-masculino').classList.add('active');
+            } else {
+                event.target.classList.add('active');
+                document.getElementById('p4p-feminino').classList.add('active');
+            }
+        }
+
+        /* Modal do Lutador */
+        function openFighterModal(fighter) {
+            document.getElementById('modalName').innerText = `${fighter.name} "${fighter.nickname}"`;
+            document.getElementById('modalCategory').innerText = fighter.categoryLabel;
+            document.getElementById('modalRecord').innerText = fighter.record;
+            document.getElementById('modalCountry').innerText = fighter.country;
+            document.getElementById('modalStyle').innerText = fighter.style;
+            document.getElementById('modalKo').innerText = fighter.koCount;
+            document.getElementById('modalBio').innerText = fighter.bio;
+            document.getElementById('modalAchievements').innerText = fighter.achievements;
+            document.getElementById('modalBg').style.backgroundImage = `url('${fighter.image}')`;
+
+            document.getElementById('fighterModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('fighterModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        /* Countdown Regressivo */
+        function startCountdown() {
+            // Data alvo fictícia para o próximo grande Pay-Per-View
+            const targetDate = new Date().getTime() + (14 * 24 * 60 * 60 * 1000) + (8 * 60 * 60 * 1000);
+
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = targetDate - now;
+
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    document.getElementById('cd-days').innerText = days < 10 ? '0' + days : days;
+                    document.getElementById('cd-hours').innerText = hours < 10 ? '0' + hours : hours;
+                    document.getElementById('cd-mins').innerText = mins < 10 ? '0' + mins : mins;
+                    document.getElementById('cd-secs').innerText = secs < 10 ? '0' + secs : secs;
+                }
+            }, 1000);
+        }
+
+        /* Sistema de Enquete Interativa */
+        let voted = false;
+        function votePoll(optionIndex) {
+            if(voted) return;
+            voted = true;
+
+            const pollContainer = document.getElementById('pollOptions');
+            pollContainer.classList.add('poll-voted');
+
+            if(optionIndex === 0) {
+                document.getElementById('poll-bg-0').style.width = '65%';
+                document.getElementById('poll-bg-1').style.width = '35%';
+                document.getElementById('poll-pct-0').innerText = '65%';
+                document.getElementById('poll-pct-1').innerText = '35%';
+            } else {
+                document.getElementById('poll-bg-0').style.width = '58%';
+                document.getElementById('poll-bg-1').style.width = '42%';
+                document.getElementById('poll-pct-0').innerText = '58%';
+                document.getElementById('poll-pct-1').innerText = '42%';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UFC Hub — Portal de Campeões, Rankings e Lendas do Octógono</title>
+  <meta name="description" content="Portal não oficial sobre o UFC: próximo evento, campeões atuais, rankings, maiores lutas da história e estatísticas.">
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 (CSS) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Tailwind CSS (CDN) — prefixo "tw-" e sem preflight para conviver com o Bootstrap sem conflitos -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      prefix: 'tw-',
+      corePlugins: { preflight: false },
+      theme: {
+        extend: {
+          colors: {
+            ufc: { red: '#e11d48', gold: '#f59e0b', bg: '#0f172a', card: '#162033', deep: '#0b1220' }
+          },
+          fontFamily: { display: ['Oswald', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --ufc-bg: #0f172a;
+      --ufc-red: #e11d48;
+      --ufc-gold: #f59e0b;
+      --bs-body-bg: #0f172a;
+      --bs-body-font-family: 'Inter', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body { background: var(--ufc-bg); color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Oswald', sans-serif; letter-spacing: .02em; }
+
+    /* Navbar */
+    .navbar-ufc { background: rgba(11, 18, 32, .85); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .navbar-ufc .nav-link { color: #cbd5e1; font-weight: 500; text-transform: uppercase; font-size: .82rem; letter-spacing: .08em; }
+    .navbar-ufc .nav-link:hover, .navbar-ufc .nav-link.active { color: var(--ufc-gold); }
+    .brand-mark { background: var(--ufc-red); color: #fff; padding: 2px 10px; border-radius: 4px; transform: skewX(-10deg); display: inline-block; }
+    .btn-ufc { background: var(--ufc-red); border: 0; color: #fff; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+    .btn-ufc:hover { background: #be123c; color: #fff; }
+    .btn-outline-gold { border: 1px solid var(--ufc-gold); color: var(--ufc-gold); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+    .btn-outline-gold:hover { background: var(--ufc-gold); color: #111; }
+
+    /* Hero */
+    .hero {
+      position: relative; padding: 140px 0 80px; overflow: hidden;
+      background:
+        radial-gradient(60% 60% at 15% 20%, rgba(225,29,72,.35), transparent 70%),
+        radial-gradient(50% 50% at 90% 80%, rgba(245,158,11,.22), transparent 70%),
+        linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; opacity: .07; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M36 6h48l30 30v48l-30 30H36L6 84V36z' fill='none' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E");
+    }
+    .count-box { background: rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.1); border-top: 3px solid var(--ufc-red); border-radius: 12px; }
+    .count-num { font-family: 'Oswald', sans-serif; font-size: clamp(2rem, 6vw, 3.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
+    .vs-pill { background: var(--ufc-gold); color: #111; font-family: 'Oswald'; font-weight: 700; padding: 4px 14px; border-radius: 999px; }
+
+    /* Avatares (sem fotos protegidas: iniciais estilizadas) */
+    .avatar {
+      width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto;
+      font-family: 'Oswald', sans-serif; font-size: 1.9rem; font-weight: 700; color: #fff;
+      border: 3px solid var(--ufc-gold); box-shadow: 0 0 0 4px rgba(245,158,11,.15);
+    }
+
+    /* Cards */
+    .champ-card { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; cursor: pointer; }
+    .champ-card:hover { transform: translateY(-6px); border-color: var(--ufc-gold); box-shadow: 0 18px 40px -18px rgba(245,158,11,.45); }
+    .section-title { position: relative; display: inline-block; padding-bottom: 10px; }
+    .section-title::after { content: ""; position: absolute; left: 0; bottom: 0; width: 64px; height: 4px; background: linear-gradient(90deg, var(--ufc-red), var(--ufc-gold)); border-radius: 2px; }
+    .eyebrow { color: var(--ufc-gold); text-transform: uppercase; letter-spacing: .25em; font-size: .75rem; font-weight: 600; }
+
+    /* Tabelas Bootstrap estilizadas */
+    .table-ufc { --bs-table-bg: transparent; --bs-table-striped-bg: rgba(255,255,255,.03); --bs-table-hover-bg: rgba(225,29,72,.12); margin: 0; }
+    .table-ufc thead th { background: #0b1220; color: var(--ufc-gold); text-transform: uppercase; font-size: .75rem; letter-spacing: .12em; border-bottom: 2px solid var(--ufc-red); }
+    .table-ufc td, .table-ufc th { padding: .75rem 1rem; }
+    .rank-num { font-family: 'Oswald'; font-weight: 700; width: 2.1rem; height: 2.1rem; display: inline-grid; place-items: center; border-radius: 8px; background: rgba(255,255,255,.07); }
+    .rank-1 { background: var(--ufc-gold); color: #111; }
+    .rank-2 { background: #cbd5e1; color: #111; }
+    .rank-3 { background: #b45309; color: #fff; }
+    .table-card { background: #162033; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; overflow: hidden; }
+
+    /* Carrossel */
+    .fight-slide { min-height: 420px; border-radius: 20px; overflow: hidden; position: relative; }
+    .carousel-control-prev, .carousel-control-next { width: 8%; }
+    .carousel-indicators [data-bs-target] { background-color: var(--ufc-gold); }
+    .stat-chip { background: rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 10px 14px; }
+
+    /* Utilidades */
+    .no-results { display: none; }
+    .no-results.show { display: block; }
+    .toast-container { z-index: 2000; }
+    ::selection { background: var(--ufc-red); color: #fff; }
+    @media (max-width: 575.98px) { .hero { padding-top: 120px; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .champ-card { transition: none; } }
+  </style>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="100" tabindex="0">
+
+  <!-- ======================= NAVBAR ======================= -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-ufc" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand font-display fs-4 text-white d-flex align-items-center gap-2" href="#inicio">
+        <span class="brand-mark">UFC</span><span>HUB</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Abrir menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="#campeoes">Campeões</a></li>
+          <li class="nav-item"><a class="nav-link" href="#rankings">Rankings</a></li>
+          <li class="nav-item"><a class="nav-link" href="#lendas">Lendas</a></li>
+          <li class="nav-item"><a class="nav-link" href="#futuro">Invictos &amp; Futuro</a></li>
+          <li class="nav-item"><a class="nav-link" href="#estatisticas">Estatísticas</a></li>
+        </ul>
+        <form class="d-flex gap-2" role="search" id="navSearchForm">
+          <input class="form-control form-control-sm" type="search" id="navSearch" placeholder="Buscar lutador..." aria-label="Buscar lutador" autocomplete="off">
+          <button class="btn btn-ufc btn-sm px-3" type="submit" aria-label="Pesquisar">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ======================= HERO ======================= -->
+    <section id="inicio" class="hero">
+      <div class="container position-relative">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-7">
+            <span class="eyebrow">Próximo evento · Pay-per-view</span>
+            <h1 class="tw-text-5xl sm:tw-text-7xl tw-font-bold tw-text-white tw-mt-3 tw-mb-2">UFC 333</h1>
+            <h2 class="tw-text-2xl sm:tw-text-4xl tw-text-ufc-gold tw-mb-4">Volkanovski <span class="tw-text-white">vs</span> Evloev</h2>
+            <p class="tw-text-slate-300 tw-text-lg tw-max-w-xl">
+              O campeão peso-pena Alexander Volkanovski (28-4) defende o cinturão contra o invicto Movsar Evloev (20-0).
+              No co-main, trilogia no peso-galo: Petr Yan x Merab Dvalishvili.
+            </p>
+            <ul class="list-unstyled tw-text-slate-300 tw-mt-4 tw-space-y-1">
+              <li>📍 Etihad Arena · Yas Island, Abu Dhabi</li>
+              <li>🗓️ Sábado, 24 de outubro de 2026 · card principal às 15h (Brasília)</li>
+              <li>🕒 Seu horário local: <strong class="tw-text-white" id="localTime">—</strong></li>
+            </ul>
+            <div class="tw-flex tw-flex-wrap tw-gap-3 tw-mt-5">
+              <a href="#campeoes" class="btn btn-ufc btn-lg px-4">Ver campeões</a>
+              <a href="#rankings" class="btn btn-outline-gold btn-lg px-4">Rankings</a>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="count-box tw-p-4 sm:tw-p-6">
+              <p class="eyebrow tw-text-center tw-mb-3" id="countLabel">Contagem regressiva para o card principal</p>
+              <div class="tw-grid tw-grid-cols-4 tw-gap-2 sm:tw-gap-3 tw-text-center" id="countdown" aria-live="off">
+                <div><div class="count-num tw-text-white" id="cd-days">00</div><small class="tw-text-slate-400 tw-uppercase">Dias</small></div>
+                <div><div class="count-num tw-text-white" id="cd-hours">00</div><small class="tw-text-slate-400 tw-uppercase">Horas</small></div>
+                <div><div class="count-num tw-text-white" id="cd-mins">00</div><small class="tw-text-slate-400 tw-uppercase">Min</small></div>
+                <div><div class="count-num tw-text-ufc-red" id="cd-secs">00</div><small class="tw-text-slate-400 tw-uppercase">Seg</small></div>
+              </div>
+              <hr class="tw-border-white/10 tw-my-4">
+              <div class="tw-flex tw-items-center tw-justify-between tw-gap-3">
+                <div class="tw-text-center tw-flex-1">
+                  <div class="avatar tw-mx-auto tw-mb-2" style="background:linear-gradient(135deg,#0ea5e9,#1e3a8a)">AV</div>
+                  <div class="tw-font-semibold tw-text-white">Volkanovski</div>
+                  <small class="tw-text-slate-400">28-4 · Campeão</small>
+                </div>
+                <span class="vs-pill">VS</span>
+                <div class="tw-text-center tw-flex-1">
+                  <div class="avatar tw-mx-auto tw-mb-2" style="background:linear-gradient(135deg,#e11d48,#7f1d1d)">ME</div>
+                  <div class="tw-font-semibold tw-text-white">Evloev</div>
+                  <small class="tw-text-slate-400">20-0 · Invicto</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= CAMPEÕES ======================= -->
+    <section id="campeoes" class="tw-py-20 tw-bg-ufc-deep">
+      <div class="container">
+        <div class="row align-items-end g-3 tw-mb-8">
+          <div class="col-lg-6">
+            <span class="eyebrow">Cinturões</span>
+            <h2 class="section-title tw-text-4xl tw-text-white tw-mt-2">Atuais campeões</h2>
+          </div>
+          <div class="col-lg-6">
+            <div class="tw-flex tw-flex-col sm:tw-flex-row tw-gap-3 lg:tw-justify-end">
+              <div class="btn-group" role="group" aria-label="Filtrar por gênero" id="sexFilter">
+                <button type="button" class="btn btn-sm btn-outline-gold active" data-sex="all">Todos</button>
+                <button type="button" class="btn btn-sm btn-outline-gold" data-sex="M">Masculino</button>
+                <button type="button" class="btn btn-sm btn-outline-gold" data-sex="F">Feminino</button>
+              </div>
+              <input type="search" id="champSearch" class="form-control form-control-sm tw-max-w-xs" placeholder="Filtrar por nome, divisão ou país..." aria-label="Filtrar campeões">
+            </div>
+          </div>
+        </div>
+
+        <div id="champGrid" class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4 tw-gap-6"></div>
+        <p class="no-results text-center tw-text-slate-400 tw-py-10" id="champEmpty">Nenhum campeão encontrado para essa busca.</p>
+        <p class="tw-text-slate-500 tw-text-sm tw-mt-6 tw-mb-0">
+          Dados compilados de fontes públicas em 16/10/2026. O título peso-pesado está vago (Tom Aspinall o deixou em 14/09); Ciryl Gane é o campeão interino.
+          Cartéis e defesas podem mudar — confirme no site oficial do UFC.
+        </p>
+      </div>
+    </section>
+
+    <!-- ======================= RANKINGS ======================= -->
+    <section id="rankings" class="tw-py-20">
+      <div class="container">
+        <span class="eyebrow">Pound-for-Pound</span>
+        <h2 class="section-title tw-text-4xl tw-text-white tw-mt-2 tw-mb-2">Rankings P4P</h2>
+        <p class="tw-text-slate-400 tw-mb-8 tw-max-w-3xl">
+          Último ranking P4P publicado antes da transição para o modelo matemático “Meta UFC Rankings”, anunciado em junho de 2026 (snapshot de 1º/09/2026).
+        </p>
+        <div class="row g-4">
+          <div class="col-xl-6">
+            <div class="table-card">
+              <div class="tw-px-4 tw-py-3 tw-flex tw-items-center tw-justify-between tw-bg-ufc-deep">
+                <h3 class="tw-text-xl tw-text-white tw-m-0">Masculino</h3><span class="badge text-bg-danger">Top 15</span>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-ufc table-striped table-hover align-middle">
+                  <thead><tr><th>#</th><th>Lutador</th><th>País</th><th class="d-none d-sm-table-cell">Divisão</th></tr></thead>
+                  <tbody id="rankMen"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="table-card">
+              <div class="tw-px-4 tw-py-3 tw-flex tw-items-center tw-justify-between tw-bg-ufc-deep">
+                <h3 class="tw-text-xl tw-text-white tw-m-0">Feminino</h3><span class="badge text-bg-warning">Top 15</span>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-ufc table-striped table-hover align-middle">
+                  <thead><tr><th>#</th><th>Lutadora</th><th>País</th><th class="d-none d-sm-table-cell">Divisão</th></tr></thead>
+                  <tbody id="rankWomen"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= LENDAS / CARROSSEL ======================= -->
+    <section id="lendas" class="tw-py-20 tw-bg-ufc-deep">
+      <div class="container">
+        <span class="eyebrow">Hall da fama</span>
+        <h2 class="section-title tw-text-4xl tw-text-white tw-mt-2 tw-mb-8">Maiores da história &amp; melhores lutas</h2>
+        <div id="fightCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000" data-bs-pause="hover">
+          <div class="carousel-indicators" id="fightIndicators"></div>
+          <div class="carousel-inner" id="fightInner"></div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#fightCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Anterior</span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#fightCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Próxima</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= INVICTOS & FUTURO ======================= -->
+    <section id="futuro" class="tw-py-20">
+      <div class="container">
+        <span class="eyebrow">Próxima geração</span>
+        <h2 class="section-title tw-text-4xl tw-text-white tw-mt-2 tw-mb-8">Lutadores invictos &amp; futuro do UFC</h2>
+
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <h3 class="tw-text-2xl tw-text-ufc-gold tw-mb-4">Invictos em ação no UFC 333</h3>
+            <div id="undefList" class="tw-space-y-4"></div>
+            <p class="no-results tw-text-slate-400 tw-mt-4" id="undefEmpty">Nenhum invicto encontrado para essa busca.</p>
+          </div>
+
+          <div class="col-lg-6">
+            <h3 class="tw-text-2xl tw-text-ufc-gold tw-mb-4">Quem leva? Probabilidades do modelo</h3>
+            <div class="tw-bg-ufc-card tw-rounded-2xl tw-p-5 tw-border tw-border-white/10 tw-space-y-6" id="predBars"></div>
+            <p class="tw-text-slate-500 tw-text-xs tw-mt-2">Fonte: Combat Edge (modelo estatístico, sem garantia de resultado).</p>
+          </div>
+        </div>
+
+        <h3 class="tw-text-2xl tw-text-ufc-gold tw-mt-12 tw-mb-4">O que vem por aí nas divisões</h3>
+        <div class="row g-4" id="futureCards"></div>
+      </div>
+    </section>
+
+    <!-- ======================= ESTATÍSTICAS ======================= -->
+    <section id="estatisticas" class="tw-py-20 tw-bg-ufc-deep">
+      <div class="container">
+        <span class="eyebrow">Painel rápido</span>
+        <h2 class="section-title tw-text-4xl tw-text-white tw-mt-2 tw-mb-8">Recordes &amp; estatísticas</h2>
+        <div class="row g-4" id="statPanel"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================= RODAPÉ ======================= -->
+  <footer class="tw-bg-[#070d19] tw-pt-16 tw-pb-8 tw-border-t tw-border-white/10">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <a class="font-display fs-3 text-white text-decoration-none d-flex align-items-center gap-2 mb-3" href="#inicio"><span class="brand-mark">UFC</span>HUB</a>
+          <p class="tw-text-slate-400">Portal de fãs sobre as artes marciais mistas: eventos, campeões, rankings e a história do octógono.</p>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h4 class="tw-text-white tw-text-lg tw-mb-3">Navegação</h4>
+          <ul class="list-unstyled tw-space-y-2 tw-text-slate-400">
+            <li><a class="text-decoration-none link-secondary" href="#inicio">Início</a></li>
+            <li><a class="text-decoration-none link-secondary" href="#campeoes">Campeões</a></li>
+            <li><a class="text-decoration-none link-secondary" href="#rankings">Rankings</a></li>
+            <li><a class="text-decoration-none link-secondary" href="#lendas">Lendas</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h4 class="tw-text-white tw-text-lg tw-mb-3">Explore</h4>
+          <ul class="list-unstyled tw-space-y-2 tw-text-slate-400">
+            <li><a class="text-decoration-none link-secondary" href="#futuro">Invictos</a></li>
+            <li><a class="text-decoration-none link-secondary" href="#estatisticas">Estatísticas</a></li>
+            <li><a class="text-decoration-none link-secondary" href="https://www.ufc.com" target="_blank" rel="noopener">Site oficial do UFC</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h4 class="tw-text-white tw-text-lg tw-mb-3">Newsletter</h4>
+          <form id="newsForm" class="needs-validation" novalidate>
+            <div class="input-group has-validation">
+              <input type="email" class="form-control" id="newsEmail" placeholder="seu@email.com" required aria-label="E-mail">
+              <button class="btn btn-ufc" type="submit">Assinar</button>
+              <div class="invalid-feedback">Informe um e-mail válido.</div>
+            </div>
+          </form>
+          <small class="tw-text-slate-500 tw-block tw-mt-2">Sem spam. Cancele quando quiser.</small>
+        </div>
+      </div>
+      <hr class="tw-border-white/10 tw-my-8">
+      <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-gap-3 tw-text-slate-500 tw-text-sm">
+        <span>© 2026 UFC Hub · Projeto independente e demonstrativo · contato@exemplo.com</span>
+        <span>Site não oficial, sem vínculo com a Zuffa, LLC ou o UFC®. Marcas pertencem aos respectivos donos.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================= MODAL (detalhes do campeão) ======================= -->
+  <div class="modal fade" id="champModal" tabindex="-1" aria-labelledby="champModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background:#162033;border:1px solid rgba(245,158,11,.4)">
+        <div class="modal-header border-secondary-subtle">
+          <h5 class="modal-title font-display fs-4" id="champModalTitle"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body" id="champModalBody"></div>
+        <div class="modal-footer border-secondary-subtle">
+          <button type="button" class="btn btn-outline-gold btn-sm" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="appToast" class="toast align-items-center text-bg-success border-0" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex"><div class="toast-body" id="toastMsg"></div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar"></button></div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 (JS Bundle) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ============ DADOS ============ */
+    // Campeões em 16/out/2026 (fontes públicas). def = defesas de cinturão (null = não confirmado).
+    var CHAMPS = [
+      { div: 'Peso-pesado',       sex: 'M', name: 'Ciryl Gane',          nick: 'Bon Gamin',     country: 'França',        flag: '🇫🇷', rec: '15-2 (1 NC)', def: null, badge: 'Interino', tone: 'warning', hue: [217, 70], note: 'Campeão interino. O título está vago desde que Tom Aspinall o deixou, em 14/09/2026; o UFC afirma que Gane lutará "em breve" pelo cinturão.' },
+      { div: 'Meio-pesado',       sex: 'M', name: 'Carlos Ulberg',       nick: 'Black Jag',     country: 'Nova Zelândia', flag: '🇳🇿', rec: '14-1',        def: 0,    badge: 'Campeão', tone: 'danger',  hue: [165, 60], note: 'Conquistou o cinturão no UFC 327 (11/04/2026) diante de Jiří Procházka.' },
+      { div: 'Peso-médio',        sex: 'M', name: 'Sean Strickland',     nick: 'Tarzan',        country: 'EUA',           flag: '🇺🇸', rec: '30-6',        def: 0,    badge: 'Campeão', tone: 'danger',  hue: [28, 80],  note: 'Venceu Khamzat Chimaev no UFC 328 (09/05/2026) e tomou o cinturão.' },
+      { div: 'Meio-médio',        sex: 'M', name: 'Islam Makhachev',     nick: '—',             country: 'Rússia',        flag: '🇷🇺', rec: '28-1',        def: 0,    badge: 'Campeão duplo', tone: 'warning', hue: [350, 78], note: 'Ex-campeão peso-leve que conquistou o cinturão dos meio-médios no UFC 322. Líder do P4P.' },
+      { div: 'Peso-leve',         sex: 'M', name: 'Justin Gaethje',      nick: 'The Highlight', country: 'EUA',           flag: '🇺🇸', rec: '28-5',        def: 0,    badge: 'Campeão', tone: 'danger',  hue: [8, 82],   note: 'Campeão desde o UFC Freedom 250, o evento da Casa Branca (14/06/2026).' },
+      { div: 'Peso-pena',         sex: 'M', name: 'Alexander Volkanovski', nick: 'The Great',   country: 'Austrália',     flag: '🇦🇺', rec: '28-4',        def: 1,    badge: 'Campeão', tone: 'danger',  hue: [200, 80], note: 'Bicampeão. Defende o título contra Movsar Evloev no UFC 333 (24/10/2026).' },
+      { div: 'Peso-galo',         sex: 'M', name: 'Petr Yan',            nick: 'No Mercy',      country: 'Rússia',        flag: '🇷🇺', rec: '20-5',        def: 0,    badge: 'Campeão', tone: 'danger',  hue: [270, 55], note: 'Bicampeão desde o UFC 323. Enfrenta Merab Dvalishvili na terceira luta da rivalidade, no UFC 333.' },
+      { div: 'Peso-mosca',        sex: 'M', name: 'Joshua Van',          nick: 'The Fearless',  country: 'Mianmar',       flag: '🇲🇲', rec: '16-2',        def: null, badge: 'Campeão', tone: 'danger',  hue: [140, 55], note: 'Aos 24 anos, tornou-se o segundo campeão mais jovem da história do UFC ao vencer Alexandre Pantoja.' },
+      { div: 'Palha feminino',    sex: 'F', name: 'Mackenzie Dern',      nick: 'Trouble',       country: 'EUA',           flag: '🇺🇸', rec: '16-5',        def: null, badge: 'Campeã',  tone: 'danger',  hue: [320, 60], note: 'Conquistou o cinturão vago no UFC 321, vencendo Virna Jandiroba. Zhang Weili é a grande ameaça da divisão.' },
+      { div: 'Mosca feminino',    sex: 'F', name: 'Valentina Shevchenko', nick: 'Bullet',       country: 'Quirguistão',   flag: '🇰🇬', rec: '25-4-1',      def: null, badge: 'Campeã',  tone: 'danger',  hue: [45, 85],  note: 'Campeã de longa data; derrotou Zhang Weili no UFC 322. Líder do ranking P4P feminino.' },
+      { div: 'Galo feminino',     sex: 'F', name: 'Kayla Harrison',      nick: 'The Judo Queen', country: 'EUA',          flag: '🇺🇸', rec: '18-1',        def: null, badge: 'Campeã',  tone: 'danger',  hue: [190, 65], note: 'Campeã olímpica de judô e dona do cinturão dos galos desde o UFC 316.' }
+    ];
+
+    var RANK_M = [
+      ['Islam Makhachev','Rússia','Meio-médio'],['Alexander Volkanovski','Austrália','Peso-pena'],['Petr Yan','Rússia','Peso-galo'],
+      ['Justin Gaethje','EUA','Peso-leve'],['Ilia Topuria','Geórgia/Espanha','Peso-leve'],['Tom Aspinall','Inglaterra','Peso-pesado'],
+      ['Sean Strickland','EUA','Peso-médio'],['Merab Dvalishvili','Geórgia','Peso-galo'],['Alex Pereira','Brasil','Peso-pesado'],
+      ['Joshua Van','Mianmar','Peso-mosca'],['Ciryl Gane','França','Peso-pesado'],['Khamzat Chimaev','Emirados Árabes','Peso-médio'],
+      ['Alexandre Pantoja','Brasil','Peso-mosca'],['Arman Tsarukyan','Armênia','Peso-leve'],['Charles Oliveira','Brasil','Peso-leve']
+    ];
+    var RANK_W = [
+      ['Valentina Shevchenko','Quirguistão','Peso-mosca'],['Kayla Harrison','EUA','Peso-galo'],['Zhang Weili','China','Palha/Mosca'],
+      ['Natalia Silva','Brasil','Peso-mosca'],['Mackenzie Dern','EUA','Peso-palha'],['Manon Fiorot','França','Peso-mosca'],
+      ['Alexa Grasso','México','Peso-mosca'],['Erin Blanchfield','EUA','Peso-mosca'],['Tatiana Suarez','EUA','Peso-palha'],
+      ['Julianna Peña','EUA','Peso-galo'],['Virna Jandiroba','Brasil','Peso-palha'],['Rose Namajunas','EUA','Peso-palha'],
+      ['Raquel Pennington','EUA','Peso-galo'],['Yan Xiaonan','China','Peso-palha'],['Maycee Barber','EUA','Peso-mosca']
+    ];
+
+    var FIGHTS = [
+      { title: 'Forrest Griffin vs. Stephan Bonnar', tag: 'A luta que salvou o UFC', event: 'The Ultimate Fighter 1 Finale', year: '2005', result: 'Griffin por decisão unânime', facts: ['3 rounds sem pausa de ritmo', 'Ambos foram contratados pelo UFC', 'Marco da popularização do esporte na TV'], grad: 'linear-gradient(135deg,#7f1d1d,#1e293b)' },
+      { title: 'Matt Serra vs. Georges St-Pierre', tag: 'A maior zebra da história', event: 'UFC 69', year: '2007', result: 'Serra por TKO no 1º round', facts: ['Serra era azarão enorme nas casas de apostas', 'Cinturão dos meio-médios', 'GSP recuperou o título no ano seguinte'], grad: 'linear-gradient(135deg,#78350f,#0f172a)' },
+      { title: 'Anderson Silva vs. Chael Sonnen', tag: 'A virada mais famosa do octógono', event: 'UFC 117', year: '2010', result: 'Silva por finalização no 5º round', facts: ['Sonnen dominou quase 5 rounds', 'Finalização aos 3:10 do último round', 'Defesa de cinturão dos médios'], grad: 'linear-gradient(135deg,#14532d,#0f172a)' },
+      { title: 'José Aldo vs. Conor McGregor', tag: 'Treze segundos', event: 'UFC 194', year: '2015', result: 'McGregor por nocaute em 13 segundos', facts: ['Nocaute mais rápido em disputa de cinturão', 'Unificação dos penas', 'Marcou a ascensão global de McGregor'], grad: 'linear-gradient(135deg,#065f46,#7c2d12)' },
+      { title: 'Holly Holm vs. Ronda Rousey', tag: 'O chute que parou o mundo', event: 'UFC 193', year: '2015', result: 'Holm por nocaute no 2º round', facts: ['Público de 56.214 pessoas em Melbourne', 'Rousey perdeu a invencibilidade', 'Cinturão dos galos feminino'], grad: 'linear-gradient(135deg,#9f1239,#1e1b4b)' },
+      { title: 'Zhang Weili vs. Joanna Jędrzejczyk', tag: 'Referência das lutas femininas', event: 'UFC 248', year: '2020', result: 'Zhang por decisão dividida', facts: ['5 rounds de trocação intensa', 'Luta do Ano de 2020 para vários veículos', 'Cinturão dos palhas'], grad: 'linear-gradient(135deg,#b45309,#450a0a)' }
+    ];
+
+    var UNDEF = [
+      { name: 'Movsar Evloev', rec: '20-0', wins: 20, div: 'Peso-pena', country: 'Rússia', note: 'Disputa o cinturão no UFC 333 contra Volkanovski.', badge: 'Desafiante ao título' },
+      { name: 'Nurullo Aliev', rec: '12-0', wins: 12, div: 'Peso-leve', country: 'Tajiquistão', note: 'Enfrenta Grant Dawson (nº 15 do ranking) no UFC 333.', badge: 'Em ascensão' },
+      { name: 'Abdul Rakhman Yakhyaev', rec: '10-0', wins: 10, div: 'Meio-pesado', country: 'Rússia', note: 'Teste de fogo contra o veterano Nikita Krylov no UFC 333.', badge: 'Prospecto' }
+    ];
+
+    var PRED = [
+      { a: 'Merab Dvalishvili', pa: 52, b: 'Petr Yan', pb: 48, label: 'Co-main · Peso-galo (título)' },
+      { a: 'Ramazan Temirov', pa: 60, b: "Lone'er Kavanagh", pb: 40, label: 'Peso-mosca' }
+    ];
+
+    var FUTURE = [
+      { div: 'Peso-pesado', hot: 'Título vago', txt: 'Gane (interino) deve disputar o cinturão assim que o UFC definir o rival. A volta de Tom Aspinall depende de sua recuperação ocular.' },
+      { div: 'Meio-médio', hot: 'Divisão mais forte', txt: 'Makhachev é o dono do cinturão e enfrenta uma fila de desafiantes de peso, como Rakhmonov, Morales e Prates.' },
+      { div: 'Peso-leve', hot: 'Pedra na engrenagem', txt: 'Com Gaethje no topo, nomes como Topuria, Tsarukyan, Oliveira e Pimblett disputam a próxima chance.' },
+      { div: 'Palha feminino', hot: 'Retorno de Zhang', txt: 'Zhang Weili aparece como grande favorita a recuperar o cinturão que deixou vago em 2025.' }
+    ];
+
+    var STATS = [
+      { n: 11, suf: '', big: 'divisões com cinturão', sub: '8 masculinas (mosca a pesado) e 3 femininas (palha, mosca e galo).' },
+      { n: 11, suf: '', big: 'defesas de título seguidas', sub: 'Recorde de Demetrious Johnson no peso-mosca.' },
+      { n: 5, suf: 's', big: 'nocaute mais rápido', sub: 'Jorge Masvidal sobre Ben Askren, no UFC 239.' },
+      { n: 13, suf: 's', big: 'nocaute mais rápido em título', sub: 'Conor McGregor sobre José Aldo, no UFC 194.' },
+      { n: 13, suf: '+', big: 'nocautes: recorde do UFC', sub: 'Derrick Lewis é o maior nocauteador da história da organização.' },
+      { n: 16, suf: '', big: 'finalizações no UFC', sub: 'Charles Oliveira lidera o ranking histórico de submissões.' }
+    ];
+
+    /* ============ HELPERS ============ */
+    function $(s, r) { return (r || document).querySelector(s); }
+    function norm(s) { return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+    function initials(name) { var p = name.split(' '); return (p[0][0] + (p[p.length - 1][0] || '')).toUpperCase(); }
+    function grad(h) { return 'linear-gradient(135deg,hsl(' + h[0] + ',' + h[1] + '%,45%),hsl(' + ((h[0] + 40) % 360) + ',' + h[1] + '%,22%))'; }
+    function toast(msg) { $('#toastMsg').textContent = msg; bootstrap.Toast.getOrCreateInstance($('#appToast'), { delay: 3500 }).show(); }
+
+    /* ============ CONTAGEM REGRESSIVA ============ */
+    // Card principal do UFC 333: sáb, 24/10/2026, 14h (horário de Nova York) = 18:00 UTC = 15h em Brasília.
+    var TARGET = new Date('2026-10-24T18:00:00Z').getTime();
+    try {
+      $('#localTime').textContent = new Date(TARGET).toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+    } catch (e) {}
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var diff = TARGET - Date.now();
+      if (diff <= 0) {
+        $('#countdown').innerHTML = '<div class="tw-col-span-4 tw-py-4"><span class="count-num tw-text-ufc-red">AO VIVO</span><div class="tw-text-slate-400 tw-mt-1">O card principal já começou!</div></div>';
+        $('#countLabel').textContent = 'UFC 333 em andamento';
+        clearInterval(timer);
+        return;
+      }
+      var s = Math.floor(diff / 1000);
+      $('#cd-days').textContent = pad(Math.floor(s / 86400));
+      $('#cd-hours').textContent = pad(Math.floor((s % 86400) / 3600));
+      $('#cd-mins').textContent = pad(Math.floor((s % 3600) / 60));
+      $('#cd-secs').textContent = pad(s % 60);
+    }
+    var timer = setInterval(tick, 1000); tick();
+
+    /* ============ CAMPEÕES ============ */
+    var grid = $('#champGrid');
+    grid.innerHTML = CHAMPS.map(function (c, i) {
+      var search = norm([c.name, c.nick, c.div, c.country, c.badge].join(' '));
+      return '' +
+        '<article class="champ-card js-champ tw-bg-ufc-card tw-rounded-2xl tw-border tw-border-white/10 tw-overflow-hidden" data-idx="' + i + '" data-sex="' + c.sex + '" data-search="' + search + '" tabindex="0" role="button" aria-label="Detalhes de ' + c.name + '">' +
+          '<div class="tw-h-1.5 tw-bg-gradient-to-r tw-from-ufc-red tw-to-ufc-gold"></div>' +
+          '<div class="tw-p-5">' +
+            '<div class="tw-flex tw-items-center tw-justify-between tw-mb-4">' +
+              '<span class="tw-text-xs tw-uppercase tw-tracking-widest tw-text-ufc-gold tw-font-semibold">' + c.div + '</span>' +
+              '<span class="badge text-bg-' + c.tone + '">' + c.badge + '</span>' +
+            '</div>' +
+            '<div class="tw-flex tw-items-center tw-gap-4">' +
+              '<div class="avatar" style="background:' + grad(c.hue) + '">' + initials(c.name) + '</div>' +
+              '<div class="tw-min-w-0">' +
+                '<h3 class="tw-text-xl tw-text-white tw-leading-tight tw-m-0">' + c.name + '</h3>' +
+                '<div class="tw-text-slate-400 tw-text-sm">' + (c.nick !== '—' ? '“' + c.nick + '” · ' : '') + c.flag + ' ' + c.country + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="tw-grid tw-grid-cols-2 tw-gap-3 tw-mt-5">' +
+              '<div class="stat-chip tw-text-center"><div class="font-display tw-text-xl tw-text-white">' + c.rec + '</div><small class="tw-text-slate-400">Cartel</small></div>' +
+              '<div class="stat-chip tw-text-center"><div class="font-display tw-text-xl tw-text-ufc-gold">' + (c.def === null ? '—' : c.def) + '</div><small class="tw-text-slate-400">Defesas</small></div>' +
+            '</div>' +
+          '</div>' +
+        '</article>';
+    }).join('');
+
+    var modalEl = $('#champModal');
+    var modal = new bootstrap.Modal(modalEl);
+    function openChamp(i) {
+      var c = CHAMPS[i];
+      $('#champModalTitle').textContent = c.name;
+      $('#champModalBody').innerHTML =
+        '<div class="tw-flex tw-items-center tw-gap-4 tw-mb-4"><div class="avatar" style="background:' + grad(c.hue) + '">' + initials(c.name) + '</div>' +
+        '<div><span class="badge text-bg-' + c.tone + ' tw-mb-1">' + c.badge + '</span><div class="tw-text-ufc-gold tw-uppercase tw-text-xs tw-tracking-widest">' + c.div + '</div>' +
+        '<div class="tw-text-slate-300">' + c.flag + ' ' + c.country + '</div></div></div>' +
+        '<ul class="list-group list-group-flush mb-3">' +
+          '<li class="list-group-item bg-transparent d-flex justify-content-between"><span>Cartel</span><strong>' + c.rec + '</strong></li>' +
+          '<li class="list-group-item bg-transparent d-flex justify-content-between"><span>Defesas de cinturão</span><strong>' + (c.def === null ? 'n/d' : c.def) + '</strong></li>' +
+          (c.nick !== '—' ? '<li class="list-group-item bg-transparent d-flex justify-content-between"><span>Apelido</span><strong>' + c.nick + '</strong></li>' : '') +
+        '</ul><p class="mb-0 tw-text-slate-300">' + c.note + '</p>';
+      modal.show();
+    }
+    grid.addEventListener('click', function (e) { var a = e.target.closest('.js-champ'); if (a) openChamp(+a.dataset.idx); });
+    grid.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var a = e.target.closest('.js-champ'); if (a) { e.preventDefault(); openChamp(+a.dataset.idx); }
+    });
+
+    /* ============ RANKINGS ============ */
+    function rows(list) {
+      return list.map(function (r, i) {
+        var cls = i < 3 ? ' rank-' + (i + 1) : '';
+        return '<tr><td><span class="rank-num' + cls + '">' + (i + 1) + '</span></td><td class="fw-semibold">' + r[0] + '</td><td class="text-secondary">' + r[1] + '</td><td class="d-none d-sm-table-cell"><span class="badge text-bg-dark border border-secondary">' + r[2] + '</span></td></tr>';
+      }).join('');
+    }
+    $('#rankMen').innerHTML = rows(RANK_M);
+    $('#rankWomen').innerHTML = rows(RANK_W);
+
+    /* ============ CARROSSEL ============ */
+    $('#fightIndicators').innerHTML = FIGHTS.map(function (f, i) {
+      return '<button type="button" data-bs-target="#fightCarousel" data-bs-slide-to="' + i + '"' + (i === 0 ? ' class="active" aria-current="true"' : '') + ' aria-label="Slide ' + (i + 1) + '"></button>';
+    }).join('');
+    $('#fightInner').innerHTML = FIGHTS.map(function (f, i) {
+      var parts = f.title.split(' vs. ');
+      return '' +
+        '<div class="carousel-item' + (i === 0 ? ' active' : '') + '">' +
+          '<div class="fight-slide tw-flex tw-items-center" style="background:' + f.grad + '">' +
+            '<div class="tw-w-full tw-px-6 sm:tw-px-16 tw-py-12">' +
+              '<div class="row align-items-center g-4">' +
+                '<div class="col-md-7">' +
+                  '<span class="badge text-bg-warning tw-mb-3">' + f.tag + '</span>' +
+                  '<h3 class="tw-text-3xl sm:tw-text-5xl tw-text-white tw-mb-2">' + parts[0] + ' <span class="tw-text-ufc-gold">vs.</span> ' + parts[1] + '</h3>' +
+                  '<p class="tw-text-slate-200 tw-mb-4">' + f.event + ' · ' + f.year + '</p>' +
+                  '<div class="stat-chip tw-inline-block tw-mb-3"><small class="tw-text-slate-300 tw-block">Resultado</small><strong class="tw-text-white">' + f.result + '</strong></div>' +
+                  '<ul class="tw-text-slate-200 tw-pl-5 tw-mb-0" style="list-style:disc">' + f.facts.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' +
+                '</div>' +
+                '<div class="col-md-5 d-none d-md-block text-center">' +
+                  '<svg viewBox="0 0 200 200" width="220" height="220" aria-hidden="true"><polygon points="60,10 140,10 190,60 190,140 140,190 60,190 10,140 10,60" fill="rgba(0,0,0,.25)" stroke="#f59e0b" stroke-width="3"/>' +
+                  '<text x="100" y="112" text-anchor="middle" font-family="Oswald" font-size="56" font-weight="700" fill="#fff">' + f.year + '</text></svg>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+    new bootstrap.Carousel($('#fightCarousel'), { interval: 7000, ride: 'carousel', pause: 'hover' });
+
+    /* ============ INVICTOS, PREVISÕES, FUTURO, ESTATÍSTICAS ============ */
+    $('#undefList').innerHTML = UNDEF.map(function (u) {
+      var pct = Math.min(100, Math.round(u.wins / 25 * 100));
+      return '' +
+        '<div class="js-undef tw-bg-ufc-card tw-rounded-2xl tw-p-5 tw-border tw-border-white/10" data-search="' + norm([u.name, u.div, u.country, u.badge].join(' ')) + '">' +
+          '<div class="tw-flex tw-items-center tw-justify-between tw-mb-2">' +
+            '<h4 class="tw-text-xl tw-text-white tw-m-0">' + u.name + '</h4>' +
+            '<span class="badge text-bg-success">' + u.rec + '</span>' +
+          '</div>' +
+          '<div class="tw-flex tw-flex-wrap tw-gap-2 tw-mb-3"><span class="badge text-bg-danger">' + u.badge + '</span><span class="badge text-bg-dark border border-secondary">' + u.div + '</span><span class="badge text-bg-dark border border-secondary">' + u.country + '</span></div>' +
+          '<p class="tw-text-slate-300 tw-text-sm tw-mb-3">' + u.note + '</p>' +
+          '<div class="tw-flex tw-justify-between tw-text-xs tw-text-slate-400 tw-mb-1"><span>Sequência invicta</span><span>' + u.wins + ' vitórias</span></div>' +
+          '<div class="tw-w-full tw-h-2.5 tw-bg-slate-700 tw-rounded-full tw-overflow-hidden"><div class="tw-h-full tw-rounded-full tw-bg-gradient-to-r tw-from-ufc-red tw-to-ufc-gold" style="width:' + pct + '%"></div></div>' +
+        '</div>';
+    }).join('');
+
+    $('#predBars').innerHTML = PRED.map(function (p) {
+      return '' +
+        '<div><div class="tw-text-xs tw-uppercase tw-tracking-widest tw-text-ufc-gold tw-mb-2">' + p.label + '</div>' +
+        '<div class="tw-flex tw-justify-between tw-text-sm tw-text-white tw-mb-1"><span>' + p.a + ' · ' + p.pa + '%</span><span>' + p.b + ' · ' + p.pb + '%</span></div>' +
+        '<div class="tw-flex tw-w-full tw-h-3 tw-rounded-full tw-overflow-hidden tw-bg-slate-700">' +
+          '<div class="tw-h-full tw-bg-ufc-red" style="width:' + p.pa + '%"></div><div class="tw-h-full tw-bg-ufc-gold" style="width:' + p.pb + '%"></div>' +
+        '</div></div>';
+    }).join('');
+
+    $('#futureCards').innerHTML = FUTURE.map(function (f) {
+      return '<div class="col-md-6 col-xl-3"><div class="tw-bg-ufc-card tw-rounded-2xl tw-p-5 tw-border tw-border-white/10 tw-h-full">' +
+        '<span class="badge text-bg-warning tw-mb-2">' + f.hot + '</span>' +
+        '<h4 class="tw-text-xl tw-text-white">' + f.div + '</h4><p class="tw-text-slate-300 tw-text-sm tw-mb-0">' + f.txt + '</p></div></div>';
+    }).join('');
+
+    $('#statPanel').innerHTML = STATS.map(function (s) {
+      return '<div class="col-sm-6 col-lg-4"><div class="tw-bg-ufc-card tw-rounded-2xl tw-p-6 tw-border tw-border-white/10 tw-h-full tw-border-t-4 tw-border-t-ufc-red">' +
+        '<div class="font-display tw-text-6xl tw-text-ufc-gold tw-leading-none"><span class="js-count" data-to="' + s.n + '">0</span>' + s.suf + '</div>' +
+        '<div class="tw-text-white tw-font-semibold tw-mt-3 tw-uppercase tw-tracking-wide">' + s.big + '</div>' +
+        '<p class="tw-text-slate-400 tw-text-sm tw-mt-1 tw-mb-0">' + s.sub + '</p></div></div>';
+    }).join('');
+
+    // Contadores animados ao entrar na tela
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target, to = +el.dataset.to, t0 = performance.now(), dur = 1200;
+        (function step(t) {
+          var p = Math.min(1, (t - t0) / dur);
+          el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(step);
+        })(t0);
+        io.unobserve(el);
+      });
+    }, { threshold: .4 });
+    document.querySelectorAll('.js-count').forEach(function (el) { io.observe(el); });
+
+    /* ============ BUSCA EM TEMPO REAL + FILTRO ============ */
+    var navSearch = $('#navSearch'), champSearch = $('#champSearch'), sex = 'all';
+    function applyFilter() {
+      var q = norm(champSearch.value.trim());
+      var shown = 0;
+      document.querySelectorAll('.js-champ').forEach(function (el) {
+        var ok = (sex === 'all' || el.dataset.sex === sex) && el.dataset.search.indexOf(q) !== -1;
+        el.classList.toggle('d-none', !ok); if (ok) shown++;
+      });
+      $('#champEmpty').classList.toggle('show', shown === 0);
+      var u = 0;
+      document.querySelectorAll('.js-undef').forEach(function (el) {
+        var ok = el.dataset.search.indexOf(q) !== -1; el.classList.toggle('d-none', !ok); if (ok) u++;
+      });
+      $('#undefEmpty').classList.toggle('show', u === 0);
+    }
+    function syncFrom(src, dst) { dst.value = src.value; applyFilter(); }
+    champSearch.addEventListener('input', function () { syncFrom(champSearch, navSearch); });
+    navSearch.addEventListener('input', function () { syncFrom(navSearch, champSearch); });
+    $('#navSearchForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      applyFilter();
+      $('#campeoes').scrollIntoView({ behavior: 'smooth' });
+      var m = bootstrap.Collapse.getInstance($('#navMenu')); if (m) m.hide();
+    });
+    $('#sexFilter').addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      sex = b.dataset.sex;
+      this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('active', x === b); });
+      applyFilter();
+    });
+
+    /* ============ NAVBAR: fecha o menu mobile ao clicar em um link ============ */
+    document.querySelectorAll('#navMenu .nav-link').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var c = bootstrap.Collapse.getInstance($('#navMenu')); if (c) c.hide();
+      });
+    });
+
+    /* ============ NEWSLETTER ============ */
+    $('#newsForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!this.checkValidity()) { this.classList.add('was-validated'); return; }
+      toast('Inscrição confirmada! Você receberá as novidades do octógono.');
+      this.reset(); this.classList.remove('was-validated');
+    });
+  })();
+  </script>
+</body>
+</html>

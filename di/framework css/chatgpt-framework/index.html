@@ -1,0 +1,1780 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="UFC Arena — portal de MMA com campeões, rankings, grandes lutas, estatísticas e novidades do UFC.">
+  <title>UFC ARENA | O universo do MMA</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            arena: '#0f172a',
+            panel: '#151e30',
+            fightred: '#e11d48',
+            fightgold: '#f59e0b'
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #151e30;
+      --surface-light: #1d293d;
+      --red: #e11d48;
+      --gold: #f59e0b;
+      --muted: #94a3b8;
+      --border: rgba(148,163,184,.15);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .display-font {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+    }
+
+    a { text-decoration: none; }
+    section { padding: 76px 0; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--gold);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 25px;
+      height: 3px;
+      background: var(--red);
+    }
+
+    .section-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: .98;
+      margin: 12px 0 15px;
+    }
+
+    .text-muted-custom { color: var(--muted); }
+
+    .navbar {
+      background: rgba(15,23,42,.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      padding: 15px 0;
+    }
+
+    .navbar-brand {
+      color: white;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.9rem;
+      letter-spacing: -1px;
+    }
+
+    .navbar-brand span { color: var(--red); }
+
+    .navbar .nav-link {
+      color: #cbd5e1;
+      font-size: .85rem;
+      font-weight: 700;
+      transition: color .2s;
+    }
+
+    .navbar .nav-link:hover,
+    .navbar .nav-link.active { color: var(--gold); }
+
+    .navbar-toggler {
+      border-color: var(--border);
+      box-shadow: none !important;
+    }
+
+    .navbar-toggler-icon {
+      filter: invert(1);
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: white;
+      border: 1px solid var(--red);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      padding: 12px 22px;
+      border-radius: 5px;
+      transition: .2s;
+    }
+
+    .btn-red:hover {
+      background: #be123c;
+      border-color: #be123c;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline-light-custom {
+      color: white;
+      border: 1px solid #475569;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .btn-outline-light-custom:hover {
+      background: white;
+      color: var(--bg);
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 670px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 125px 0 80px;
+      background:
+        linear-gradient(90deg, rgba(15,23,42,.98) 0%,
+        rgba(15,23,42,.88) 42%, rgba(15,23,42,.35) 100%),
+        linear-gradient(0deg, var(--bg) 0%, transparent 35%),
+        url('https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=2000&q=85')
+        center 35% / cover no-repeat;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(225,29,72,.15);
+      border: 1px solid rgba(225,29,72,.6);
+      color: #fda4af;
+      padding: 8px 13px;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      border-radius: 3px;
+    }
+
+    .hero-title {
+      font-size: clamp(4rem, 10vw, 8.5rem);
+      line-height: .82;
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin: 26px 0;
+    }
+
+    .hero-title span {
+      display: block;
+      color: var(--red);
+    }
+
+    .hero-description {
+      max-width: 510px;
+      color: #cbd5e1;
+      line-height: 1.8;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 10px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .count-box {
+      min-width: 78px;
+      padding: 13px 10px;
+      text-align: center;
+      background: rgba(15,23,42,.85);
+      border: 1px solid rgba(148,163,184,.25);
+      border-bottom: 3px solid var(--red);
+      border-radius: 5px;
+    }
+
+    .count-number {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .count-label {
+      display: block;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: .65rem;
+      margin-top: 7px;
+      letter-spacing: 1px;
+    }
+
+    .hero-fight {
+      margin-top: 26px;
+      color: #cbd5e1;
+      font-size: .8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* PAINEL GERAL */
+
+    .stats-strip {
+      position: relative;
+      z-index: 2;
+      margin-top: -28px;
+    }
+
+    .stat-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 25px 12px;
+      height: 100%;
+      border-radius: 8px;
+      text-align: center;
+      transition: .25s;
+    }
+
+    .stat-panel:hover {
+      border-color: rgba(245,158,11,.5);
+      transform: translateY(-4px);
+    }
+
+    .stat-number {
+      color: var(--gold);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .stat-caption {
+      color: var(--muted);
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 8px;
+    }
+
+    /* CARDS */
+
+    .fighter-card {
+      height: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      overflow: hidden;
+      transition: transform .25s, border-color .25s;
+    }
+
+    .fighter-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(225,29,72,.65);
+    }
+
+    .fighter-image {
+      height: 245px;
+      position: relative;
+      overflow: hidden;
+      background: #202c40;
+    }
+
+    .fighter-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+      transition: transform .4s;
+    }
+
+    .fighter-card:hover .fighter-image img {
+      transform: scale(1.06);
+    }
+
+    .fighter-image::after {
+      content: "";
+      position: absolute;
+      inset: 40% 0 0;
+      background: linear-gradient(transparent, var(--surface));
+      pointer-events: none;
+    }
+
+    .status-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 1;
+      background: #166534;
+      color: #dcfce7;
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .6px;
+      padding: 6px 9px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .fighter-number {
+      position: absolute;
+      right: 13px;
+      bottom: 2px;
+      z-index: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 4.5rem;
+      color: rgba(255,255,255,.2);
+    }
+
+    .fighter-content { padding: 18px; }
+
+    .division {
+      color: var(--gold);
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .fighter-name {
+      font-size: 1.9rem;
+      font-weight: 800;
+      margin: 7px 0 12px;
+      line-height: 1;
+    }
+
+    .fighter-record {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      border-top: 1px solid var(--border);
+      padding-top: 13px;
+      color: var(--muted);
+      font-size: .72rem;
+    }
+
+    .fighter-record strong {
+      display: block;
+      color: white;
+      font-size: .95rem;
+      margin-top: 4px;
+    }
+
+    .champion-tag {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+      color: var(--gold);
+      background: rgba(245,158,11,.1);
+      padding: 5px 8px;
+      border-radius: 3px;
+      font-size: .66rem;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .search-box {
+      position: relative;
+      max-width: 340px;
+      width: 100%;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid #334155;
+      color: white;
+      border-radius: 5px;
+      padding: 12px 14px 12px 40px;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: var(--gold);
+    }
+
+    .search-box input::placeholder { color: #64748b; }
+
+    .search-icon {
+      position: absolute;
+      top: 11px;
+      left: 13px;
+      color: var(--muted);
+    }
+
+    /* TABELAS */
+
+    .ranking-table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .ranking-table {
+      --bs-table-bg: transparent;
+      --bs-table-color: #e2e8f0;
+      --bs-table-border-color: var(--border);
+      margin: 0;
+      vertical-align: middle;
+    }
+
+    .ranking-table thead th {
+      background: #202c40;
+      color: var(--muted);
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 16px;
+      white-space: nowrap;
+    }
+
+    .ranking-table tbody td {
+      padding: 15px 16px;
+      font-size: .85rem;
+    }
+
+    .ranking-table tbody tr:hover td {
+      background: rgba(148,163,184,.05);
+    }
+
+    .rank-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .rank-name { font-weight: 700; }
+
+    .rank-champion {
+      background: rgba(245,158,11,.1);
+      color: var(--gold);
+      border: 1px solid rgba(245,158,11,.25);
+      font-size: .6rem;
+      padding: 4px 6px;
+      border-radius: 3px;
+    }
+
+    /* CARROSSEL */
+
+    .history-carousel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .history-image {
+      min-height: 400px;
+      height: 100%;
+      background: #202c40;
+    }
+
+    .history-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      object-fit: cover;
+    }
+
+    .history-content {
+      padding: clamp(24px, 5vw, 55px);
+    }
+
+    .history-year {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: .8rem;
+      letter-spacing: 2px;
+    }
+
+    .history-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: .95;
+      margin: 18px 0;
+    }
+
+    .history-meta {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .history-meta strong {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+    }
+
+    .history-meta span {
+      font-size: .7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .carousel-indicators {
+      margin-bottom: 10px;
+    }
+
+    .carousel-indicators [data-bs-target] {
+      width: 25px;
+      height: 4px;
+      border: 0;
+      background-color: var(--red);
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      width: 8%;
+    }
+
+    /* PROSPECTS */
+
+    .prospect-card {
+      height: 100%;
+      padding: 25px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .prospect-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      background: rgba(225,29,72,.13);
+      color: #fb7185;
+      font-size: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 18px;
+    }
+
+    .progress {
+      height: 7px;
+      background: #334155;
+      border-radius: 20px;
+    }
+
+    .progress-bar { background: var(--red); }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: .75rem;
+      margin-bottom: 8px;
+    }
+
+    .future-badge {
+      background: rgba(245,158,11,.12);
+      color: var(--gold);
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .7px;
+    }
+
+    /* NOTÍCIAS / EVENTOS */
+
+    .event-card {
+      height: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: .25s;
+    }
+
+    .event-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--red);
+    }
+
+    .event-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .event-body { padding: 20px; }
+
+    .event-category {
+      color: var(--red);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .event-title {
+      font-size: 1.7rem;
+      line-height: 1.05;
+      margin: 12px 0;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: #090f1d;
+      border-top: 1px solid var(--border);
+      padding: 65px 0 25px;
+    }
+
+    .footer-heading {
+      font-size: 1.35rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li { margin-bottom: 12px; }
+
+    .footer-links a {
+      color: var(--muted);
+      font-size: .85rem;
+      transition: color .2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .newsletter-input {
+      width: 100%;
+      background: var(--surface);
+      color: white;
+      border: 1px solid #334155;
+      border-radius: 5px;
+      padding: 12px;
+      outline: none;
+    }
+
+    .newsletter-input:focus { border-color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      margin-top: 45px;
+      padding-top: 22px;
+      color: #64748b;
+      font-size: .75rem;
+    }
+
+    .back-top {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 1000;
+      width: 45px;
+      height: 45px;
+      background: var(--red);
+      color: white;
+      border: 0;
+      border-radius: 50%;
+      font-size: 1.25rem;
+      box-shadow: 0 8px 25px rgba(0,0,0,.35);
+      display: none;
+    }
+
+    .back-top.visible { display: block; }
+
+    .empty-state {
+      color: var(--muted);
+      text-align: center;
+      padding: 35px 10px;
+      width: 100%;
+    }
+
+    .disclaimer {
+      color: #64748b;
+      font-size: .72rem;
+      line-height: 1.7;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      color: white;
+      border: 1px solid var(--border);
+    }
+
+    .modal-header,
+    .modal-footer { border-color: var(--border); }
+
+    .btn-close {
+      filter: invert(1);
+    }
+
+    @media (max-width: 767px) {
+      section { padding: 55px 0; }
+
+      .hero {
+        min-height: 630px;
+        padding: 110px 0 70px;
+        background-position: 60% center;
+      }
+
+      .hero-title {
+        font-size: clamp(4rem, 16vw, 6rem);
+      }
+
+      .count-box {
+        min-width: 65px;
+        padding: 12px 8px;
+      }
+
+      .count-number { font-size: 1.9rem; }
+
+      .fighter-image { height: 210px; }
+
+      .history-image,
+      .history-image img { min-height: 270px; }
+
+      .carousel-control-prev,
+      .carousel-control-next { width: 10%; }
+
+      .stats-strip { margin-top: -12px; }
+
+      .ranking-table thead th,
+      .ranking-table tbody td {
+        padding: 12px 10px;
+        font-size: .75rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg fixed-top" aria-label="Navegação principal">
+    <div class="container">
+      <a class="navbar-brand" href="#inicio" aria-label="UFC Arena início">
+        UFC <span>ARENA</span><small class="d-block text-secondary"
+          style="font-family:Inter,sans-serif;font-size:.55rem;letter-spacing:3px">MMA PORTAL</small>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#mainNav" aria-controls="mainNav"
+              aria-expanded="false" aria-label="Abrir menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="#campeoes">Campeões</a></li>
+          <li class="nav-item"><a class="nav-link" href="#rankings">Rankings</a></li>
+          <li class="nav-item"><a class="nav-link" href="#historia">Lutas históricas</a></li>
+          <li class="nav-item"><a class="nav-link" href="#futuro">Futuro do MMA</a></li>
+          <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+            <button class="btn-red py-2 px-3" type="button"
+                    data-bs-toggle="modal" data-bs-target="#searchModal">
+              &#9906; Pesquisar
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO / EVENTO -->
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <span class="hero-badge">&#9679; O OCTÓGONO NÃO PARA</span>
+            <p class="mt-4 mb-1 text-uppercase fw-bold"
+               style="color:var(--gold);letter-spacing:3px;font-size:.8rem">
+              UFC ARENA APRESENTA
+            </p>
+
+            <h1 class="hero-title">
+              FIGHT<br><span>NIGHT</span>
+            </h1>
+
+            <p class="hero-description">
+              Histórias são escritas no octógono. Acompanhe os confrontos,
+              os atletas e os momentos que definem o maior espetáculo do MMA.
+            </p>
+
+            <div class="hero-fight">
+              <span style="color:var(--red)">&#9670;</span>
+              Próximo evento em destaque
+              <span class="mx-2">|</span>
+              Data configurável
+            </div>
+
+            <div class="countdown" aria-label="Contagem regressiva para o evento">
+              <div class="count-box">
+                <span class="count-number" id="days">--</span>
+                <span class="count-label">Dias</span>
+              </div>
+              <div class="count-box">
+                <span class="count-number" id="hours">--</span>
+                <span class="count-label">Horas</span>
+              </div>
+              <div class="count-box">
+                <span class="count-number" id="minutes">--</span>
+                <span class="count-label">Minutos</span>
+              </div>
+              <div class="count-box">
+                <span class="count-number" id="seconds">--</span>
+                <span class="count-label">Segundos</span>
+              </div>
+            </div>
+
+            <p id="countdownMessage" class="small text-muted-custom mb-4"
+               aria-live="polite">Contagem regressiva para o evento demonstrativo.</p>
+
+            <div class="d-flex gap-3 flex-wrap">
+              <a href="#campeoes" class="btn-red">Explorar o UFC &#8594;</a>
+              <a href="#historia" class="btn-outline-light-custom">Lutas lendárias</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESTATÍSTICAS -->
+    <div class="container stats-strip">
+      <div class="row g-3">
+        <div class="col-6 col-lg-3">
+          <div class="stat-panel">
+            <div class="stat-number" data-count="11">0</div>
+            <div class="stat-caption">Categorias de peso</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-panel">
+            <div class="stat-number" data-count="30">0</div>
+            <div class="stat-caption">Anos de história*</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-panel">
+            <div class="stat-number" data-count="500">0</div>
+            <div class="stat-caption">Eventos realizados*</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-panel">
+            <div class="stat-number">MMA</div>
+            <div class="stat-caption">Paixão mundial</div>
+          </div>
+        </div>
+      </div>
+      <p class="disclaimer mt-3">*Indicadores ilustrativos do layout, não um painel oficial atualizado.</p>
+    </div>
+
+    <!-- CAMPEÕES -->
+    <section id="campeoes">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-end flex-wrap gap-4 mb-5">
+          <div>
+            <span class="section-label">Os donos do cinturão</span>
+            <h2 class="section-title">CAMPEÕES <span style="color:var(--red)">DO UFC</span></h2>
+            <p class="text-muted-custom mb-0">
+              Conheça as divisões e os atletas em destaque.
+            </p>
+          </div>
+
+          <div class="search-box">
+            <span class="search-icon">&#9906;</span>
+            <input type="search" id="fighterSearch"
+                   placeholder="Buscar atleta ou divisão..."
+                   aria-label="Buscar atletas e divisões">
+          </div>
+        </div>
+
+        <div class="row g-4" id="championGrid">
+
+          <div class="col-6 col-lg-3 fighter-item" data-search="jon jones pesado heavyweight masculino">
+            <article class="fighter-card">
+              <div class="fighter-image">
+                <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=700&q=80"
+                     alt="Atleta de combate em treinamento" loading="lazy">
+                <span class="status-badge">Destaque</span>
+                <span class="fighter-number">01</span>
+              </div>
+              <div class="fighter-content">
+                <span class="division">Peso-pesado</span>
+                <h3 class="fighter-name">Jon Jones</h3>
+                <span class="champion-tag">&#9733; Perfil ilustrativo</span>
+                <div class="fighter-record">
+                  <div>Cartel<strong>27-1-0*</strong></div>
+                  <div>Defesas<strong>11*</strong></div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-6 col-lg-3 fighter-item" data-search="islam makhachev meio medio leve lightweight masculino">
+            <article class="fighter-card">
+              <div class="fighter-image">
+                <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=700&q=80"
+                     alt="Lutador de MMA treinando" loading="lazy">
+                <span class="status-badge">Destaque</span>
+                <span class="fighter-number">02</span>
+              </div>
+              <div class="fighter-content">
+                <span class="division">Peso-leve</span>
+                <h3 class="fighter-name">Islam Makhachev</h3>
+                <span class="champion-tag">&#9733; Perfil ilustrativo</span>
+                <div class="fighter-record">
+                  <div>Cartel<strong>26-1-0*</strong></div>
+                  <div>Defesas<strong>4*</strong></div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-6 col-lg-3 fighter-item" data-search="alex pereira meio pesado light heavyweight brasileiro">
+            <article class="fighter-card">
+              <div class="fighter-image">
+                <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=700&q=80"
+                     alt="Atleta em preparação física" loading="lazy">
+                <span class="status-badge">Destaque</span>
+                <span class="fighter-number">03</span>
+              </div>
+              <div class="fighter-content">
+                <span class="division">Peso meio-pesado</span>
+                <h3 class="fighter-name">Alex Pereira</h3>
+                <span class="champion-tag">&#9733; Perfil ilustrativo</span>
+                <div class="fighter-record">
+                  <div>Cartel<strong>12-2-0*</strong></div>
+                  <div>Defesas<strong>3*</strong></div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-6 col-lg-3 fighter-item" data-search="valentina shevchenko mosca feminino flyweight">
+            <article class="fighter-card">
+              <div class="fighter-image">
+                <img src="https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=700&q=80"
+                     alt="Atleta praticando esporte e condicionamento" loading="lazy">
+                <span class="status-badge">Destaque</span>
+                <span class="fighter-number">04</span>
+              </div>
+              <div class="fighter-content">
+                <span class="division">Peso-mosca feminino</span>
+                <h3 class="fighter-name">Valentina Shevchenko</h3>
+                <span class="champion-tag">&#9733; Perfil ilustrativo</span>
+                <div class="fighter-record">
+                  <div>Cartel<strong>23-4-1*</strong></div>
+                  <div>Defesas<strong>7*</strong></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div id="noFighters" class="empty-state d-none">
+          Nenhum atleta encontrado. Experimente outra busca.
+        </div>
+
+        <p class="disclaimer mt-4">
+          *Cartéis, defesas, associações a divisões e imagens são exemplos demonstrativos.
+          Confirme os campeões atuais no site oficial do UFC antes de publicar estes dados.
+        </p>
+      </div>
+    </section>
+
+    <!-- RANKINGS -->
+    <section id="rankings" style="background:#0b1220">
+      <div class="container">
+        <span class="section-label">Quem está no topo?</span>
+        <h2 class="section-title mb-2">RANKINGS <span style="color:var(--red)">P4P</span></h2>
+        <p class="text-muted-custom mb-5">
+          Uma visão ilustrativa dos rankings pound-for-pound.
+        </p>
+
+        <div class="row g-4">
+          <!-- MASCULINO -->
+          <div class="col-lg-6">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="h2 mb-0">Masculino</h3>
+              <span class="future-badge">P4P MEN</span>
+            </div>
+
+            <div class="ranking-table-wrap table-responsive">
+              <table class="table ranking-table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Lutador</th>
+                    <th scope="col">Divisão</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="rank-number">01</span></td>
+                    <td class="rank-name">Atleta A</td>
+                    <td>Leve</td>
+                    <td><span class="rank-champion">DESTAQUE</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="rank-number">02</span></td>
+                    <td class="rank-name">Atleta B</td>
+                    <td>Meio-médio</td>
+                    <td>Top 5</td>
+                  </tr>
+                  <tr>
+                    <td><span class="rank-number">03</span></td>
+                    <td class="rank-name">Atleta C</td>
+                    <td>Meio-pesado</td>
+                    <td>Top 5</td>
+                  </tr>
+                  <tr>
+                    <td><span class="rank-number">04</span></td>
+                    <td class="rank-name">Atleta D</td>
+                    <td>Pesado</td>
+                    <td>Top 5</td>
+                  </tr>
+                  <tr>
+                    <td><span class="rank-number">05</span></td>
+                    <td class="rank-name">Atleta E</td>
+                    <td>Pena</td>
+                    <td>Top 5</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- FEMININO -->
+          <div class="col-lg-6">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="h2 mb-0">Feminino</h3>
+              <span class="future-badge">P4P WOMEN</span>
+            </div>
+
+            <div class="ranking-table-wrap table-responsive">
+              <table class="table ranking-table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Lutadora</th>
+                    <th scope="col">Divisão</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="rank-number">01</span></td>
+                    <td class="rank-name">Atleta F</td>
+                    <td>Mosca</td>
+                    <td><span class="rank-champion">DESTAQUE</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="rank-number">02</span></td>
+                    <td class="rank-name">Atleta G</td>
+                    <td>Galo</td>
+                    <td>Top 5</td>
+                  </tr>
+                  <tr>
+                    <td><span class="rank-number">03</span></td>
+                    <td class="rank-name">Atleta H</td>
+                    <td>Pena</td>
+                    <td>Top 5</td>
+                  </tr>
+                  <tr>
+                    <td><span class="rank-number">04</span></td>
+                    <td class="rank-name">Atleta I</td>
+                    <td>Palha</td>
+                    <td>Top 5</td>
+                  </tr>
+                  <tr>
+                    <td><span class="rank-number">05</span></td>
+                    <td class="rank-name">Atleta J</td>
+                    <td>Mosca</td>
+                    <td>Top 5</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <p class="disclaimer mt-4">
+          Os rankings acima são fictícios e não representam a classificação oficial.
+        </p>
+      </div>
+    </section>
+
+    <!-- HISTÓRIA / CARROSSEL -->
+    <section id="historia">
+      <div class="container">
+        <span class="section-label">Momentos eternos</span>
+        <h2 class="section-title mb-2">LENDAS DO <span style="color:var(--red)">OCTÓGONO</span></h2>
+        <p class="text-muted-custom mb-5">
+          Confrontos memoráveis e histórias que marcaram o MMA.
+        </p>
+
+        <div id="historyCarousel" class="carousel slide history-carousel"
+             data-bs-ride="carousel" data-bs-interval="6000">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#historyCarousel"
+                    data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Primeiro combate"></button>
+            <button type="button" data-bs-target="#historyCarousel"
+                    data-bs-slide-to="1" aria-label="Segundo combate"></button>
+            <button type="button" data-bs-target="#historyCarousel"
+                    data-bs-slide-to="2" aria-label="Terceiro combate"></button>
+          </div>
+
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row g-0">
+                <div class="col-lg-6 history-image">
+                  <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=1100&q=85"
+                       alt="Lutadores treinando em um ambiente de MMA"
+                       loading="lazy">
+                </div>
+                <div class="col-lg-6 d-flex align-items-center">
+                  <div class="history-content">
+                    <span class="history-year">UFC 229 · 2018</span>
+                    <h3 class="history-title">Khabib <span style="color:var(--red)">vs.</span> McGregor</h3>
+                    <p class="text-muted-custom" style="line-height:1.9">
+                      Um dos confrontos mais comentados da história do UFC,
+                      reunindo grappling de elite, trocação e enorme repercussão
+                      mundial no peso-leve.
+                    </p>
+                    <div class="history-meta">
+                      <div><strong>R4</strong><span>Round da decisão</span></div>
+                      <div><strong>SUB</strong><span>Método de vitória</span></div>
+                      <div><strong>LEVE</strong><span>Divisão</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="row g-0">
+                <div class="col-lg-6 history-image">
+                  <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=1100&q=85"
+                       alt="Preparação física de atletas de combate"
+                       loading="lazy">
+                </div>
+                <div class="col-lg-6 d-flex align-items-center">
+                  <div class="history-content">
+                    <span class="history-year">UFC 239 · 2019</span>
+                    <h3 class="history-title">Jones <span style="color:var(--red)">vs.</span> Santos</h3>
+                    <p class="text-muted-custom" style="line-height:1.9">
+                      Um duelo de alto nível no meio-pesado, marcado pela
+                      pressão, pela precisão técnica e por uma decisão dividida.
+                    </p>
+                    <div class="history-meta">
+                      <div><strong>5</strong><span>Rounds</span></div>
+                      <div><strong>DEC</strong><span>Resultado</span></div>
+                      <div><strong>93 KG</strong><span>Categoria aproximada</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="row g-0">
+                <div class="col-lg-6 history-image">
+                  <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1100&q=85"
+                       alt="Atleta durante treinamento intenso"
+                       loading="lazy">
+                </div>
+                <div class="col-lg-6 d-flex align-items-center">
+                  <div class="history-content">
+                    <span class="history-year">UFC 193 · 2015</span>
+                    <h3 class="history-title">Holm <span style="color:var(--red)">vs.</span> Rousey</h3>
+                    <p class="text-muted-custom" style="line-height:1.9">
+                      Uma luta histórica para o MMA feminino, que terminou
+                      com uma vitória por nocaute e uma mudança no cenário
+                      da divisão peso-galo.
+                    </p>
+                    <div class="history-meta">
+                      <div><strong>R2</strong><span>Round</span></div>
+                      <div><strong>KO</strong><span>Método de vitória</span></div>
+                      <div><strong>GALO</strong><span>Divisão</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="carousel-control-prev" type="button"
+                  data-bs-target="#historyCarousel" data-bs-slide="prev"
+                  aria-label="Combate anterior">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          </button>
+          <button class="carousel-control-next" type="button"
+                  data-bs-target="#historyCarousel" data-bs-slide="next"
+                  aria-label="Próximo combate">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURO DO UFC -->
+    <section id="futuro" style="background:#0b1220">
+      <div class="container">
+        <span class="section-label">A próxima geração</span>
+        <h2 class="section-title">O FUTURO DO <span style="color:var(--red)">MMA</span></h2>
+        <p class="text-muted-custom mb-5" style="max-width:650px">
+          O cenário do MMA muda a cada evento. Estas áreas representam
+          tendências e critérios de observação, não previsões estatísticas oficiais.
+        </p>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <article class="prospect-card">
+              <div class="prospect-icon">&#9889;</div>
+              <span class="future-badge">TENDÊNCIA</span>
+              <h3 class="mt-3 mb-3" style="font-size:1.8rem">Nova geração</h3>
+              <p class="text-muted-custom small" style="line-height:1.8">
+                Atletas jovens combinando wrestling, jiu-jítsu e trocação
+                para competir em alto nível.
+              </p>
+              <div class="progress-label mt-4">
+                <span>Formação técnica</span><span>85%</span>
+              </div>
+              <div class="progress" role="progressbar"
+                   aria-label="Indicador ilustrativo de formação técnica"
+                   aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" style="width:85%"></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <article class="prospect-card">
+              <div class="prospect-icon">&#9876;</div>
+              <span class="future-badge">EVOLUÇÃO</span>
+              <h3 class="mt-3 mb-3" style="font-size:1.8rem">MMA completo</h3>
+              <p class="text-muted-custom small" style="line-height:1.8">
+                Transições eficientes entre luta em pé, quedas, controle
+                posicional e finalizações.
+              </p>
+              <div class="progress-label mt-4">
+                <span>Versatilidade</span><span>90%</span>
+              </div>
+              <div class="progress" role="progressbar"
+                   aria-label="Indicador ilustrativo de versatilidade"
+                   aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" style="width:90%"></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <article class="prospect-card">
+              <div class="prospect-icon">&#9733;</div>
+              <span class="future-badge">PROJEÇÃO</span>
+              <h3 class="mt-3 mb-3" style="font-size:1.8rem">Novos talentos</h3>
+              <p class="text-muted-custom small" style="line-height:1.8">
+                Acompanhe prospectos, resultados regionais e atletas em
+                ascensão antes de chegarem ao topo.
+              </p>
+              <div class="progress-label mt-4">
+                <span>Potencial de desenvolvimento</span><span>75%</span>
+              </div>
+              <div class="progress" role="progressbar"
+                   aria-label="Indicador ilustrativo de desenvolvimento"
+                   aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" style="width:75%"></div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <p class="disclaimer mt-4">
+          Os percentuais são ilustrativos para demonstração visual e não representam
+          avaliações reais, probabilidades de vitória ou previsões de resultados.
+        </p>
+      </div>
+    </section>
+
+    <!-- ESTATÍSTICAS DO ESPORTE -->
+    <section id="estatisticas">
+      <div class="container">
+        <div class="text-center mb-5">
+          <span class="section-label">Números do combate</span>
+          <h2 class="section-title">ESTATÍSTICAS <span style="color:var(--red)">DO MMA</span></h2>
+          <p class="text-muted-custom">Recordes e conceitos que ajudam a entender o esporte.</p>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-6 col-lg-3">
+            <div class="stat-panel">
+              <div class="stat-number">KO</div>
+              <div class="stat-caption">Nocautes e TKOs</div>
+              <p class="small text-muted-custom mt-3 mb-0">
+                Finalizações por golpes.
+              </p>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-panel">
+              <div class="stat-number">SUB</div>
+              <div class="stat-caption">Finalizações</div>
+              <p class="small text-muted-custom mt-3 mb-0">
+                Chaves e estrangulamentos.
+              </p>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-panel">
+              <div class="stat-number">DEC</div>
+              <div class="stat-caption">Decisões</div>
+              <p class="small text-muted-custom mt-3 mb-0">
+                Resultado por pontuação.
+              </p>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-panel">
+              <div class="stat-number">5R</div>
+              <div class="stat-caption">Lutas de título</div>
+              <p class="small text-muted-custom mt-3 mb-0">
+                Formato tradicional de cinco rounds.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 p-4 rounded-3"
+             style="background:var(--surface);border:1px solid var(--border)">
+          <h3 class="h3 mb-3">Você sabia?</h3>
+          <p class="text-muted-custom mb-0" style="line-height:1.9">
+            No MMA, uma vitória pode acontecer por nocaute, nocaute técnico,
+            finalização, decisão dos juízes ou outros resultados previstos nas
+            regras. O tempo e o método de cada resultado dependem do combate.
+            Para recordes históricos, consulte bases oficiais atualizadas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTOS / DESTAQUES -->
+    <section id="eventos" style="background:#0b1220">
+      <div class="container">
+        <span class="section-label">Dentro do octógono</span>
+        <h2 class="section-title mb-2">EXPLORE O <span style="color:var(--red)">UNIVERSO UFC</span></h2>
+        <p class="text-muted-custom mb-5">
+          Três caminhos para acompanhar o esporte.
+        </p>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <article class="event-card">
+              <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=800&q=80"
+                   alt="Treinamento de combate" loading="lazy">
+              <div class="event-body">
+                <span class="event-category">Calendário</span>
+                <h3 class="event-title">Próximos eventos</h3>
+                <p class="text-muted-custom small">
+                  Consulte datas, locais, cards e horários em fontes oficiais.
+                </p>
+                <a href="https://www.ufc.com/events" target="_blank"
+                   rel="noopener noreferrer" class="btn-outline-light-custom d-inline-block mt-2">
+                  Ver calendário &#8599;
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <article class="event-card">
+              <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=800&q=80"
+                   alt="Atleta treinando para uma competição" loading="lazy">
+              <div class="event-body">
+                <span class="event-category">Atletas</span>
+                <h3 class="event-title">Perfis oficiais</h3>
+                <p class="text-muted-custom small">
+                  Pesquise atletas, divisões, biografias e estatísticas.
+                </p>
+                <a href="https://www.ufc.com/athletes" target="_blank"
+                   rel="noopener noreferrer" class="btn-outline-light-custom d-inline-block mt-2">
+                  Explorar atletas &#8599;
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <article class="event-card">
+              <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=800&q=80"
+                   alt="Preparação esportiva e condicionamento físico" loading="lazy">
+              <div class="event-body">
+                <span class="event-category">Informação oficial</span>
+                <h3 class="event-title">Notícias do UFC</h3>
+                <p class="text-muted-custom small">
+                  Confira comunicados, resultados, entrevistas e novidades.
+                </p>
+                <a href="https://www.ufc.com/news" target="_blank"
+                   rel="noopener noreferrer" class="btn-outline-light-custom d-inline-block mt-2">
+                  Ler notícias &#8599;
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <a class="navbar-brand" href="#inicio">
+            UFC <span>ARENA</span>
+          </a>
+          <p class="text-muted-custom mt-3 small" style="line-height:1.9;max-width:350px">
+            Um portal demonstrativo dedicado ao MMA, às histórias do octógono
+            e aos atletas que fazem o esporte acontecer.
+          </p>
+          <span class="future-badge">PAIXÃO PELO MMA</span>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <h3 class="footer-heading">Navegação</h3>
+          <ul class="footer-links">
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#campeoes">Campeões</a></li>
+            <li><a href="#rankings">Rankings</a></li>
+            <li><a href="#historia">História</a></li>
+            <li><a href="#eventos">Eventos</a></li>
+          </ul>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <h3 class="footer-heading">Links oficiais</h3>
+          <ul class="footer-links">
+            <li><a href="https://www.ufc.com/" target="_blank" rel="noopener noreferrer">Site do UFC &#8599;</a></li>
+            <li><a href="https://www.ufc.com/rankings" target="_blank" rel="noopener noreferrer">Rankings &#8599;</a></li>
+            <li><a href="https://www.ufc.com/athletes" target="_blank" rel="noopener noreferrer">Atletas &#8599;</a></li>
+            <li><a href="https://www.ufc.com/events" target="_blank" rel="noopener noreferrer">Calendário &#8599;</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4">
+          <h3 class="footer-heading">Newsletter</h3>
+          <p class="text-muted-custom small">
+            Receba novidades do portal e conteúdos sobre MMA.
+          </p>
+          <form id="newsletterForm">
+            <label for="newsletterEmail" class="form-label small">Seu e-mail</label>
+            <div class="d-flex gap-2 flex-wrap">
+              <input id="newsletterEmail" type="email"
+                     class="newsletter-input flex-grow-1"
+                     placeholder="voce@exemplo.com" required>
+              <button type="submit" class="btn-red">Cadastrar</button>
+            </div>
+            <div id="newsletterMessage" class="small mt-3" aria-live="polite"></div>
+          </form>
+          <p class="disclaimer mt-2">
+            Demonstração de interface: o formulário não envia nem armazena dados.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between gap-2">
+        <span>&copy; <span id="currentYear"></span> UFC Arena. Projeto demonstrativo independente.</span>
+        <span>Feito para fãs de MMA.</span>
+      </div>
+
+      <p class="disclaimer mt-4 mb-0">
+        UFC Arena é um projeto independente, sem afiliação oficial com o Ultimate
+        Fighting Championship. Nomes, marcas e imagens de terceiros pertencem
+        aos respectivos titulares. Alguns dados deste modelo são ilustrativos.
+      </p>
+    </div>
+  </footer>
+
+  <!-- BOTÃO VOLTAR AO TOPO -->
+  <button id="backToTop" class="back-top" aria-label="Voltar ao topo"
+          title="Voltar ao topo">&#8593;</button>
+
+  <!-- MODAL DE PESQUISA -->
+  <div class="modal fade" id="searchModal" tabindex="-1"
+       aria-labelledby="searchModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-4" id="searchModalTitle">Buscar no UFC Arena</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <label for="modalSearchInput" class="form-label">Nome do atleta ou divisão</label>
+          <input type="search" id="modalSearchInput"
+                 class="newsletter-input" placeholder="Ex.: peso-leve">
+          <p class="small text-muted-custom mt-3 mb-0">
+            A pesquisa filtra os cards de atletas desta página.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-light-custom"
+                  data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn-red" id="executeSearch">Pesquisar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    'use strict';
+
+    /*
+      CONFIGURAÇÃO DO EVENTO
+      Altere a data abaixo para a data e o horário reais do evento desejado.
+      O valor atual é demonstrativo e não representa um evento oficial.
+      Formato: AAAA-MM-DDTHH:mm:ss-03:00 (horário de Brasília).
+    */
+    const EVENT_CONFIG = {
+      title: 'Evento demonstrativo',
+      date: '2026-11-01T22:00:00-03:00'
+    };
+
+    // 1. CONTAGEM REGRESSIVA
+    const countdownEls = {
+      days: document.getElementById('days'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds')
+    };
+
+    const countdownMessage = document.getElementById('countdownMessage');
+    const eventTimestamp = new Date(EVENT_CONFIG.date).getTime();
+
+    function updateCountdown() {
+      if (!Number.isFinite(eventTimestamp)) {
+        countdownMessage.textContent = 'Configure uma data válida para o evento.';
+        Object.values(countdownEls).forEach(el => el.textContent = '--');
+        return;
+      }
+
+      const remaining = eventTimestamp - Date.now();
+
+      if (remaining <= 0) {
+        Object.values(countdownEls).forEach(el => el.textContent = '00');
+        countdownMessage.textContent =
+          'A data configurada chegou ou já passou. Atualize EVENT_CONFIG para o próximo evento.';
+        return;
+      }
+
+      const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+      const seconds = Math.floor((remaining / 1000) % 60);
+
+      countdownEls.days.textContent = String(days).padStart(2, '0');
+      countdownEls.hours.textContent = String(hours).padStart(2, '0');
+      countdownEls.minutes.textContent = String(minutes).padStart(2, '0');
+      countdownEls.seconds.textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+
+    // 2. PESQUISA EM TEMPO REAL
+    const fighterSearch = document.getElementById('fighterSearch');
+    const fighterItems = Array.from(document.querySelectorAll('.fighter-item'));
+    const noFighters = document.getElementById('noFighters');
+
+    function filterFighters(value) {
+      const query = value.trim().toLocaleLowerCase('pt-BR');
+      let visible = 0;
+
+      fighterItems.forEach(card => {
+        const searchableText = (
+          card.dataset.search + ' ' + card.innerText
+        ).toLocaleLowerCase('pt-BR');
+
+        const matches = searchableText.includes(query);
+        card.classList.toggle('d-none', !matches);
+
+        if (matches) visible++;
+      });
+
+      noFighters.classList.toggle('d-none', visible !== 0);
+      fighterSearch.value = value;
+    }
+
+    fighterSearch.addEventListener('input', event => {
+      filterFighters(event.target.value);
+    });
+
+    // 3. MODAL DE BUSCA
+    const searchModal = document.getElementById('searchModal');
+    const modalSearchInput = document.getElementById('modalSearchInput');
+    const executeSearch = document.getElementById('executeSearch');
+
+    executeSearch.addEventListener('click', () => {
+      filterFighters(modalSearchInput.value);
+
+      const instance = bootstrap.Modal.getInstance(searchModal);
+      if (instance) instance.hide();
+
+      document.getElementById('campeoes').scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'auto' : 'smooth'
+      });
+    });
+
+    searchModal.addEventListener('shown.bs.modal', () => {
+      modalSearchInput.focus();
+    });
+
+    modalSearchInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        executeSearch.click();
+      }
+    });
+
+    // 4. FECHAR MENU MOBILE APÓS CLICAR EM UM LINK
+    document.querySelectorAll('#mainNav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const navCollapse = document.getElementById('mainNav');
+        const instance = bootstrap.Collapse.getInstance(navCollapse);
+
+        if (instance && navCollapse.classList.contains('show')) {
+          instance.hide();
+        }
+      });
+    });
+
+    // 5. BOTÃO VOLTAR AO TOPO
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 450);
+    }, { passive: true });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'auto' : 'smooth'
+      });
+    });
+
+    // 6. ANO AUTOMÁTICO
+    document.getElementById('currentYear').textContent =
+      new Date().getFullYear();
+
+    // 7. NEWSLETTER DEMONSTRATIVA
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterMessage = document.getElementById('newsletterMessage');
+
+    newsletterForm.addEventListener('submit', event => {
+      event.preventDefault();
+
+      if (!newsletterForm.reportValidity()) return;
+
+      newsletterMessage.textContent =
+        'Interface demonstrativa: conecte um serviço de newsletter para concluir o cadastro.';
+      newsletterMessage.style.color = '#fbbf24';
+    });
+
+    // 8. ANIMAÇÃO LEVE DAS MÉTRICAS
+    // Os valores são apenas exemplos de apresentação.
+    const statNumbers = document.querySelectorAll('[data-count]');
+
+    if ('IntersectionObserver' in window) {
+      const statObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+
+          const element = entry.target;
+          const target = Number(element.dataset.count);
+          const duration = 1000;
+          const start = performance.now();
+
+          function animate(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+
+            element.textContent = Math.round(target * eased).toLocaleString('pt-BR');
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          }
+
+          requestAnimationFrame(animate);
+          observer.unobserve(element);
+        });
+      }, { threshold: 0.4 });
+
+      statNumbers.forEach(element => statObserver.observe(element));
+    } else {
+      statNumbers.forEach(element => {
+        element.textContent = Number(element.dataset.count).toLocaleString('pt-BR');
+      });
+    }
+  </script>
+</body>
+</html>

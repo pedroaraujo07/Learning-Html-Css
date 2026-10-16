@@ -1,0 +1,1976 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0b">
+  <meta name="description" content="UFC Hub — campeões, rankings, lendas, lutas históricas e o futuro do MMA.">
+  <title>UFC Hub | A Casa do MMA</title>
+
+  <style>
+    :root {
+      --bg: #09090b;
+      --surface: #111114;
+      --surface-2: #19191e;
+      --surface-3: #222228;
+      --red: #e31b35;
+      --red-dark: #a90f24;
+      --gold: #e7bd58;
+      --text: #f5f5f5;
+      --muted: #a0a0aa;
+      --border: rgba(255,255,255,.09);
+      --radius: 15px;
+      --max-width: 1240px;
+      --shadow: 0 18px 55px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body.modal-open { overflow: hidden; }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    img { display: block; max-width: 100%; }
+
+    ::selection { background: var(--red); color: white; }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .section { padding: 90px 0; }
+    .section-dark { background: #0d0d10; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 12px;
+      color: var(--gold);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: 2.4px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: var(--red);
+    }
+
+    h2 {
+      font-size: clamp(1.9rem, 4vw, 3.2rem);
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+    }
+
+    .section-description {
+      max-width: 470px;
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    .accent { color: var(--red); }
+    .gold { color: var(--gold); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 20px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      font-weight: 800;
+      font-size: .85rem;
+      transition: transform .2s, background .2s, border-color .2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary { background: var(--red); color: white; }
+    .btn-primary:hover { background: #ff2946; }
+    .btn-outline { border-color: var(--border); background: rgba(255,255,255,.03); }
+    .btn-outline:hover { border-color: var(--gold); }
+
+    /* HEADER */
+    .header {
+      position: sticky;
+      z-index: 50;
+      top: 0;
+      background: rgba(9,9,11,.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-shrink: 0;
+      font-size: 1.45rem;
+      font-weight: 950;
+      letter-spacing: -1px;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 39px;
+      height: 39px;
+      background: var(--red);
+      transform: skew(-8deg);
+      font-size: .85rem;
+      font-style: italic;
+      letter-spacing: -1px;
+    }
+
+    .brand span:last-child { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 21px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #d0d0d5;
+      font-size: .78rem;
+      font-weight: 700;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 190px;
+      flex-shrink: 0;
+    }
+
+    .nav-search input {
+      width: 100%;
+      padding: 10px 34px 10px 12px;
+      color: white;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      outline: none;
+      font-size: .8rem;
+    }
+
+    .nav-search input:focus { border-color: var(--gold); }
+
+    .search-icon {
+      position: absolute;
+      right: 11px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 0;
+      color: white;
+      font-size: 1.65rem;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 610px;
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(7,7,9,.99) 0%, rgba(7,7,9,.92) 37%, rgba(7,7,9,.38) 75%, rgba(7,7,9,.65) 100%),
+        linear-gradient(0deg, var(--bg), transparent 30%),
+        url("https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=2000&q=85") center 35% / cover;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      right: -130px;
+      top: 70px;
+      width: 550px;
+      height: 550px;
+      border: 2px solid rgba(231,189,88,.25);
+      border-radius: 50%;
+      box-shadow: 0 0 0 45px rgba(255,255,255,.015),
+                  0 0 0 90px rgba(255,255,255,.012);
+    }
+
+    .hero-content { max-width: 700px; padding: 90px 0 110px; }
+
+    .live-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 11px;
+      margin-bottom: 23px;
+      border: 1px solid rgba(227,27,53,.45);
+      background: rgba(227,27,53,.1);
+      color: #ff7b8c;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: 1.7px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--red);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--red);
+    }
+
+    .hero h1 {
+      max-width: 740px;
+      font-size: clamp(3.3rem, 8vw, 6.7rem);
+      font-weight: 950;
+      letter-spacing: -5px;
+      line-height: .94;
+      text-transform: uppercase;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--red);
+      text-shadow: 3px 4px 0 rgba(0,0,0,.3);
+    }
+
+    .hero p {
+      max-width: 510px;
+      margin: 25px 0 28px;
+      color: #c1c1c8;
+      font-size: 1.03rem;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 35px;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-stat strong {
+      display: block;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 900;
+    }
+
+    .hero-stat span {
+      color: var(--muted);
+      font-size: .72rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* QUICK STRIP */
+    .ticker {
+      overflow: hidden;
+      background: var(--red);
+      color: white;
+    }
+
+    .ticker-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      padding-block: 13px;
+      font-size: .76rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .ticker-inner span { white-space: nowrap; }
+    .ticker-inner b { color: #ffc65e; }
+
+    /* CHAMPIONS */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .filter-bar input, .filter-bar select {
+      min-height: 43px;
+      padding: 10px 13px;
+      color: white;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .filter-bar input {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-bar input:focus, .filter-bar select:focus {
+      border-color: var(--gold);
+    }
+
+    .filter-bar select option { background: var(--surface); }
+
+    .results-count {
+      width: 100%;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .champions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .fighter-card {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(150deg, #1a1a20, #101013);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: transform .25s, border-color .25s;
+    }
+
+    .fighter-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(231,189,88,.5);
+    }
+
+    .fighter-photo {
+      position: relative;
+      height: 235px;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 30%, #41414b, #18181d 65%);
+    }
+
+    .fighter-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 22%;
+      filter: saturate(.75);
+      transition: transform .4s;
+    }
+
+    .fighter-card:hover .fighter-photo img { transform: scale(1.06); }
+
+    .fighter-photo::after {
+      content: "";
+      position: absolute;
+      inset: 40% 0 0;
+      background: linear-gradient(transparent, #131316);
+      pointer-events: none;
+    }
+
+    .champion-label {
+      position: absolute;
+      z-index: 1;
+      top: 13px;
+      left: 13px;
+      padding: 5px 9px;
+      color: #17130b;
+      background: var(--gold);
+      font-size: .65rem;
+      font-weight: 950;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .fighter-info { padding: 16px; }
+
+    .fighter-weight {
+      color: var(--red);
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+
+    .fighter-name {
+      margin: 5px 0 9px;
+      font-size: 1.15rem;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .fighter-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 7px;
+      color: var(--muted);
+      font-size: .76rem;
+    }
+
+    .fighter-record { color: var(--gold); font-weight: 800; }
+
+    .fighter-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .text-button {
+      color: white;
+      background: transparent;
+      border: 0;
+      font-size: .76rem;
+      font-weight: 800;
+    }
+
+    .text-button:hover { color: var(--gold); }
+
+    .no-results {
+      grid-column: 1 / -1;
+      padding: 50px 20px;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    /* RANKINGS */
+    .rankings-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .ranking-panel {
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .ranking-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
+    .ranking-title h3 { font-size: 1.15rem; }
+    .ranking-title span { color: var(--gold); font-size: .75rem; font-weight: 800; }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 9px 12px;
+      color: var(--muted);
+      background: var(--surface-2);
+      border: 1px solid transparent;
+      border-radius: 4px;
+      font-size: .75rem;
+      font-weight: 800;
+    }
+
+    .tab.active {
+      color: white;
+      background: rgba(227,27,53,.16);
+      border-color: var(--red);
+    }
+
+    .rank-list { list-style: none; }
+
+    .rank-item {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rank-item:last-child { border-bottom: 0; }
+
+    .rank-number {
+      display: grid;
+      place-items: center;
+      width: 33px;
+      height: 33px;
+      color: var(--muted);
+      background: var(--surface-2);
+      border-radius: 5px;
+      font-weight: 900;
+    }
+
+    .rank-item:first-child .rank-number {
+      color: #16120a;
+      background: var(--gold);
+    }
+
+    .rank-name { font-size: .9rem; font-weight: 800; }
+    .rank-sub { color: var(--muted); font-size: .72rem; }
+    .rank-badge { color: var(--gold); font-size: .7rem; font-weight: 800; }
+
+    .ranking-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: .75rem;
+    }
+
+    /* LEGENDS */
+    .legends-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .legend-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 305px;
+      display: flex;
+      align-items: end;
+      padding: 18px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      isolation: isolate;
+    }
+
+    .legend-card > img {
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(35%);
+      transition: transform .5s;
+    }
+
+    .legend-card:hover > img { transform: scale(1.07); }
+
+    .legend-card::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: linear-gradient(0deg, #09090b 0%, rgba(9,9,11,.85) 30%, transparent 100%);
+    }
+
+    .legend-number {
+      color: var(--gold);
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .legend-card h3 { margin: 5px 0; font-size: 1.13rem; }
+    .legend-card p { color: #c5c5cc; font-size: .76rem; line-height: 1.5; }
+    .legend-card button { margin-top: 12px; }
+
+    /* HISTORIC FIGHTS */
+    .fights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 20px;
+    }
+
+    .fight-card {
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color .25s, transform .25s;
+    }
+
+    .fight-card:hover { border-color: var(--red); transform: translateY(-4px); }
+
+    .fight-image {
+      position: relative;
+      height: 205px;
+      background: #222;
+      overflow: hidden;
+    }
+
+    .fight-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.8);
+      transition: transform .4s;
+    }
+
+    .fight-card:hover .fight-image img { transform: scale(1.04); }
+
+    .fight-event {
+      position: absolute;
+      left: 13px;
+      top: 13px;
+      padding: 5px 9px;
+      color: white;
+      background: var(--red);
+      font-size: .67rem;
+      font-weight: 900;
+    }
+
+    .fight-info { padding: 19px; }
+    .fight-info h3 { font-size: 1.15rem; line-height: 1.3; }
+    .fight-info p { margin-top: 9px; color: var(--muted); font-size: .82rem; }
+    .fight-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 17px;
+      padding-top: 13px;
+      border-top: 1px solid var(--border);
+    }
+
+    .fight-bottom span { color: var(--gold); font-size: .75rem; font-weight: 800; }
+
+    /* UNDEFEATED */
+    .undefeated-banner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      overflow: hidden;
+      background: linear-gradient(120deg, #17171c, #0d0d10);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .undefeated-copy { padding: 46px; }
+    .undefeated-copy h2 { margin-bottom: 18px; }
+    .undefeated-copy p { max-width: 470px; color: var(--muted); }
+
+    .undefeated-stats {
+      display: flex;
+      gap: 26px;
+      margin: 28px 0;
+    }
+
+    .undefeated-stats strong { display: block; font-size: 1.6rem; color: var(--gold); }
+    .undefeated-stats span { color: var(--muted); font-size: .73rem; }
+
+    .undefeated-visual {
+      min-height: 330px;
+      position: relative;
+      background:
+        linear-gradient(90deg, #141418 0%, rgba(20,20,24,.12) 100%),
+        url("https://images.unsplash.com/photo-1599058917212-d750089bc07c?auto=format&fit=crop&w=1000&q=85") center / cover;
+    }
+
+    .undefeated-visual::after {
+      content: "UNDEFEATED";
+      position: absolute;
+      right: -15px;
+      bottom: 18px;
+      color: rgba(255,255,255,.09);
+      font-size: clamp(2rem,5vw,4rem);
+      font-weight: 950;
+      transform: rotate(-8deg);
+    }
+
+    .prospect-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 17px;
+      margin-top: 24px;
+    }
+
+    .prospect-card {
+      padding: 21px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .prospect-card .record {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--gold);
+      font-size: .74rem;
+      font-weight: 900;
+    }
+
+    .prospect-card h3 { margin-bottom: 5px; font-size: 1.06rem; }
+    .prospect-card p { color: var(--muted); font-size: .8rem; }
+    .prospect-card small { display: block; margin-top: 12px; color: var(--red); font-weight: 800; }
+
+    /* FUTURE */
+    .future-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 19px;
+    }
+
+    .future-card {
+      padding: 25px;
+      background: linear-gradient(150deg,#1a1a20,#101013);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .future-icon {
+      display: grid;
+      place-items: center;
+      width: 47px;
+      height: 47px;
+      margin-bottom: 22px;
+      color: var(--gold);
+      background: rgba(231,189,88,.1);
+      border: 1px solid rgba(231,189,88,.2);
+      border-radius: 8px;
+      font-size: 1.4rem;
+    }
+
+    .future-card h3 { margin-bottom: 10px; font-size: 1.1rem; }
+    .future-card p { color: var(--muted); font-size: .85rem; }
+    .future-tag {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 5px 8px;
+      color: #ff8997;
+      background: rgba(227,27,53,.1);
+      border-radius: 4px;
+      font-size: .68rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    /* NEWSLETTER */
+    .newsletter {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 34px;
+      background: linear-gradient(110deg,rgba(227,27,53,.16),rgba(231,189,88,.04));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .newsletter h2 { font-size: 1.7rem; letter-spacing: -.6px; }
+    .newsletter p { margin-top: 7px; color: var(--muted); font-size: .85rem; }
+
+    .newsletter-form { display: flex; gap: 8px; width: min(430px,100%); }
+
+    .newsletter-form input {
+      min-width: 0;
+      flex: 1;
+      padding: 12px;
+      color: white;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .newsletter-form input:focus { border-color: var(--gold); }
+
+    /* FOOTER */
+    .footer {
+      padding: 55px 0 22px;
+      background: #070708;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 35px;
+      padding-bottom: 35px;
+    }
+
+    .footer-brand p {
+      max-width: 290px;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .footer h4 { margin-bottom: 15px; font-size: .9rem; }
+    .footer-links { display: grid; gap: 9px; list-style: none; }
+    .footer-links a { color: var(--muted); font-size: .82rem; }
+    .footer-links a:hover { color: var(--gold); }
+
+    .social-links { display: flex; flex-wrap: wrap; gap: 9px; }
+
+    .social-links a {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: .76rem;
+      font-weight: 900;
+      transition: border-color .2s;
+    }
+
+    .social-links a:hover { border-color: var(--gold); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: #777780;
+      font-size: .73rem;
+    }
+
+    .disclaimer { max-width: 650px; }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.82);
+      backdrop-filter: blur(7px);
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-card {
+      position: relative;
+      width: min(600px,100%);
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 30px;
+      background: #151519;
+      border: 1px solid rgba(231,189,88,.25);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      animation: modalIn .22s ease-out;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(12px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 13px;
+      right: 15px;
+      width: 36px;
+      height: 36px;
+      color: white;
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 1.35rem;
+    }
+
+    .modal-card h2 { padding-right: 32px; font-size: 2rem; }
+    .modal-card p { margin-top: 14px; color: #c3c3cc; }
+    .modal-details { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+    .modal-detail { padding: 13px; background: var(--surface-2); border-radius: 7px; }
+    .modal-detail span { display: block; color: var(--muted); font-size: .72rem; }
+    .modal-detail strong { display: block; margin-top: 4px; }
+
+    .toast {
+      position: fixed;
+      z-index: 150;
+      right: 20px;
+      bottom: 20px;
+      max-width: calc(100% - 40px);
+      padding: 15px 20px;
+      color: white;
+      background: #202026;
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: .25s;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) {
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: .72rem; }
+      .nav-search { width: 150px; }
+      .champions-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+      .legends-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+      .legend-card { min-height: 340px; }
+    }
+
+    @media (max-width: 850px) {
+      .menu-toggle { display: block; }
+      .nav-search { margin-left: auto; width: min(210px,35vw); }
+
+      .nav-links {
+        position: absolute;
+        top: 76px;
+        left: 0;
+        right: 0;
+        display: none;
+        align-items: stretch;
+        padding: 15px 22px 22px;
+        background: #0c0c0f;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.open { display: flex; flex-direction: column; gap: 0; }
+      .nav-links a { display: block; padding: 12px 4px; font-size: .9rem; }
+      .nav-links li + li { border-top: 1px solid var(--border); }
+
+      .hero { min-height: 570px; background-position: 58% center; }
+      .hero h1 { letter-spacing: -3px; }
+
+      .champions-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .rankings-layout { grid-template-columns: 1fr; }
+      .legends-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .fights-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .undefeated-banner { grid-template-columns: 1fr; }
+      .undefeated-visual { min-height: 250px; }
+      .future-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .footer-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .newsletter { align-items: flex-start; flex-direction: column; }
+      .newsletter-form { width: 100%; }
+    }
+
+    @media (max-width: 520px) {
+      .container { width: min(100% - 28px, var(--max-width)); }
+      .section { padding: 62px 0; }
+      .navbar { min-height: 66px; gap: 10px; }
+      .brand { font-size: 1.18rem; gap: 7px; }
+      .brand-mark { width: 34px; height: 34px; font-size: .75rem; }
+      .nav-links { top: 66px; }
+      .nav-search { width: 37px; }
+      .nav-search input {
+        padding: 10px 10px;
+        color: transparent;
+        cursor: pointer;
+      }
+      .nav-search input:focus {
+        position: absolute;
+        z-index: 2;
+        right: 0;
+        width: min(240px,72vw);
+        color: white;
+        background: var(--surface-2);
+        cursor: text;
+      }
+      .nav-search input::placeholder { color: transparent; }
+      .hero { min-height: 580px; background-position: 58% center; }
+      .hero-content { padding: 75px 0; }
+      .hero h1 { font-size: clamp(3.1rem,15vw,4.6rem); letter-spacing: -2.5px; }
+      .hero p { font-size: .93rem; }
+      .hero-stats { gap: 22px; }
+      .hero-stat strong { font-size: 1.25rem; }
+      .ticker-inner { justify-content: flex-start; overflow-x: auto; }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 13px; }
+      .champions-grid { gap: 10px; }
+      .fighter-photo { height: 185px; }
+      .fighter-info { padding: 12px; }
+      .fighter-name { font-size: 1rem; }
+      .fighter-meta { flex-wrap: wrap; font-size: .7rem; }
+      .fighter-footer { gap: 5px; }
+      .text-button { font-size: .7rem; }
+      .legends-grid { gap: 10px; }
+      .legend-card { min-height: 280px; padding: 12px; }
+      .legend-card h3 { font-size: 1rem; }
+      .fights-grid, .future-grid, .prospect-grid { grid-template-columns: 1fr; }
+      .fight-image { height: 220px; }
+      .undefeated-copy { padding: 25px 20px; }
+      .undefeated-stats { gap: 18px; }
+      .ranking-panel { padding: 17px; }
+      .newsletter { padding: 23px 17px; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form .btn { width: 100%; }
+      .footer-grid { gap: 25px 16px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-bottom { align-items: flex-start; flex-direction: column; }
+      .modal-card { padding: 25px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar container" aria-label="Navegação principal">
+      <a class="brand" href="#inicio" aria-label="UFC Hub, início">
+        <span class="brand-mark">UFC</span>
+        <span>HUB</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#campeoes">Campeões</a></li>
+        <li><a href="#rankings">Rankings</a></li>
+        <li><a href="#lendas">Lendas</a></li>
+        <li><a href="#lutas">Lutas históricas</a></li>
+        <li><a href="#invictos">Invictos</a></li>
+        <li><a href="#futuro">Futuro</a></li>
+      </ul>
+
+      <form class="nav-search" id="globalSearch" role="search">
+        <input id="globalSearchInput" type="search" placeholder="Buscar lutador..." aria-label="Buscar lutador">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+      </form>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="hero-content">
+          <div class="live-tag"><span class="live-dot"></span> A CASA DO MMA</div>
+          <h1>Mais que luta.<span>É legado.</span></h1>
+          <p>
+            Entre no universo do UFC. Conheça os campeões, reviva batalhas
+            históricas e descubra quem pode dominar o octógono amanhã.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#campeoes">⌄ Explorar campeões</a>
+            <a class="btn btn-outline" href="#lutas">▶ Lutas lendárias</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><strong>12+</strong><span>Categorias masculinas</span></div>
+            <div class="hero-stat"><strong>4 oz</strong><span>Luvas de combate</span></div>
+            <div class="hero-stat"><strong>1</strong><span>Octógono</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-label="Destaques do UFC Hub">
+      <div class="container ticker-inner">
+        <span>★ <b>UFC HUB</b> ORIGINAL</span>
+        <span>RESPEITO</span>
+        <span>DISCIPLINA</span>
+        <span>SUPERAÇÃO</span>
+        <span>LEGADO ★</span>
+      </div>
+    </div>
+
+    <section class="section" id="campeoes">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Os donos do cinturão</span>
+            <h2>Atuais <span class="accent">campeões</span></h2>
+          </div>
+          <p class="section-description">
+            Explore as principais divisões do UFC. Use a busca e os filtros
+            para encontrar lutadores por nome, nacionalidade ou categoria.
+          </p>
+        </div>
+
+        <div class="filter-bar">
+          <input id="fighterSearch" type="search" placeholder="Buscar por lutador, país ou categoria..." aria-label="Buscar campeões">
+          <select id="weightFilter" aria-label="Filtrar por categoria">
+            <option value="all">Todas as categorias</option>
+            <option value="Peso-pesado">Peso-pesado</option>
+            <option value="Peso-meio-pesado">Meio-pesado</option>
+            <option value="Peso-médio">Peso-médio</option>
+            <option value="Peso-meio-médio">Meio-médio</option>
+            <option value="Peso-leve">Peso-leve</option>
+            <option value="Peso-pena">Pena</option>
+            <option value="Peso-galo">Galo</option>
+            <option value="Peso-mosca">Mosca</option>
+            <option value="Peso-palha">Palha</option>
+          </select>
+          <button class="btn btn-outline" id="clearFilters" type="button">Limpar filtros</button>
+          <div class="results-count" id="resultsCount" aria-live="polite"></div>
+        </div>
+
+        <div class="champions-grid" id="championsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="rankings">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Excelência no octógono</span>
+            <h2>Rankings <span class="gold">P4P</span></h2>
+          </div>
+          <p class="section-description">
+            Listas demonstrativas de atletas pound-for-pound, divididas entre
+            masculino e feminino. Os rankings podem mudar a cada evento.
+          </p>
+        </div>
+
+        <div class="rankings-layout">
+          <article class="ranking-panel">
+            <div class="ranking-title">
+              <h3>Top 5 masculino</h3>
+              <span>MEN'S P4P</span>
+            </div>
+            <div class="tabs" role="group" aria-label="Rankings masculinos">
+              <button class="tab active" data-ranking="menCurrent" type="button">Destaques</button>
+              <button class="tab" data-ranking="menLegends" type="button">Lendas</button>
+            </div>
+            <ol class="rank-list" id="menRanking"></ol>
+          </article>
+
+          <article class="ranking-panel">
+            <div class="ranking-title">
+              <h3>Top 5 feminino</h3>
+              <span>WOMEN'S P4P</span>
+            </div>
+            <div class="tabs" role="group" aria-label="Rankings femininos">
+              <button class="tab active" data-ranking="womenCurrent" type="button">Destaques</button>
+              <button class="tab" data-ranking="womenLegends" type="button">Lendas</button>
+            </div>
+            <ol class="rank-list" id="womenRanking"></ol>
+          </article>
+        </div>
+        <p class="ranking-note">
+          * Rankings editoriais ilustrativos, não uma reprodução oficial da classificação atual do UFC.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="lendas">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Imortais do esporte</span>
+            <h2>Lendas do <span class="accent">octógono</span></h2>
+          </div>
+          <p class="section-description">
+            Atletas que redefiniram categorias, inspiraram gerações e deixaram
+            marcas profundas na história das artes marciais mistas.
+          </p>
+        </div>
+
+        <div class="legends-grid" id="legendsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="lutas">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Noite de guerra</span>
+            <h2>Lutas que viraram <span class="gold">história</span></h2>
+          </div>
+          <p class="section-description">
+            Rivalidades intensas, reviravoltas e batalhas inesquecíveis.
+            Relembre alguns dos confrontos mais celebrados pelos fãs.
+          </p>
+        </div>
+
+        <div class="fights-grid" id="fightsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="invictos">
+      <div class="container">
+        <div class="undefeated-banner">
+          <div class="undefeated-copy">
+            <span class="eyebrow">Zero derrotas. Ambição infinita.</span>
+            <h2>Invictos: o próximo <span class="gold">capítulo</span></h2>
+            <p>
+              No MMA, manter um cartel perfeito exige técnica, estratégia,
+              consistência e nervos de aço. Conheça nomes históricos e
+              prospectos que chamam a atenção dos fãs.
+            </p>
+            <div class="undefeated-stats">
+              <div><strong>0</strong><span>Derrotas no cartel destacado</span></div>
+              <div><strong>100%</strong><span>Foco na evolução</span></div>
+            </div>
+            <a class="btn btn-primary" href="#promessas">Conhecer prospectos →</a>
+          </div>
+          <div class="undefeated-visual" role="img" aria-label="Atleta treinando em uma academia de combate"></div>
+        </div>
+
+        <div id="promessas" class="prospect-grid"></div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="futuro">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">O amanhã começa hoje</span>
+            <h2>Previsões & <span class="accent">futuro</span></h2>
+          </div>
+          <p class="section-description">
+            Possíveis superlutas, novos talentos e histórias que podem
+            movimentar o esporte. Cenários editoriais, não anúncios oficiais.
+          </p>
+        </div>
+
+        <div class="future-grid">
+          <article class="future-card">
+            <div class="future-icon" aria-hidden="true">⚔</div>
+            <h3>Superlutas dos sonhos</h3>
+            <p>
+              Duelo entre campeões, rivalidades entre gerações e confrontos
+              entre estilos contrastantes alimentam o debate dos fãs.
+            </p>
+            <span class="future-tag">Combates hipotéticos</span>
+          </article>
+
+          <article class="future-card">
+            <div class="future-icon" aria-hidden="true">◈</div>
+            <h3>A nova geração</h3>
+            <p>
+              Jovens atletas com wrestling sólido, striking criativo e
+              preparação multidisciplinar podem transformar suas divisões.
+            </p>
+            <span class="future-tag">Talentos em ascensão</span>
+          </article>
+
+          <article class="future-card">
+            <div class="future-icon" aria-hidden="true">◎</div>
+            <h3>Próximos grandes eventos</h3>
+            <p>
+              Disputas de cinturão, defesas decisivas e lutas eliminatórias
+              podem alterar os rankings e abrir caminho para novos campeões.
+            </p>
+            <span class="future-tag">Agenda a confirmar</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="newsletter">
+          <div>
+            <span class="eyebrow">Entre para o time</span>
+            <h2>O MMA não para. <span class="gold">Você também não.</span></h2>
+            <p>Receba novidades editoriais e destaques do universo das lutas.</p>
+          </div>
+          <form class="newsletter-form" id="newsletterForm">
+            <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail" aria-label="Seu e-mail" required>
+            <button class="btn btn-primary" type="submit">Quero receber →</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#inicio">
+            <span class="brand-mark">UFC</span>
+            <span>HUB</span>
+          </a>
+          <p>
+            Informação, história e paixão pelo MMA. Uma experiência editorial
+            independente feita para quem vive o esporte.
+          </p>
+        </div>
+
+        <div>
+          <h4>Navegue</h4>
+          <ul class="footer-links">
+            <li><a href="#campeoes">Campeões</a></li>
+            <li><a href="#rankings">Rankings P4P</a></li>
+            <li><a href="#lendas">Lendas</a></li>
+            <li><a href="#lutas">Lutas históricas</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="#invictos">Invictos</a></li>
+            <li><a href="#promessas">Prospectos</a></li>
+            <li><a href="#futuro">O futuro</a></li>
+            <li><a href="#inicio">Voltar ao topo ↑</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Redes sociais</h4>
+          <div class="social-links">
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">YT</a>
+            <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok">TK</a>
+            <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X">X</a>
+          </div>
+          <p style="margin-top:13px;color:var(--muted);font-size:.76rem">
+            Perfis ilustrativos. Links para as plataformas.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> UFC Hub. Projeto demonstrativo independente.</p>
+        <p class="disclaimer">
+          UFC e marcas associadas pertencem aos respectivos titulares. Este site
+          não é oficial, não possui afiliação com o UFC e não representa seus
+          rankings oficiais. Estatísticas e status de campeões devem ser verificados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="fighterModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Fechar detalhes">×</button>
+      <span class="eyebrow" id="modalEyebrow">Perfil do atleta</span>
+      <h2 id="modalTitle">Lutador</h2>
+      <p id="modalDescription"></p>
+      <div class="modal-details" id="modalDetails"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    "use strict";
+
+    // Os dados esportivos abaixo são demonstrativos, não uma base oficial em tempo real.
+    const champions = [
+      {
+        name: "Jon Jones", category: "Peso-pesado", record: "28-1",
+        country: "Estados Unidos", flag: "🇺🇸", status: "Campeão histórico",
+        image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=600&q=80",
+        description: "Um dos nomes mais dominantes da história do MMA, reconhecido pelo alcance, criatividade e inteligência tática."
+      },
+      {
+        name: "Alex Pereira", category: "Peso-meio-pesado", record: "12-2",
+        country: "Brasil", flag: "🇧🇷", status: "Destaque da divisão",
+        image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80",
+        description: "Striker brasileiro de elite, conhecido pela precisão dos golpes, potência e transição bem-sucedida entre categorias."
+      },
+      {
+        name: "Dricus du Plessis", category: "Peso-médio", record: "23-2",
+        country: "África do Sul", flag: "🇿🇦", status: "Destaque da divisão",
+        image: "https://images.unsplash.com/photo-1599058917212-d750089bc07c?auto=format&fit=crop&w=600&q=80",
+        description: "Lutador sul-africano conhecido pela pressão constante, resistência física e estilo pouco convencional."
+      },
+      {
+        name: "Islam Makhachev", category: "Peso-meio-médio", record: "27-1",
+        country: "Rússia", flag: "🇷🇺", status: "Destaque da divisão",
+        image: "https://images.unsplash.com/photo-1517438322307-e67111335449?auto=format&fit=crop&w=600&q=80",
+        description: "Especialista em grappling e controle posicional, com uma abordagem estratégica para neutralizar adversários."
+      },
+      {
+        name: "Ilia Topuria", category: "Peso-leve", record: "16-0",
+        country: "Geórgia / Espanha", flag: "🇬🇪", status: "Destaque da divisão",
+        image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=600&q=80",
+        description: "Lutador explosivo, com boxe técnico, potência e confiança para buscar o nocaute."
+      },
+      {
+        name: "Alexander Volkanovski", category: "Peso-pena", record: "26-4",
+        country: "Austrália", flag: "🇦🇺", status: "Ex-campeão",
+        image: "https://images.unsplash.com/photo-1517438322307-e67111335449?auto=format&fit=crop&w=600&q=80",
+        description: "Um dos pesos-penas mais consistentes da história, conhecido pelo jogo de pernas e pelos ajustes táticos."
+      },
+      {
+        name: "Merab Dvalishvili", category: "Peso-galo", record: "18-4",
+        country: "Geórgia", flag: "🇬🇪", status: "Destaque da divisão",
+        image: "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=600&q=80",
+        description: "Atleta de ritmo intenso, wrestling persistente e grande capacidade de manter a pressão durante os rounds."
+      },
+      {
+        name: "Alexandre Pantoja", category: "Peso-mosca", record: "28-5",
+        country: "Brasil", flag: "🇧🇷", status: "Destaque da divisão",
+        image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80",
+        description: "Brasileiro com jiu-jítsu de alto nível, agressividade e experiência em confrontos de elite."
+      },
+      {
+        name: "Zhang Weili", category: "Peso-palha", record: "25-3",
+        country: "China", flag: "🇨🇳", status: "Destaque da divisão",
+        image: "https://images.unsplash.com/photo-1599058917212-d750089bc07c?auto=format&fit=crop&w=600&q=80",
+        description: "Campeã de alto nível técnico, com força física, combinações rápidas e excelente preparo atlético."
+      },
+      {
+        name: "Valentina Shevchenko", category: "Peso-mosca", record: "23-4-1",
+        country: "Quirguistão", flag: "🇰🇬", status: "Ex-campeã",
+        image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=600&q=80",
+        description: "Especialista em striking técnico, contra-ataques e domínio de distância, com longa trajetória de elite."
+      },
+      {
+        name: "Amanda Nunes", category: "Peso-galo", record: "23-5",
+        country: "Brasil", flag: "🇧🇷", status: "Lenda / aposentada",
+        image: "https://images.unsplash.com/photo-1599058917212-d750089bc07c?auto=format&fit=crop&w=600&q=80",
+        description: "Uma das maiores lutadoras de todos os tempos, ex-campeã de duas divisões e dona de vitórias históricas."
+      },
+      {
+        name: "Khabib Nurmagomedov", category: "Peso-leve", record: "29-0",
+        country: "Rússia", flag: "🇷🇺", status: "Lenda / aposentado",
+        image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=600&q=80",
+        description: "Ex-campeão invicto, lembrado pelo wrestling sufocante, controle no solo e carreira encerrada sem derrotas."
+      }
+    ];
+
+    const rankingData = {
+      menCurrent: [
+        ["Islam Makhachev", "Técnica e controle", "P4P"],
+        ["Jon Jones", "Legado no MMA", "Lenda"],
+        ["Alex Pereira", "Striking de elite", "Destaque"],
+        ["Ilia Topuria", "Precisão e potência", "Destaque"],
+        ["Alexander Volkanovski", "Consistência", "Destaque"]
+      ],
+      menLegends: [
+        ["Georges St-Pierre", "Ex-campeão de duas divisões", "Lenda"],
+        ["Anderson Silva", "Longo reinado no peso-médio", "Lenda"],
+        ["Jon Jones", "Dominância em alto nível", "Lenda"],
+        ["Khabib Nurmagomedov", "Carreira encerrada invicta", "Lenda"],
+        ["José Aldo", "Referência histórica do peso-pena", "Lenda"]
+      ],
+      womenCurrent: [
+        ["Valentina Shevchenko", "Técnica e experiência", "Destaque"],
+        ["Zhang Weili", "Potência e ritmo", "Destaque"],
+        ["Alexa Grasso", "Boxe e jiu-jítsu", "Destaque"],
+        ["Manon Fiorot", "Striking e pressão", "Destaque"],
+        ["Julianna Peña", "Grappling e agressividade", "Destaque"]
+      ],
+      womenLegends: [
+        ["Amanda Nunes", "Ex-campeã de duas divisões", "Lenda"],
+        ["Valentina Shevchenko", "Domínio técnico", "Lenda"],
+        ["Ronda Rousey", "Pioneira do MMA feminino", "Lenda"],
+        ["Joanna Jędrzejczyk", "Referência no striking", "Lenda"],
+        ["Cris Cyborg", "Carreira marcante", "Lenda"]
+      ]
+    };
+
+    const legends = [
+      {
+        name: "Jon Jones", number: "01 / DOMINÂNCIA",
+        image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=700&q=80",
+        summary: "Alcance, criatividade e uma das trajetórias mais debatidas da história.",
+        detail: "Jon Jones construiu uma carreira de enorme impacto no UFC. Sua variedade de cotoveladas, chutes e técnicas de wrestling fez dele uma referência tática."
+      },
+      {
+        name: "Anderson Silva", number: "02 / PRECISÃO",
+        image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=700&q=80",
+        summary: "Um dos strikers mais criativos que já pisaram no octógono.",
+        detail: "Anderson Silva marcou época no peso-médio com esquivas, contragolpes e finalizações espetaculares. Seu reinado está entre os mais lembrados do esporte."
+      },
+      {
+        name: "Georges St-Pierre", number: "03 / ESTRATÉGIA",
+        image: "https://images.unsplash.com/photo-1599058917212-d750089bc07c?auto=format&fit=crop&w=700&q=80",
+        summary: "Preparação impecável e adaptação estratégica em alto nível.",
+        detail: "GSP foi um dos atletas mais completos de sua geração, combinando wrestling, boxe e preparação física para dominar o peso-meio-médio."
+      },
+      {
+        name: "Amanda Nunes", number: "04 / GRANDEZA",
+        image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=700&q=80",
+        summary: "Uma carreira histórica no MMA feminino e dois cinturões.",
+        detail: "Amanda Nunes venceu diversas campeãs e consolidou seu legado como uma das maiores lutadoras da história, com títulos em duas categorias."
+      },
+      {
+        name: "Khabib Nurmagomedov", number: "05 / INVICTO",
+        image: "https://images.unsplash.com/photo-1517438322307-e67111335449?auto=format&fit=crop&w=700&q=80",
+        summary: "Pressão constante e um cartel profissional encerrado em 29-0.",
+        detail: "Khabib encerrou a carreira profissional invicto, usando wrestling e controle posicional para limitar as opções de seus adversários."
+      }
+    ];
+
+    const historicFights = [
+      {
+        title: "Robbie Lawler vs. Rory MacDonald 2",
+        event: "UFC 189 · 2015",
+        image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=900&q=80",
+        description: "Uma guerra pelo cinturão meio-médio, lembrada pela resistência, pelos danos acumulados e pela intensidade até o fim.",
+        highlight: "Clássico do peso-meio-médio",
+        details: "A luta terminou no quinto round por nocaute técnico a favor de Robbie Lawler. O confronto tornou-se um marco pela disposição ofensiva dos dois atletas."
+      },
+      {
+        title: "Shogun Rua vs. Dan Henderson",
+        event: "UFC 139 · 2011",
+        image: "https://images.unsplash.com/photo-1599058917212-d750089bc07c?auto=format&fit=crop&w=900&q=80",
+        description: "Cinco rounds de trocação, quedas e recuperação em um duelo que mostrou a dureza dos dois veteranos.",
+        highlight: "Batalha de cinco rounds",
+        details: "Dan Henderson venceu por decisão unânime após cinco rounds. O duelo é amplamente recordado pela intensidade e pela capacidade de ambos resistirem à pressão."
+      },
+      {
+        title: "Forrest Griffin vs. Stephan Bonnar",
+        event: "TUF 1 Finale · 2005",
+        image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=900&q=80",
+        description: "Uma luta que ajudou a apresentar o UFC a uma nova audiência e marcou a história do reality The Ultimate Fighter.",
+        highlight: "Impacto histórico",
+        details: "Forrest Griffin venceu por decisão unânime. A disposição ofensiva dos dois ajudou a transformar o evento final da primeira temporada do TUF em um momento decisivo para a divulgação do esporte."
+      },
+      {
+        title: "Jon Jones vs. Alexander Gustafsson",
+        event: "UFC 165 · 2013",
+        image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=900&q=80",
+        description: "Um confronto que levou o campeão ao limite e mostrou o valor dos ajustes táticos durante cinco rounds.",
+        highlight: "Rivalidade histórica",
+        details: "Jon Jones venceu por decisão unânime em uma disputa competitiva pelo título dos meio-pesados. A luta é frequentemente lembrada entre os grandes combates da divisão."
+      },
+      {
+        title: "Zhang Weili vs. Joanna Jędrzejczyk",
+        event: "UFC 248 · 2020",
+        image: "https://images.unsplash.com/photo-1599058917212-d750089bc07c?auto=format&fit=crop&w=900&q=80",
+        description: "Um combate de alto volume e técnica entre duas das maiores atletas do peso-palha.",
+        highlight: "Elite feminina",
+        details: "Zhang Weili venceu por decisão dividida após cinco rounds. O confronto foi celebrado pela qualidade técnica, pelas trocas intensas e pela resistência das duas lutadoras."
+      },
+      {
+        title: "Khabib Nurmagomedov vs. Conor McGregor",
+        event: "UFC 229 · 2018",
+        image: "https://images.unsplash.com/photo-1517438322307-e67111335449?auto=format&fit=crop&w=900&q=80",
+        description: "Uma das maiores rivalidades comerciais do MMA, com enorme atenção mundial dentro e fora do octógono.",
+        highlight: "Rivalidade mundial",
+        details: "Khabib venceu por finalização no quarto round, defendendo o cinturão dos leves. A luta teve grande repercussão e se tornou um dos eventos mais comentados da organização."
+      }
+    ];
+
+    const prospects = [
+      {
+        name: "Khamzat Chimaev",
+        record: "Cartel com poucas derrotas",
+        summary: "Wrestling agressivo e pressão inicial, com capacidade de impor um ritmo intenso.",
+        tag: "Peso-médio / meio-médio"
+      },
+      {
+        name: "Shavkat Rakhmonov",
+        record: "Invicto no cartel profissional listado historicamente",
+        summary: "Combina striking, wrestling e finalizações, representando um desafio completo para adversários de elite.",
+        tag: "Peso-meio-médio"
+      },
+      {
+        name: "Movsar Evloev",
+        record: "Invicto no cartel profissional listado historicamente",
+        summary: "Controle posicional, ritmo consistente e capacidade de vencer rounds em disputas exigentes.",
+        tag: "Peso-pena"
+      }
+    ];
+
+    const allRankings = {
+      ...rankingData
+    };
+
+    const championsGrid = document.getElementById("championsGrid");
+    const fighterSearch = document.getElementById("fighterSearch");
+    const weightFilter = document.getElementById("weightFilter");
+    const resultsCount = document.getElementById("resultsCount");
+    const navLinks = document.getElementById("navLinks");
+    const menuToggle = document.getElementById("menuToggle");
+    const modal = document.getElementById("fighterModal");
+    const toast = document.getElementById("toast");
+
+    let toastTimeout;
+    let previousFocus = null;
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function renderChampions() {
+      const query = fighterSearch.value.trim().toLocaleLowerCase("pt-BR");
+      const category = weightFilter.value;
+
+      const filtered = champions.filter(fighter => {
+        const searchable = [
+          fighter.name,
+          fighter.category,
+          fighter.country,
+          fighter.status
+        ].join(" ").toLocaleLowerCase("pt-BR");
+
+        return searchable.includes(query) &&
+          (category === "all" || fighter.category === category);
+      });
+
+      resultsCount.textContent = `${filtered.length} atleta(s) encontrado(s)`;
+
+      if (!filtered.length) {
+        championsGrid.innerHTML = `
+          <div class="no-results">
+            <h3>Nenhum atleta encontrado</h3>
+            <p>Tente outro nome ou selecione uma categoria diferente.</p>
+          </div>`;
+        return;
+      }
+
+      championsGrid.innerHTML = filtered.map(fighter => {
+        const index = champions.indexOf(fighter);
+
+        return `
+          <article class="fighter-card">
+            <div class="fighter-photo">
+              <img
+                src="${escapeHTML(fighter.image)}"
+                alt="Imagem ilustrativa de ${escapeHTML(fighter.name)}"
+                loading="lazy"
+                onerror="this.style.display='none'">
+              <span class="champion-label">${escapeHTML(fighter.status)}</span>
+            </div>
+            <div class="fighter-info">
+              <span class="fighter-weight">${escapeHTML(fighter.category)}</span>
+              <h3 class="fighter-name">${escapeHTML(fighter.name)}</h3>
+              <div class="fighter-meta">
+                <span>${escapeHTML(fighter.flag)} ${escapeHTML(fighter.country)}</span>
+                <span class="fighter-record">${escapeHTML(fighter.record)}</span>
+              </div>
+              <div class="fighter-footer">
+                <span style="color:var(--muted);font-size:.7rem">Perfil do atleta</span>
+                <button class="text-button" type="button" data-fighter="${index}">Ver detalhes ↗</button>
+              </div>
+            </div>
+          </article>`;
+      }).join("");
+    }
+
+    function renderLegends() {
+      document.getElementById("legendsGrid").innerHTML = legends.map((legend, index) => `
+        <article class="legend-card">
+          <img src="${escapeHTML(legend.image)}"
+               alt="Imagem ilustrativa de ${escapeHTML(legend.name)}"
+               loading="lazy"
+               onerror="this.style.display='none'">
+          <div>
+            <span class="legend-number">${escapeHTML(legend.number)}</span>
+            <h3>${escapeHTML(legend.name)}</h3>
+            <p>${escapeHTML(legend.summary)}</p>
+            <button class="btn btn-outline" type="button" data-legend="${index}">Conhecer legado ↗</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderFights() {
+      document.getElementById("fightsGrid").innerHTML = historicFights.map((fight, index) => `
+        <article class="fight-card">
+          <div class="fight-image">
+            <img src="${escapeHTML(fight.image)}"
+                 alt="Imagem ilustrativa de ${escapeHTML(fight.title)}"
+                 loading="lazy"
+                 onerror="this.style.display='none'">
+            <span class="fight-event">${escapeHTML(fight.event)}</span>
+          </div>
+          <div class="fight-info">
+            <h3>${escapeHTML(fight.title)}</h3>
+            <p>${escapeHTML(fight.description)}</p>
+            <div class="fight-bottom">
+              <span>${escapeHTML(fight.highlight)}</span>
+              <button class="text-button" type="button" data-fight="${index}">Detalhes ↗</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderProspects() {
+      document.getElementById("promessas").innerHTML = prospects.map(prospect => `
+        <article class="prospect-card">
+          <span class="record">${escapeHTML(prospect.record)}</span>
+          <h3>${escapeHTML(prospect.name)}</h3>
+          <p>${escapeHTML(prospect.summary)}</p>
+          <small>${escapeHTML(prospect.tag)}</small>
+        </article>
+      `).join("");
+    }
+
+    function renderRanking(listId, dataKey) {
+      const target = document.getElementById(listId);
+      const entries = allRankings[dataKey];
+
+      target.innerHTML = entries.map((entry, index) => `
+        <li class="rank-item">
+          <span class="rank-number">${index + 1}</span>
+          <div>
+            <div class="rank-name">${escapeHTML(entry[0])}</div>
+            <div class="rank-sub">${escapeHTML(entry[1])}</div>
+          </div>
+          <span class="rank-badge">${escapeHTML(entry[2])}</span>
+        </li>
+      `).join("");
+    }
+
+    function renderRankings() {
+      renderRanking("menRanking", "menCurrent");
+      renderRanking("womenRanking", "womenCurrent");
+
+      document.querySelectorAll("[data-ranking]").forEach(button => {
+        button.addEventListener("click", () => {
+          const key = button.dataset.ranking;
+          const group = button.closest(".ranking-panel");
+
+          group.querySelectorAll("[data-ranking]").forEach(tab => {
+            tab.classList.toggle("active", tab === button);
+          });
+
+          renderRanking(
+            group.querySelector(".rank-list").id,
+            key
+          );
+        });
+      });
+    }
+
+    function showModal({ eyebrow, title, description, details = [] }) {
+      previousFocus = document.activeElement;
+      document.getElementById("modalEyebrow").textContent = eyebrow;
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalDescription").textContent = description;
+
+      document.getElementById("modalDetails").innerHTML = details.map(detail => `
+        <div class="modal-detail">
+          <span>${escapeHTML(detail.label)}</span>
+          <strong>${escapeHTML(detail.value)}</strong>
+        </div>
+      `).join("");
+
+      modal.classList.add("open");
+      document.body.classList.add("modal-open");
+      document.getElementById("modalClose").focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove("open");
+      document.body.classList.remove("modal-open");
+      if (previousFocus && typeof previousFocus.focus === "function") {
+        previousFocus.focus();
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove("show"), 3500);
+    }
+
+    function openFighter(index) {
+      const fighter = champions[index];
+      if (!fighter) return;
+
+      showModal({
+        eyebrow: fighter.status,
+        title: fighter.name,
+        description: fighter.description,
+        details: [
+          { label: "Categoria", value: fighter.category },
+          { label: "Cartel ilustrativo", value: fighter.record },
+          { label: "Nacionalidade", value: `${fighter.flag} ${fighter.country}` },
+          { label: "Situação no site", value: fighter.status }
+        ]
+      });
+    }
+
+    function openLegend(index) {
+      const legend = legends[index];
+      if (!legend) return;
+
+      showModal({
+        eyebrow: "Lenda do MMA",
+        title: legend.name,
+        description: legend.detail,
+        details: [
+          { label: "Reconhecimento", value: "Legado histórico" },
+          { label: "Perfil", value: legend.summary }
+        ]
+      });
+    }
+
+    function openFight(index) {
+      const fight = historicFights[index];
+      if (!fight) return;
+
+      showModal({
+        eyebrow: fight.event,
+        title: fight.title,
+        description: fight.details,
+        details: [
+          { label: "Destaque", value: fight.highlight },
+          { label: "Coleção", value: "Lutas históricas" }
+        ]
+      });
+    }
+
+    fighterSearch.addEventListener("input", renderChampions);
+    weightFilter.addEventListener("change", renderChampions);
+
+    document.getElementById("clearFilters").addEventListener("click", () => {
+      fighterSearch.value = "";
+      weightFilter.value = "all";
+      renderChampions();
+      fighterSearch.focus();
+    });
+
+    // A busca do cabeçalho direciona para a seção de atletas.
+    document.getElementById("globalSearch").addEventListener("submit", event => {
+      event.preventDefault();
+      const query = document.getElementById("globalSearchInput").value.trim();
+
+      fighterSearch.value = query;
+      weightFilter.value = "all";
+      renderChampions();
+
+      document.getElementById("campeoes").scrollIntoView({ behavior: "smooth" });
+      fighterSearch.focus();
+
+      if (!query) showToast("Digite um nome ou categoria para buscar.");
+    });
+
+    championsGrid.addEventListener("click", event => {
+      const button = event.target.closest("[data-fighter]");
+      if (button) openFighter(Number(button.dataset.fighter));
+    });
+
+    document.getElementById("legendsGrid").addEventListener("click", event => {
+      const button = event.target.closest("[data-legend]");
+      if (button) openLegend(Number(button.dataset.legend));
+    });
+
+    document.getElementById("fightsGrid").addEventListener("click", event => {
+      const button = event.target.closest("[data-fight]");
+      if (button) openFight(Number(button.dataset.fight));
+    });
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+      menuToggle.textContent = isOpen ? "×" : "☰";
+    });
+
+    navLinks.addEventListener("click", event => {
+      if (event.target.closest("a")) {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Abrir menu");
+        menuToggle.textContent = "☰";
+      }
+    });
+
+    document.getElementById("modalClose").addEventListener("click", closeModal);
+
+    modal.addEventListener("click", event => {
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeModal();
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Abrir menu");
+        menuToggle.textContent = "☰";
+      }
+
+      // Mantém o foco dentro do modal enquanto estiver aberto.
+      if (event.key === "Tab" && modal.classList.contains("open")) {
+        const focusable = [...modal.querySelectorAll("button, a, input, [tabindex]:not([tabindex='-1'])")]
+          .filter(element => !element.disabled && element.offsetParent !== null);
+
+        if (!focusable.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    document.getElementById("newsletterForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const email = document.getElementById("newsletterEmail");
+
+      if (!email.checkValidity()) {
+        email.reportValidity();
+        return;
+      }
+
+      // Demonstração local: não envia nem armazena dados.
+      showToast("Cadastro demonstrativo concluído! Nenhum e-mail foi enviado.");
+      email.value = "";
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Inicialização.
+    renderChampions();
+    renderRankings();
+    renderLegends();
+    renderFights();
+    renderProspects();
+  </script>
+</body>
+</html>

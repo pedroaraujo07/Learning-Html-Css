@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UFC Hub — Campeões, Lendas e o Futuro do Octógono</title>
+<meta name="description" content="UFC Hub: campeões atuais, rankings P4P, lendas, melhores lutas, invictos e o que vem por aí no UFC.">
+<meta name="theme-color" content="#0a0a0b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0b;
+  --bg-2:#101012;
+  --card:#16161a;
+  --card-2:#1d1d22;
+  --line:#2a2a31;
+  --text:#f3f3f5;
+  --muted:#a0a0ab;
+  --red:#d20a0a;
+  --red-2:#ff2e2e;
+  --gold:#f5c518;
+  --gold-2:#ffe27a;
+  --radius:16px;
+  --shadow:0 18px 50px rgba(0,0,0,.55);
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --font-display:"Oswald","Impact","Arial Narrow",sans-serif;
+  --font-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --nav-h:68px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 12px)}
+body{
+  margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);
+  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body.lock{overflow:hidden}
+img,svg{max-width:100%;display:block}
+.av svg{width:100%;height:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+ul{list-style:none;margin:0;padding:0}
+h1,h2,h3,h4{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.02em;margin:0;line-height:1.1}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.container{width:min(1200px,100% - 40px);margin-inline:auto}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;inset:0 0 auto 0;height:var(--nav-h);z-index:100;
+  background:rgba(10,10,11,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.06);transition:background .3s,box-shadow .3s;
+}
+.nav.scrolled{background:rgba(10,10,11,.94);box-shadow:0 6px 30px rgba(0,0,0,.5)}
+.nav__inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:1.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.logo__mark{
+  display:grid;place-items:center;width:38px;height:38px;background:var(--red);color:#fff;
+  clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);font-size:1rem
+}
+.logo b{color:var(--gold);font-weight:700}
+.nav__panel{display:flex;align-items:center;gap:26px;flex:1;justify-content:flex-end}
+.nav__links{display:flex;gap:4px;flex-wrap:nowrap}
+.nav__links a{
+  position:relative;padding:8px 11px;font-size:.84rem;font-weight:600;letter-spacing:.03em;
+  color:var(--muted);text-transform:uppercase;transition:color .25s;white-space:nowrap
+}
+.nav__links a::after{
+  content:"";position:absolute;left:11px;right:11px;bottom:2px;height:2px;background:var(--red);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)
+}
+.nav__links a:hover,.nav__links a.active{color:#fff}
+.nav__links a:hover::after,.nav__links a.active::after{transform:scaleX(1)}
+.search{position:relative;width:240px}
+.search input{
+  width:100%;height:40px;padding:0 14px 0 40px;border-radius:999px;border:1px solid var(--line);
+  background:var(--card);color:var(--text);font:inherit;font-size:.9rem;transition:border-color .25s,box-shadow .25s,width .3s
+}
+.search input::placeholder{color:#74747e}
+.search input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,197,24,.15)}
+.search svg{position:absolute;left:13px;top:50%;translate:0 -50%;width:18px;height:18px;color:var(--muted);pointer-events:none}
+.suggest{
+  position:absolute;top:calc(100% + 8px);right:0;width:min(340px,92vw);background:var(--card);border:1px solid var(--line);
+  border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:5
+}
+.suggest.open{display:block}
+.suggest button{
+  display:flex;width:100%;gap:12px;align-items:center;text-align:left;background:none;border:0;padding:10px 12px;
+  border-bottom:1px solid var(--line)
+}
+.suggest button:last-child{border-bottom:0}
+.suggest button:hover,.suggest button:focus-visible{background:var(--card-2)}
+.suggest .av{width:34px;height:34px;border-radius:50%;overflow:hidden;flex:none}
+.suggest strong{display:block;font-size:.92rem;line-height:1.2}
+.suggest small{color:var(--muted);font-size:.76rem}
+.suggest .empty{padding:14px;color:var(--muted);font-size:.88rem}
+.burger{
+  display:none;width:44px;height:44px;border-radius:12px;background:var(--card);border:1px solid var(--line);
+  position:relative
+}
+.burger span{position:absolute;left:12px;right:12px;height:2px;background:#fff;border-radius:2px;transition:transform .3s var(--ease),opacity .2s,top .3s var(--ease)}
+.burger span:nth-child(1){top:15px}.burger span:nth-child(2){top:21px}.burger span:nth-child(3){top:27px}
+.burger[aria-expanded="true"] span:nth-child(1){top:21px;transform:rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){top:21px;transform:rotate(-45deg)}
+
+/* ---------- BUTTONS / UTIL ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;border-radius:12px;border:0;
+  font-family:var(--font-display);font-size:1.05rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;
+  transition:transform .25s var(--ease),box-shadow .25s,background .25s,color .25s
+}
+.btn--red{background:linear-gradient(135deg,var(--red),#8f0606);color:#fff;box-shadow:0 10px 30px rgba(210,10,10,.4)}
+.btn--red:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(210,10,10,.55)}
+.btn--ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.28)}
+.btn--ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;font-size:.72rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;background:rgba(245,197,24,.12);color:var(--gold);border:1px solid rgba(245,197,24,.3)
+}
+.chip--red{background:rgba(210,10,10,.15);color:#ff6b6b;border-color:rgba(210,10,10,.4)}
+.chip--gray{background:rgba(255,255,255,.06);color:var(--muted);border-color:var(--line)}
+
+section{padding:96px 0;position:relative}
+.sec-head{margin-bottom:44px;max-width:720px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--red-2);font-weight:700;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase}
+.eyebrow::before{content:"";width:28px;height:3px;background:var(--red)}
+.sec-head h2{font-size:clamp(2rem,4.5vw,3.4rem);margin:10px 0 12px}
+.sec-head h2 span{color:var(--gold)}
+.sec-head p{color:var(--muted);margin:0;font-size:1.02rem}
+.alt{background:linear-gradient(180deg,var(--bg-2),var(--bg))}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:100svh;padding:calc(var(--nav-h) + 60px) 0 70px;display:flex;align-items:center;overflow:hidden;
+  background:
+    radial-gradient(900px 520px at 78% 40%,rgba(210,10,10,.28),transparent 65%),
+    radial-gradient(700px 420px at 10% 100%,rgba(245,197,24,.12),transparent 60%),
+    linear-gradient(180deg,#0c0c0e,#0a0a0b);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;opacity:.5;pointer-events:none;
+  background:repeating-linear-gradient(115deg,transparent 0 46px,rgba(255,255,255,.025) 46px 48px);
+}
+.spot{position:absolute;top:-20%;width:34vw;height:140%;background:linear-gradient(180deg,rgba(255,255,255,.13),transparent 70%);
+  filter:blur(40px);transform-origin:top center;opacity:.35;animation:sweep 9s ease-in-out infinite alternate;pointer-events:none}
+.spot.s1{left:30%;rotate:14deg}
+.spot.s2{left:55%;rotate:-16deg;animation-delay:-4s;opacity:.25}
+@keyframes sweep{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+.hero__grid{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero__tag{display:inline-flex;gap:10px;align-items:center;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:.8rem;font-weight:600;color:var(--gold)}
+.hero__tag i{width:8px;height:8px;border-radius:50%;background:var(--red-2);box-shadow:0 0 0 0 rgba(255,46,46,.7);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(255,46,46,0)}100%{box-shadow:0 0 0 0 rgba(255,46,46,0)}}
+.hero h1{font-size:clamp(3rem,9vw,7rem);margin:22px 0 18px;line-height:.95;font-weight:700}
+.hero h1 em{font-style:normal;display:block;background:linear-gradient(90deg,var(--gold),var(--gold-2) 40%,var(--red-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:clamp(1rem,1.6vw,1.2rem);color:#c9c9d1;max-width:560px;margin:0 0 30px}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero__stats{display:flex;gap:34px;margin-top:44px;flex-wrap:wrap}
+.hero__stats div strong{display:block;font-family:var(--font-display);font-size:2.4rem;color:#fff;line-height:1}
+.hero__stats div span{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.octa{position:relative;display:grid;place-items:center}
+.octa svg{width:min(520px,100%);filter:drop-shadow(0 0 50px rgba(210,10,10,.45))}
+.octa .ring{transform-origin:200px 200px;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.octa .float{animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.ticker{position:absolute;left:0;right:0;bottom:0;border-block:1px solid var(--line);background:rgba(10,10,11,.8);overflow:hidden}
+.ticker__track{display:flex;width:max-content;animation:marquee 45s linear infinite}
+.ticker:hover .ticker__track{animation-play-state:paused}
+.ticker span{padding:11px 34px;font-size:.84rem;color:#d7d7dd;white-space:nowrap;position:relative}
+.ticker span::after{content:"";position:absolute;right:0;top:50%;width:6px;height:6px;translate:50% -50%;rotate:45deg;background:var(--red)}
+.ticker b{color:var(--gold);font-weight:700}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ---------- CHAMPIONS ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.tabs{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.tabs button{padding:9px 20px;border-radius:9px;border:0;background:transparent;color:var(--muted);font-weight:600;font-size:.88rem;transition:background .25s,color .25s}
+.tabs button[aria-selected="true"]{background:var(--red);color:#fff}
+.tabs button:not([aria-selected="true"]):hover{color:#fff}
+.field{position:relative;flex:1;min-width:220px;max-width:380px}
+.field input{
+  width:100%;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);
+  padding:0 14px 0 44px;font:inherit;transition:border-color .25s,box-shadow .25s
+}
+.field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,197,24,.15)}
+.field svg{position:absolute;left:14px;top:50%;translate:0 -50%;width:19px;height:19px;color:var(--muted)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:34px}
+.chips button{
+  padding:7px 15px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--muted);
+  font-size:.82rem;font-weight:600;transition:all .25s
+}
+.chips button:hover{border-color:var(--gold);color:#fff}
+.chips button.on{background:var(--gold);color:#111;border-color:var(--gold)}
+.group-title{display:flex;align-items:center;gap:14px;margin:34px 0 18px;font-size:1.3rem;color:var(--gold)}
+.group-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.count{font-size:.85rem;color:var(--muted);margin-bottom:6px}
+.grid{display:grid;gap:22px}
+.grid--champs{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.card{
+  position:relative;background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;transition:transform .35s var(--ease),border-color .3s,box-shadow .35s;cursor:pointer
+}
+.card:hover,.card:focus-visible{transform:translateY(-8px);border-color:rgba(245,197,24,.55);box-shadow:0 22px 50px rgba(0,0,0,.6),0 0 0 1px rgba(245,197,24,.2)}
+.champ__top{position:relative;aspect-ratio:1/.82;overflow:hidden;background:#101013}
+.champ__top .av{position:absolute;inset:0}
+.champ__top .av svg{width:100%;height:100%}
+.champ__top::after{content:"";position:absolute;inset:auto 0 0 0;height:50%;background:linear-gradient(0deg,var(--card),transparent)}
+.belt{
+  position:absolute;top:12px;left:12px;z-index:2;display:inline-flex;gap:6px;align-items:center;padding:5px 10px;border-radius:6px;
+  background:linear-gradient(135deg,var(--gold),#b8890a);color:#17120a;font-weight:800;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase
+}
+.champ__body{padding:6px 18px 20px;position:relative;z-index:2;margin-top:-26px}
+.champ__div{font-size:.74rem;color:var(--red-2);font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.champ__name{font-size:1.5rem;margin:4px 0 2px}
+.champ__nick{color:var(--muted);font-size:.85rem;font-style:italic;min-height:1.3em}
+.champ__meta{display:flex;justify-content:space-between;align-items:flex-end;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.rec{font-family:var(--font-display);font-size:1.9rem;color:#fff;line-height:1}
+.rec small{display:block;font-family:var(--font-body);font-size:.66rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:4px}
+.nat{text-align:right;font-size:.86rem;color:#d0d0d8}
+.nat span{font-size:1.4rem;display:block;line-height:1.1}
+.empty-state{padding:50px 20px;text-align:center;border:1px dashed var(--line);border-radius:var(--radius);color:var(--muted);display:none}
+.empty-state.show{display:block}
+.note{font-size:.8rem;color:var(--muted);margin-top:26px}
+
+/* ---------- P4P ---------- */
+.p4p{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative;overflow:hidden}
+.panel::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.panel h3{font-size:1.5rem;margin-bottom:4px}
+.panel > small{color:var(--muted)}
+.rank{margin-top:18px;display:grid;gap:10px}
+.rank li{
+  display:grid;grid-template-columns:46px 48px 1fr auto;gap:14px;align-items:center;padding:12px 14px;border-radius:12px;
+  background:var(--card-2);border:1px solid transparent;transition:transform .3s var(--ease),border-color .3s;cursor:pointer
+}
+.rank li:hover,.rank li:focus-visible{transform:translateX(6px);border-color:var(--gold)}
+.rank .n{font-family:var(--font-display);font-size:2rem;color:var(--muted);text-align:center;line-height:1}
+.rank li:nth-child(1) .n{color:var(--gold)}
+.rank li:nth-child(2) .n{color:#cfd3d8}
+.rank li:nth-child(3) .n{color:#cd8a4b}
+.rank .av{width:48px;height:48px;border-radius:50%;overflow:hidden;border:2px solid var(--line)}
+.rank li:nth-child(1) .av{border-color:var(--gold)}
+.rank strong{display:block;line-height:1.2}
+.rank small{color:var(--muted);font-size:.78rem}
+
+/* ---------- LEGENDS ---------- */
+.grid--legends{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.legend{padding:0}
+.legend__img{height:150px;position:relative;overflow:hidden;background:#111}
+.legend__img .av{position:absolute;inset:0;transform:scale(1.15);transition:transform .6s var(--ease)}
+.legend:hover .legend__img .av{transform:scale(1.28)}
+.legend__img .av svg{width:100%;height:100%}
+.legend__img::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--card) 5%,transparent 70%)}
+.legend__num{position:absolute;top:10px;right:14px;z-index:2;font-family:var(--font-display);font-size:3.2rem;color:rgba(255,255,255,.12);line-height:1}
+.legend__body{padding:6px 20px 22px}
+.legend__body h3{font-size:1.45rem}
+.legend__body .role{color:var(--gold);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:3px 0 10px}
+.legend__body p{margin:0;color:#c3c3cb;font-size:.92rem}
+.legend__foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:.8rem;color:var(--muted)}
+.legend__foot b{color:#fff;font-family:var(--font-display);font-size:1.15rem;letter-spacing:.04em}
+.more{color:var(--red-2);font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.card:hover .more{gap:10px}
+
+/* ---------- FIGHTS CAROUSEL ---------- */
+.carousel{position:relative}
+.track{
+  display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 22px;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch
+}
+.track::-webkit-scrollbar{display:none}
+.fight{
+  flex:0 0 min(420px,86%);scroll-snap-align:start;background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid var(--line);
+  border-radius:var(--radius);padding:26px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s var(--ease)
+}
+.fight:hover{border-color:rgba(245,197,24,.5);transform:translateY(-4px)}
+.fight::after{content:attr(data-n);position:absolute;right:16px;bottom:-14px;font-family:var(--font-display);font-size:8rem;color:rgba(255,255,255,.04);line-height:1}
+.fight__ev{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:.78rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:16px}
+.vs strong{font-family:var(--font-display);font-size:1.35rem;text-transform:uppercase;line-height:1.1}
+.vs strong:last-child{text-align:right}
+.vs i{font-style:normal;font-family:var(--font-display);color:var(--red-2);font-size:1.1rem;border:1.5px solid var(--red);border-radius:50%;width:40px;height:40px;display:grid;place-items:center}
+.stars{color:var(--gold);letter-spacing:3px;font-size:1rem;margin-bottom:10px}
+.fight p{color:#c3c3cb;font-size:.93rem;margin:0 0 10px}
+.fight .extra{max-height:0;overflow:hidden;opacity:0;transition:max-height .5s var(--ease),opacity .4s}
+.fight.open .extra{max-height:260px;opacity:1}
+.fight .tog{background:none;border:0;color:var(--gold);font-weight:700;padding:4px 0;font-size:.86rem}
+.car-ctrl{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.dots{display:flex;gap:8px}
+.dots button{width:10px;height:10px;border-radius:50%;border:0;background:var(--line);padding:0;transition:all .3s}
+.dots button.on{background:var(--red);width:28px;border-radius:6px}
+.arrows{display:flex;gap:10px}
+.arrows button{width:46px;height:46px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;transition:all .25s}
+.arrows button:hover{background:var(--red);border-color:var(--red)}
+.arrows svg{width:20px;height:20px}
+
+/* ---------- UNDEFEATED ---------- */
+.grid--und{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.und{padding:22px;text-align:center}
+.und .av{width:96px;height:96px;margin:0 auto 14px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 0 6px rgba(245,197,24,.1)}
+.und h3{font-size:1.25rem}
+.und small{color:var(--muted)}
+.und .big{font-family:var(--font-display);font-size:2.6rem;color:var(--gold);line-height:1;margin:12px 0 2px}
+.und .big em{font-style:normal;color:var(--red-2)}
+.bar{height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin:12px 0 14px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--gold));transition:width 1.4s var(--ease)}
+.in .bar i{width:100%}
+
+/* ---------- FUTURE ---------- */
+.future{display:grid;grid-template-columns:1.25fr 1fr;gap:26px}
+.main-ev{
+  background:
+    radial-gradient(500px 280px at 100% 0,rgba(210,10,10,.35),transparent 70%),
+    linear-gradient(180deg,var(--card-2),var(--card));
+  border:1px solid rgba(210,10,10,.4);border-radius:var(--radius);padding:30px;position:relative
+}
+.main-ev h3{font-size:clamp(1.8rem,3.4vw,2.6rem);margin:10px 0 6px}
+.main-ev .where{color:var(--muted);margin-bottom:22px}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.cd div{background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center}
+.cd strong{display:block;font-family:var(--font-display);font-size:2.2rem;color:var(--gold);line-height:1}
+.cd span{font-size:.68rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.card-list li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.93rem}
+.card-list li:last-child{border:0}
+.card-list b{font-weight:600}
+.card-list span{color:var(--muted);font-size:.78rem;text-align:right}
+.card-list .title{color:var(--gold)}
+.stack{display:grid;gap:18px;align-content:start}
+.mini{padding:22px;cursor:default}
+.mini:hover{transform:translateY(-4px)}
+.mini h4{font-size:1.2rem;margin:10px 0 6px}
+.mini p{margin:0;color:#c3c3cb;font-size:.9rem}
+
+/* ---------- FOOTER ---------- */
+footer{background:#070708;border-top:1px solid var(--line);padding:64px 0 28px}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px}
+.foot p{color:var(--muted);font-size:.9rem;max-width:330px}
+.foot h5{font-family:var(--font-display);font-size:1rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:0 0 14px}
+.foot li{margin-bottom:9px}
+.foot a{color:var(--muted);font-size:.92rem;transition:color .2s}
+.foot a:hover{color:#fff}
+.social{display:flex;gap:10px;margin-top:18px}
+.social a{width:40px;height:40px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;transition:all .25s}
+.social a:hover{background:var(--red);border-color:var(--red);transform:translateY(-3px)}
+.social svg{width:18px;height:18px;color:#fff}
+.legal{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);color:#6f6f79;font-size:.78rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+.to-top{
+  position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;background:var(--red);border:0;z-index:60;
+  display:grid;place-items:center;opacity:0;pointer-events:none;transform:translateY(14px);transition:all .3s var(--ease);box-shadow:0 10px 24px rgba(210,10,10,.5)
+}
+.to-top.show{opacity:1;pointer-events:auto;transform:none}
+.to-top svg{width:20px;height:20px}
+
+/* ---------- MODAL ---------- */
+.modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:18px}
+.modal.open{display:flex}
+.modal__bd{position:absolute;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(6px);animation:fade .3s}
+.modal__panel{
+  position:relative;width:min(760px,100%);max-height:92vh;overflow:auto;background:linear-gradient(180deg,#1c1c21,#121215);
+  border:1px solid rgba(245,197,24,.3);border-radius:20px;box-shadow:var(--shadow);animation:pop .4s var(--ease)
+}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.96)}}
+.modal__x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);border:0;z-index:3;display:grid;place-items:center;transition:background .2s}
+.modal__x:hover{background:var(--red)}
+.modal__x svg{width:18px;height:18px}
+.m-head{display:flex;gap:22px;align-items:center;padding:30px 30px 20px;background:radial-gradient(400px 200px at 0 0,rgba(210,10,10,.3),transparent 70%)}
+.m-head .av{width:110px;height:110px;border-radius:18px;overflow:hidden;flex:none;border:2px solid var(--gold)}
+.m-head h3{font-size:clamp(1.6rem,4vw,2.3rem)}
+.m-head .sub{color:var(--muted);margin:4px 0 10px}
+.m-head .chips-row{display:flex;gap:8px;flex-wrap:wrap}
+.m-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1px;background:var(--line);border-block:1px solid var(--line)}
+.m-stats div{background:#15151a;padding:14px 16px}
+.m-stats strong{display:block;font-family:var(--font-display);font-size:1.4rem;color:var(--gold);line-height:1.1}
+.m-stats span{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.m-tabs{display:flex;gap:4px;padding:14px 30px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.m-tabs button{padding:10px 18px;border:0;background:none;color:var(--muted);font-weight:700;font-size:.86rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:3px solid transparent;white-space:nowrap}
+.m-tabs button[aria-selected="true"]{color:#fff;border-color:var(--red)}
+.m-body{padding:22px 30px 32px;color:#d0d0d8;min-height:140px}
+.m-body p{margin:0 0 12px}
+.m-body ul{list-style:disc;padding-left:20px;display:grid;gap:8px}
+.m-body li::marker{color:var(--red-2)}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1100px){
+  .nav__links a{padding:8px 8px;font-size:.78rem}
+  .search{width:190px}
+}
+@media (max-width:980px){
+  .burger{display:block}
+  .nav__panel{
+    position:fixed;top:var(--nav-h);left:0;right:0;flex-direction:column-reverse;align-items:stretch;gap:14px;padding:18px 20px 26px;
+    background:rgba(10,10,11,.98);border-bottom:1px solid var(--line);max-height:calc(100svh - var(--nav-h));overflow:auto;
+    transform:translateY(-12px);opacity:0;visibility:hidden;transition:all .3s var(--ease)
+  }
+  .nav__panel.open{transform:none;opacity:1;visibility:visible}
+  .nav__links{flex-direction:column;gap:0}
+  .nav__links a{padding:14px 6px;font-size:1rem;border-bottom:1px solid var(--line)}
+  .nav__links a::after{display:none}
+  .search{width:100%}
+  .suggest{width:100%}
+  .hero__grid{grid-template-columns:1fr}
+  .octa{order:-1;max-width:340px;margin-inline:auto}
+  .p4p,.future{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  section{padding:70px 0}
+  .hero{padding-bottom:110px}
+  .hero__stats{gap:22px}
+  .tabs{width:100%}
+  .tabs button{flex:1;padding:9px 6px}
+  .field{max-width:none}
+  .rank li{grid-template-columns:34px 44px 1fr;}
+  .rank li .chip{display:none}
+  .m-head{flex-direction:column;text-align:center;padding:30px 20px 18px}
+  .m-head .chips-row{justify-content:center}
+  .m-tabs{padding-inline:20px}
+  .m-body{padding:20px}
+  .foot{grid-template-columns:1fr}
+  .grid--champs{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a href="#inicio" class="logo" aria-label="UFC Hub - início"><span class="logo__mark">U</span><span>UFC <b>Hub</b></span></a>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="panel"><span></span><span></span><span></span></button>
+    <div class="nav__panel" id="panel">
+      <nav aria-label="Principal">
+        <ul class="nav__links" id="links">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#campeoes">Campeões</a></li>
+          <li><a href="#p4p">P4P</a></li>
+          <li><a href="#lendas">Lendas</a></li>
+          <li><a href="#lutas">Lutas</a></li>
+          <li><a href="#invictos">Invictos</a></li>
+          <li><a href="#futuro">Futuro</a></li>
+        </ul>
+      </nav>
+      <div class="search" role="search">
+        <label class="sr-only" for="gsearch">Buscar lutadores</label>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="gsearch" type="search" placeholder="Buscar lutador ou categoria…" autocomplete="off" aria-autocomplete="list" aria-controls="suggest">
+        <div class="suggest" id="suggest" role="listbox"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="spot s1"></div><div class="spot s2"></div>
+  <div class="container hero__grid">
+    <div class="reveal">
+      <span class="hero__tag"><i></i> UFC 333 · Abu Dhabi · 24 de outubro de 2026</span>
+      <h1>Entre no <em>Octógono</em></h1>
+      <p class="lead">Campeões, lendas, lutas inesquecíveis e o que vem por aí. Tudo sobre o maior espetáculo das artes marciais mistas, reunido em um só lugar.</p>
+      <div class="hero__cta">
+        <a href="#campeoes" class="btn btn--red">Ver campeões
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#futuro" class="btn btn--ghost">Próximo evento</a>
+      </div>
+      <div class="hero__stats">
+        <div><strong data-count="11">0</strong><span>Cinturões ativos</span></div>
+        <div><strong data-count="1993">0</strong><span>Primeiro UFC</span></div>
+        <div><strong id="daysLeft">--</strong><span>Dias para o UFC 333</span></div>
+      </div>
+    </div>
+    <div class="octa reveal" aria-hidden="true">
+      <svg viewBox="0 0 400 400" fill="none">
+        <defs>
+          <radialGradient id="floor" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#3a0a0a"/><stop offset="1" stop-color="#0c0c0e"/></radialGradient>
+          <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe27a"/><stop offset="1" stop-color="#f5c518"/></linearGradient>
+        </defs>
+        <g class="ring"><circle cx="200" cy="200" r="190" stroke="#d20a0a" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="3 12"/></g>
+        <g class="float">
+          <polygon points="357.1,265.1 265.1,357.1 134.9,357.1 42.9,265.1 42.9,134.9 134.9,42.9 265.1,42.9 357.1,134.9" fill="url(#floor)" stroke="url(#gold)" stroke-width="5" stroke-linejoin="round"/>
+          <polygon points="310.9,245.9 245.9,310.9 154.1,310.9 89.1,245.9 89.1,154.1 154.1,89.1 245.9,89.1 310.9,154.1" fill="none" stroke="#d20a0a" stroke-width="3" stroke-linejoin="round"/>
+          <g stroke="#ffffff" stroke-opacity=".12" stroke-width="1">
+            <line x1="357.1" y1="265.1" x2="310.9" y2="245.9"/><line x1="265.1" y1="357.1" x2="245.9" y2="310.9"/>
+            <line x1="134.9" y1="357.1" x2="154.1" y2="310.9"/><line x1="42.9" y1="265.1" x2="89.1" y2="245.9"/>
+            <line x1="42.9" y1="134.9" x2="89.1" y2="154.1"/><line x1="134.9" y1="42.9" x2="154.1" y2="89.1"/>
+            <line x1="265.1" y1="42.9" x2="245.9" y2="89.1"/><line x1="357.1" y1="134.9" x2="310.9" y2="154.1"/>
+          </g>
+          <circle cx="200" cy="200" r="64" fill="#d20a0a" fill-opacity=".14" stroke="url(#gold)" stroke-width="2"/>
+          <text x="200" y="196" text-anchor="middle" font-family="Oswald, Impact, sans-serif" font-size="40" font-weight="700" fill="#fff" letter-spacing="2">UFC</text>
+          <text x="200" y="224" text-anchor="middle" font-family="Oswald, Impact, sans-serif" font-size="17" fill="#f5c518" letter-spacing="6">HUB</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="ticker" aria-label="Últimos resultados">
+    <div class="ticker__track" id="ticker"></div>
+  </div>
+</section>
+
+<!-- ================= CAMPEÕES ================= -->
+<section id="campeoes" class="alt">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Os donos dos cinturões</span>
+      <h2>Atuais <span>Campeões</span></h2>
+      <p>Onze divisões, onze cinturões. Filtre por gênero, categoria de peso ou busque pelo nome, e clique em um card para ver os detalhes.</p>
+    </div>
+
+    <div class="toolbar reveal">
+      <div class="tabs" role="tablist" aria-label="Filtrar por gênero" id="genderTabs">
+        <button role="tab" aria-selected="true" data-g="all">Todos</button>
+        <button role="tab" aria-selected="false" data-g="M">Masculino</button>
+        <button role="tab" aria-selected="false" data-g="F">Feminino</button>
+      </div>
+      <div class="field">
+        <label class="sr-only" for="csearch">Filtrar campeões por nome ou categoria</label>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="csearch" type="search" placeholder="Nome, país ou categoria (ex.: leve, Brasil)…" autocomplete="off">
+      </div>
+    </div>
+    <div class="chips reveal" id="weightChips" aria-label="Categorias de peso"></div>
+    <div class="count" id="champCount" aria-live="polite"></div>
+    <div id="champs"></div>
+    <div class="empty-state" id="champEmpty">Nenhum campeão encontrado para esse filtro. Tente outro nome ou limpe a busca.</div>
+    <p class="note">* Cartéis marcados com asterisco são aproximados e podem estar desatualizados. Confira sempre em ufc.com. Campeões conforme fontes consultadas em 16/10/2026.</p>
+  </div>
+</section>
+
+<!-- ================= P4P ================= -->
+<section id="p4p">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Libra por libra</span>
+      <h2>Ranking <span>P4P</span></h2>
+      <p>Quem seria o melhor se todos tivessem o mesmo peso? O Top 5 masculino e feminino segundo o ranking de mídia mais recente que consultamos.</p>
+    </div>
+    <div class="p4p">
+      <div class="panel reveal">
+        <h3>Masculino</h3><small>Top 5 pound-for-pound</small>
+        <ol class="rank" id="p4pM" style="list-style:none;padding:0"></ol>
+      </div>
+      <div class="panel reveal">
+        <h3>Feminino</h3><small>Top 5 pound-for-pound</small>
+        <ol class="rank" id="p4pF" style="list-style:none;padding:0"></ol>
+      </div>
+    </div>
+    <p class="note">Base: ranking de votação de mídia (jun–out/2026). Desde junho de 2026 o UFC vem migrando para o ranking algorítmico Meta UFC Rankings, então as posições podem divergir.</p>
+  </div>
+</section>
+
+<!-- ================= LENDAS ================= -->
+<section id="lendas" class="alt">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Hall da fama</span>
+      <h2>Lendas e <span>Maiores da História</span></h2>
+      <p>Os nomes que definiram eras, quebraram recordes e mudaram o esporte. Clique para ler a trajetória completa.</p>
+    </div>
+    <div class="grid grid--legends" id="legends"></div>
+  </div>
+</section>
+
+<!-- ================= LUTAS ================= -->
+<section id="lutas">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Para rever mil vezes</span>
+      <h2>Melhores Lutas <span>da História</span></h2>
+      <p>Guerras de cinco rounds, viradas improváveis e nocautes em cima da hora. Arraste, use as setas ou o teclado.</p>
+    </div>
+    <div class="carousel reveal" aria-roledescription="carrossel" aria-label="Melhores lutas">
+      <div class="track" id="track" tabindex="0"></div>
+      <div class="car-ctrl">
+        <div class="dots" id="dots"></div>
+        <div class="arrows">
+          <button id="prev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+          <button id="next" aria-label="Próxima"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INVICTOS ================= -->
+<section id="invictos" class="alt">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Zero derrotas</span>
+      <h2>Lutadores <span>Invictos</span></h2>
+      <p>Cartéis imaculados são raros e frágeis: em maio de 2026, Khamzat Chimaev perdeu o &quot;0&quot; para Sean Strickland. Estes seguem de pé, além de uma lenda aposentada que nunca perdeu.</p>
+    </div>
+    <div class="grid grid--und" id="und"></div>
+    <p class="note">Cartéis conforme listas e eventos consultados até outubro de 2026. Um único resultado pode mudar tudo.</p>
+  </div>
+</section>
+
+<!-- ================= FUTURO ================= -->
+<section id="futuro">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">O que vem por aí</span>
+      <h2>Previsões &amp; <span>Futuro do UFC</span></h2>
+      <p>Um evento confirmado para a próxima semana e as principais especulações para o fim de 2026. Itens marcados como &quot;Especulação&quot; não são anúncios oficiais.</p>
+    </div>
+    <div class="future">
+      <article class="main-ev reveal">
+        <span class="chip chip--red">Confirmado</span>
+        <h3>UFC 333 · Volkanovski vs. Evloev</h3>
+        <div class="where">Sábado, 24/10/2026 · Etihad Arena, Yas Island, Abu Dhabi (EAU)</div>
+        <div class="cd" aria-label="Contagem regressiva para o UFC 333" aria-live="off">
+          <div><strong id="cdD">00</strong><span>Dias</span></div>
+          <div><strong id="cdH">00</strong><span>Horas</span></div>
+          <div><strong id="cdM">00</strong><span>Min</span></div>
+          <div><strong id="cdS">00</strong><span>Seg</span></div>
+        </div>
+        <ul class="card-list">
+          <li><b class="title">Alexander Volkanovski (c) vs. Movsar Evloev</b><span>Peso-pena · cinturão</span></li>
+          <li><b class="title">Petr Yan (c) vs. Merab Dvalishvili</b><span>Peso-galo · cinturão · trilogia</span></li>
+          <li><b>Lone&#39;er Kavanagh vs. Ramazan Temirov</b><span>Peso-mosca</span></li>
+          <li><b>Alexander Volkov vs. Rizvan Kuniev</b><span>Peso-pesado</span></li>
+          <li><b>Arnold Allen vs. Aaron Pico</b><span>Peso-pena</span></li>
+          <li><b>Reyes vs. Murzakanov · Krylov vs. Yakhyaev · Dawson vs. Aliev</b><span>Preliminares (entre outras)</span></li>
+        </ul>
+        <p class="note" style="margin-bottom:0">Horário do card principal aproximado (18h UTC / 15h em Brasília); confira a grade oficial.</p>
+      </article>
+      <div class="stack" id="stack"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="foot">
+      <div>
+        <a href="#inicio" class="logo"><span class="logo__mark">U</span><span>UFC <b>Hub</b></span></a>
+        <p style="margin-top:14px">Projeto de fãs para fãs de MMA: campeões, lendas, lutas e o futuro do octógono.</p>
+        <div class="social" aria-label="Redes sociais (fictícias)">
+          <a href="#" aria-label="Instagram do UFC Hub (fictício)" data-fake><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="X do UFC Hub (fictício)" data-fake><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l16 16M20 4 4 20"/></svg></a>
+          <a href="#" aria-label="YouTube do UFC Hub (fictício)" data-fake><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5 3-5 3Z"/></svg></a>
+          <a href="#" aria-label="TikTok do UFC Hub (fictício)" data-fake><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5M14 3c.4 2.6 2.1 4.2 5 4.4"/></svg></a>
+        </div>
+      </div>
+      <div><h5>Explorar</h5><ul>
+        <li><a href="#campeoes">Campeões</a></li><li><a href="#p4p">Ranking P4P</a></li><li><a href="#lendas">Lendas</a></li><li><a href="#lutas">Melhores lutas</a></li></ul></div>
+      <div><h5>Mais</h5><ul>
+        <li><a href="#invictos">Invictos</a></li><li><a href="#futuro">Futuro do UFC</a></li><li><a href="#inicio">Voltar ao topo</a></li></ul></div>
+      <div><h5>Aviso</h5><p>Site informativo e independente, sem vínculo com a Zuffa, LLC ou o UFC. Nomes e marcas pertencem aos seus donos.</p></div>
+    </div>
+    <div class="legal">
+      <span>© 2026 UFC Hub. Todos os direitos reservados ao projeto. Dados esportivos de fontes públicas, sujeitos a alteração.</span>
+      <span>Feito com HTML, CSS e JavaScript puros.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Voltar ao topo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg></button>
+
+<!-- ================= MODAL ================= -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal__bd" data-close></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="modal__x" data-close aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div id="mContent"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============ helpers ============ */
+const $  = (s, c) => (c || document).querySelector(s);
+const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
+const norm = s => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const pad = n => String(n).padStart(2, "0");
+
+let avCount = 0;
+const PALETTES = [["#d20a0a","#5a0505"],["#f5c518","#7a5a00"],["#b01212","#2a0606"],["#e8a90c","#5b3d00"],["#8f0606","#1a0303"],["#ff4d2e","#4a0f06"]];
+function avatar(name){
+  const id = "g" + (++avCount);
+  let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  const p = PALETTES[h % PALETTES.length];
+  const initials = name.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase();
+  return '<svg viewBox="0 0 120 120" role="img" aria-label="Avatar de ' + name + '" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + p[0] + '"/><stop offset="1" stop-color="' + p[1] + '"/></linearGradient></defs>' +
+    '<rect width="120" height="120" fill="url(#' + id + ')"/>' +
+    '<g opacity=".18" stroke="#fff" stroke-width="1"><path d="M0 40h120M0 80h120M40 0v120M80 0v120"/></g>' +
+    '<circle cx="60" cy="46" r="21" fill="#0a0a0b" fill-opacity=".55"/>' +
+    '<path d="M16 120c0-30 19-44 44-44s44 14 44 44Z" fill="#0a0a0b" fill-opacity=".55"/>' +
+    '<text x="60" y="105" text-anchor="middle" font-family="Oswald,Impact,sans-serif" font-size="20" font-weight="700" fill="#fff" letter-spacing="2">' + initials + '</text></svg>';
+}
+
+/* ============ DATA ============ */
+const results = [
+  ["UFC 332","Natalia Silva é a nova campeã peso-mosca feminina"],
+  ["UFC 330","Makhachev supera Ian Garry por decisão"],
+  ["UFC 328","Strickland vence Chimaev e é campeão dos médios"],
+  ["UFC 325","Volkanovski vence Diego Lopes e segue campeão"],
+  ["UFC 324","Gaethje vence Pimblett por decisão"],
+  ["PRÓXIMO","UFC 333: Volkanovski vs. Evloev, 24/10 em Abu Dhabi"]
+];
+
+const WK = ["Pesado","Meio-Pesado","Médio","Meio-Médio","Leve","Pena","Galo","Mosca","Palha"];
+
+const champions = [
+  {name:"Ciryl Gane", nick:"Bon Gamin", wk:"Pesado", div:"Peso-Pesado", limit:"120 kg · 265 lb", g:"M", rec:"14-2 (1 NC)", country:"França", flag:"🇫🇷", belt:"Campeão", since:"14/06/2026",
+   bio:"Ex-lutador de Muay Thai e formado na MMA Factory de Fernand Lopez, Gane chegou ao topo dos pesados em 2026: venceu Alex Pereira em 14/06/2026 pelo cinturão interino e ocupa a liderança da divisão desde que Tom Aspinall abriu mão do título.",
+   style:"Striker técnico e móvel, com jab, jogo de pernas e chutes de longa distância raros para a categoria. Defesa de quedas sólida e boa leitura de distância.",
+   next:"A primeira defesa ainda não foi definida; o retorno de Tom Aspinall é o assunto mais comentado do peso-pesado."},
+  {name:"Carlos Ulberg", nick:"", wk:"Meio-Pesado", div:"Meio-Pesado", limit:"93 kg · 205 lb", g:"M", rec:"14-1*", country:"Nova Zelândia", flag:"🇳🇿", belt:"Campeão", since:"2026",
+   bio:"Neozelandês com base no kickboxing e no muay thai, Ulberg subiu rápido no ranking e é o campeão atual dos meio-pesados.",
+   style:"Striker explosivo, com chutes rápidos, boa esquiva e poder de nocaute nas duas mãos.",
+   next:"Defesas de título dependem da fila de contendores; sem data anunciada no momento."},
+  {name:"Sean Strickland", nick:"Tarzan", wk:"Médio", div:"Peso-Médio", limit:"84 kg · 185 lb", g:"M", rec:"30-7*", country:"Estados Unidos", flag:"🇺🇸", belt:"Campeão", since:"09/05/2026",
+   bio:"No UFC 328, em 09/05/2026, Strickland venceu Khamzat Chimaev por decisão dividida e acabou com o 0 do rival. Já tinha sido campeão antes e voltou ao topo.",
+   style:"Boxe de volume, com jab constante, pressão para frente e queixo muito resistente.",
+   next:"Uma revanche com Chimaev é a especulação mais forte para o peso-médio."},
+  {name:"Islam Makhachev", nick:"", wk:"Meio-Médio", div:"Peso Meio-Médio", limit:"77 kg · 170 lb", g:"M", rec:"29-1", country:"Rússia", flag:"🇷🇺", belt:"Campeão", since:"2025",
+   bio:"Natural do Daguestão e pupilo de Khabib Nurmagomedov, foi campeão dos leves e agora reina nos meio-médios. Defendeu o cinturão contra Ian Garry no UFC 330, em 15/08/2026, por decisão.",
+   style:"Wrestling e sambo de elite, com controle sufocante no chão e striking cada vez mais completo.",
+   next:"Segue como número 1 do P4P e é visto como favorito em qualquer defesa."},
+  {name:"Justin Gaethje", nick:"The Highlight", wk:"Leve", div:"Peso-Leve", limit:"70 kg · 155 lb", g:"M", rec:"27-5*", country:"Estados Unidos", flag:"🇺🇸", belt:"Campeão", since:"24/01/2026",
+   bio:"Ex-lutador de wrestling universitário, Gaethje é sinônimo de luta emocionante. Venceu Paddy Pimblett por decisão no UFC 324, em 24/01/2026, em luta de título.",
+   style:"Pressão constante, chutes baixos devastadores e coragem para trocar golpes. O wrestling serve de rede de segurança.",
+   next:"A divisão tem fila grande de desafiantes; nada confirmado oficialmente."},
+  {name:"Alexander Volkanovski", nick:"The Great", wk:"Pena", div:"Peso-Pena", limit:"66 kg · 145 lb", g:"M", rec:"28-4", country:"Austrália", flag:"🇦🇺", belt:"Campeão", since:"2025",
+   bio:"Recuperou o cinturão e o defendeu contra Diego Lopes em 31/01/2026 (UFC 325). Aos 37 anos, é um dos mais regulares do esporte.",
+   style:"Boxe preciso, leitura de luta excelente, wrestling e cardio fora de série.",
+   next:"Defende o título contra o invicto Movsar Evloev (20-0) no UFC 333, em 24/10/2026, em Abu Dhabi."},
+  {name:"Petr Yan", nick:"No Mercy", wk:"Galo", div:"Peso-Galo", limit:"61 kg · 135 lb", g:"M", rec:"20-5", country:"Rússia", flag:"🇷🇺", belt:"Campeão", since:"2025",
+   bio:"Ex-campeão que voltou ao topo dos galos. Tem uma das maiores rivalidades da categoria com Merab Dvalishvili.",
+   style:"Boxe afiado, defesa de quedas e trocação com ritmo alto.",
+   next:"Terceira luta contra Merab Dvalishvili no UFC 333 (24/10/2026), com o cinturão em jogo."},
+  {name:"Joshua Van", nick:"", wk:"Mosca", div:"Peso-Mosca", limit:"57 kg · 125 lb", g:"M", rec:"17-2*", country:"Myanmar", flag:"🇲🇲", belt:"Campeão", since:"06/12/2025",
+   bio:"Um dos campeões mais jovens do UFC, Van conquistou o cinturão no UFC 323 sobre Alexandre Pantoja, em luta encerrada por lesão no braço do brasileiro, e já defendeu o título.",
+   style:"Striking veloz e criativo, com ângulos e combinações que pegam o oponente fora de posição.",
+   next:"Muitos ainda veem Pantoja como o melhor mosca; uma revanche segue no radar."},
+  {name:"Kayla Harrison", nick:"", wk:"Galo", div:"Peso-Galo Feminino", limit:"61 kg · 135 lb", g:"F", rec:"18-1*", country:"Estados Unidos", flag:"🇺🇸", belt:"Campeã", since:"2025",
+   bio:"Bicampeã olímpica de judô (2012 e 2016) e ex-campeã do PFL, Harrison levou o judô de elite para o topo dos galos femininos.",
+   style:"Judô e controle de clinch, com quedas e finalizações. Evoluiu bastante em pé.",
+   next:"Defesas contra as melhores contendoras da divisão, sem data confirmada."},
+  {name:"Natalia Silva", nick:"", wk:"Mosca", div:"Peso-Mosca Feminino", limit:"57 kg · 125 lb", g:"F", rec:"21-5-1", country:"Brasil", flag:"🇧🇷", belt:"Campeã", since:"03/10/2026",
+   bio:"A brasileira venceu Wang Cong por decisão unânime no UFC 332, em 03/10/2026, pelo cinturão vago após Valentina Shevchenko se afastar por lesões. Chega ao título com nove vitórias seguidas no UFC e triunfos sobre Jessica Andrade, Alexa Grasso e Rose Namajunas.",
+   style:"Chutes baixos, cruzados de esquerda e pressão constante, além de boa defesa de quedas.",
+   next:"Primeira defesa ainda não definida; o retorno de Shevchenko é um dos cenários comentados."},
+  {name:"Mackenzie Dern", nick:"Magic Hands", wk:"Palha", div:"Peso-Palha Feminino", limit:"52 kg · 115 lb", g:"F", rec:"16-5*", country:"Estados Unidos", flag:"🇺🇸", belt:"Campeã", since:"25/10/2025",
+   bio:"Campeã mundial de jiu-jitsu, filha de brasileiros e radicada nos EUA, conquistou o cinturão dos palhas em 25/10/2025.",
+   style:"Jiu-jitsu de elite, quedas e finalizações. O striking é o que mais evoluiu nos últimos anos.",
+   next:"Defesas contra as melhores da categoria, sem data confirmada."}
+];
+
+const p4pM = [
+  {name:"Islam Makhachev", sub:"Rússia · Meio-Médio", flag:"RUS", tag:"Campeão", ref:"Islam Makhachev"},
+  {name:"Alexander Volkanovski", sub:"Austrália · Peso-Pena", flag:"AUS", tag:"Campeão", ref:"Alexander Volkanovski"},
+  {name:"Petr Yan", sub:"Rússia · Peso-Galo", flag:"RUS", tag:"Campeão", ref:"Petr Yan"},
+  {name:"Justin Gaethje", sub:"Estados Unidos · Peso-Leve", flag:"USA", tag:"Campeão", ref:"Justin Gaethje"},
+  {name:"Ilia Topuria", sub:"Geórgia · campeão em duas categorias na carreira", flag:"GEO", tag:"", ref:null}
+];
+const p4pF = [
+  {name:"Valentina Shevchenko", sub:"Quirguistão · Peso-Mosca · título vago por lesão", flag:"KGZ", tag:"", ref:null},
+  {name:"Kayla Harrison", sub:"Estados Unidos · Peso-Galo", flag:"USA", tag:"Campeã", ref:"Kayla Harrison"},
+  {name:"Zhang Weili", sub:"China · Peso-Palha", flag:"CHN", tag:"", ref:null},
+  {name:"Natalia Silva", sub:"Brasil · Peso-Mosca", flag:"BRA", tag:"Campeã", ref:"Natalia Silva"},
+  {name:"Manon Fiorot", sub:"França · Peso-Mosca", flag:"FRA", tag:"", ref:null}
+];
+
+const legends = [
+  {name:"Jon Jones", role:"Meio-Pesado · Pesado", rec:"28-1 (1 NC)", blurb:"Considerado por muitos o maior de todos: domínio absoluto por mais de uma década.",
+   highlights:["Tornou-se o mais jovem campeão da história do UFC, aos 23 anos, ao vencer Maurício Shogun em 2011.","Venceu uma lista enorme de ex-campeões nos meio-pesados.","Conquistou o cinturão dos pesados no UFC 285 (2023), finalizando Ciryl Gane em pouco mais de dois minutos.","Anunciou a aposentadoria em 2025, e o título dos pesados ficou com Tom Aspinall."],
+   style:"Envergadura gigante, cotovelos, chutes frontais e lutas de clinch. Lê o adversário e se adapta como poucos.", legacy:"Sua única derrota oficial foi por desqualificação, e a discussão sobre o GOAT sempre passa por ele."},
+  {name:"Anderson Silva", role:"Peso-Médio", rec:"34-11 (1 NC)", blurb:"O Spider dominou os médios por quase sete anos com um estilo artístico e imprevisível.",
+   highlights:["Foi campeão dos médios de 2006 a 2013, com 10 defesas de título consecutivas.","Teve sequência de 16 vitórias seguidas no UFC, marca da época.","Nocautes icônicos, como o chute frontal em Vitor Belfort.","Imortalizado no Hall da Fama do UFC."],
+   style:"Muay thai de clinch, esquivas de boxe, chutes surpreendentes e jiu-jitsu de faixa preta.", legacy:"Elevou o padrão de espetáculo e criatividade no MMA e inspirou toda uma geração brasileira."},
+  {name:"Georges St-Pierre", role:"Meio-Médio · Médio", rec:"26-2", blurb:"GSP uniu atletismo, estratégia e consistência para dominar os meio-médios.",
+   highlights:["Reinou entre os meio-médios com nove defesas de título.","Voltou em 2017 e se tornou campeão dos médios ao finalizar Michael Bisping no UFC 217.","Aposentou-se em 2019, e foi homenageado no Hall da Fama.","Superou rivais que o tinham derrotado, como Matt Hughes e Matt Serra, nas revanches."],
+   style:"Jab, quedas de alto nível, controle posicional e preparo físico impecável.", legacy:"Referência de profissionalismo e de evolução constante dentro do esporte."},
+  {name:"Amanda Nunes", role:"Peso-Galo · Peso-Pena", rec:"23-5", blurb:"A Leoa é considerada a maior lutadora da história do MMA feminino.",
+   highlights:["Primeira mulher a ser campeã em duas categorias ao mesmo tempo (galo e pena).","Venceu Ronda Rousey, Cris Cyborg, Valentina Shevchenko, Holly Holm e muitas outras campeãs.","Brasileira de Salvador (BA), encerrou a carreira em 2023, no auge, após vencer Irene Aldana."],
+   style:"Poder de nocaute nas duas mãos, jiu-jitsu faixa preta e muita calma sob pressão.", legacy:"Abriu caminho para as campeãs de múltiplas categorias no UFC."},
+  {name:"Khabib Nurmagomedov", role:"Peso-Leve", rec:"29-0", blurb:"O Águia saiu invicto: 29 lutas, nenhuma derrota e domínio total no chão.",
+   highlights:["Campeão dos leves de 2018 a 2020, com defesas contra Conor McGregor, Dustin Poirier e Justin Gaethje.","Aposentou-se em outubro de 2020, logo após vencer Gaethje no UFC 254.","Hoje, como treinador, formou campeões como Islam Makhachev."],
+   style:"Wrestling e sambo com controle sufocante: quedas, passagens e ground and pound constantes.", legacy:"Um cartel invicto de 29-0 é raríssimo e coloca Khabib em qualquer conversa sobre os maiores."},
+  {name:"Demetrious Johnson", role:"Peso-Mosca", rec:"25-4-1", blurb:"Mighty Mouse transformou a divisão dos moscas em vitrine de velocidade e técnica.",
+   highlights:["Fez 11 defesas consecutivas de título, recorde na época.","Referência em transições, quedas e movimentação.","Fez história também fora do UFC, em organizações como a ONE."],
+   style:"Velocidade, troca de ângulos, quedas e finalizações.", legacy:"Provou que as categorias leves podem ser tão emocionantes quanto as pesadas."},
+  {name:"Ronda Rousey", role:"Peso-Galo", rec:"12-2", blurb:"A pioneira que levou o MMA feminino ao UFC e ao mainstream.",
+   highlights:["Primeira campeã feminina do UFC (peso-galo).","Medalhista de bronze em judô nos Jogos Olímpicos de 2008.","Hall da Fama do UFC."],
+   style:"Judô de elite e finalizações rápidas com o armlock.", legacy:"Sem Rousey, o MMA feminino no UFC não teria decolado tão cedo."},
+  {name:"José Aldo", role:"Peso-Pena", rec:"31-9*", blurb:"O brasileiro que foi o rei dos penas por quase uma década.",
+   highlights:["Campeão dos penas por cerca de cinco anos, com sete defesas de título.","Quase dez anos sem perder (de 2005 a 2015).","Sofreu a derrota em 13 segundos para Conor McGregor no UFC 194, em 2015."],
+   style:"Chutes baixos devastadores, boxe seco e defesa de quedas quase perfeita.", legacy:"Referência do MMA brasileiro e uma das maiores carreiras dos pesos leves."}
+];
+
+const fights = [
+  {a:"Robbie Lawler", b:"Rory MacDonald", ev:"UFC 189 · 11/07/2015", stars:5, sub:"Peso Meio-Médio · cinturão", text:"Cinco rounds de sangue e coragem. MacDonald terminou com o nariz quebrado e Lawler venceu por TKO nos segundos finais do 5º round.",
+   extra:"Muita gente cita essa revanche como a luta mais intensa do UFC. A cada round, Lawler e MacDonald se alternavam no controle."},
+  {a:"Maurício Shogun", b:"Dan Henderson", ev:"UFC 139 · 19/11/2011", stars:5, sub:"Meio-Pesado · 5 rounds", text:"Um duelo épico em que os dois lutadores levaram golpes brutais e quase caíram diversas vezes. Shogun venceu por decisão unânime.",
+   extra:"Henderson dominou o 3º round e Shogun reagiu nos dois rounds finais. Ficou conhecida como uma das melhores lutas já realizadas."},
+  {a:"Zhang Weili", b:"Joanna Jedrzejczyk", ev:"UFC 248 · 07/03/2020", stars:5, sub:"Peso-Palha · cinturão", text:"Cinco rounds de trocação em alto nível. Zhang venceu por decisão dividida e manteve o título dos palhas.",
+   extra:"Frequentemente apontada como a melhor luta feminina do UFC. O ritmo e a precisão das duas mulheres impressionaram todo mundo."},
+  {a:"Max Holloway", b:"Justin Gaethje", ev:"UFC 300 · 13/04/2024", stars:5, sub:"Peso-Leve · cinturão BMF", text:"Holloway apontou para o chão e nocauteou Gaethje com um segundo restante no 5º round.",
+   extra:"Aconteceu no card comemorativo do UFC 300 e ficou como um dos momentos mais lembrados dos últimos anos."},
+  {a:"Stephan Bonnar", b:"Forrest Griffin", ev:"The Ultimate Fighter 1 Finale · 09/04/2005", stars:5, sub:"Meio-Pesado", text:"Quinze minutos de pura guerra que tiveram enorme audiência. Griffin venceu por decisão unânime.",
+   extra:"Muitos atribuem a essa luta a virada de chave para o UFC, que ganhou o grande público a partir daqui."},
+  {a:"Dustin Poirier", b:"Max Holloway", ev:"UFC 236 · 13/04/2019", stars:5, sub:"Peso-Leve · cinturão interino", text:"Dois dos melhores trocadores do planeta em uma batalha de ritmo imenso. Poirier venceu por decisão unânime.",
+   extra:"Um dos melhores exemplos de uma luta equilibrada e técnica, com viradas em todos os rounds."},
+  {a:"Rose Namajunas", b:"Joanna Jedrzejczyk", ev:"UFC 223 · 07/04/2018", stars:4, sub:"Peso-Palha · cinturão", text:"Namajunas defendeu o cinturão por decisão dividida em uma revanche dura e muito disputada.",
+   extra:"Foi a luta que consolidou Rose como uma campeã de elite, depois do nocaute no primeiro encontro."},
+  {a:"Charles Oliveira", b:"Michael Chandler", ev:"UFC 262 · 15/05/2021", stars:4, sub:"Peso-Leve · cinturão vago", text:"Chandler derrubou Oliveira no 1º round, mas o brasileiro reagiu e venceu por TKO no 2º round.",
+   extra:"A luta mostrou a capacidade de Oliveira de se recuperar em segundos e finalizar em cima do rival."}
+];
+
+const unbeaten = [
+  {name:"Movsar Evloev", status:"Disputa o cinturão", rec:"20-0", div:"Peso-Pena", country:"Rússia", flag:"🇷🇺", chip:"Título em 24/10",
+   bio:"Número 1 do ranking dos penas, conquistou a chance de título com vitória por decisão majoritária sobre Lerone Murphy em março de 2026.",
+   style:"Wrestling forte, controle constante e cardio. Lutador que raramente se arrisca.",
+   next:"Encara Alexander Volkanovski no UFC 333, em 24/10/2026, em Abu Dhabi."},
+  {name:"Shavkat Rakhmonov", status:"Top 3 dos meio-médios", rec:"19-0", div:"Peso Meio-Médio", country:"Cazaquistão", flag:"🇰🇿", chip:"Contendor",
+   bio:"Aos 31 anos, o cazaque é número 3 entre os meio-médios e acumulou um cartel sem derrotas com finalizações.",
+   style:"Striking técnico e jiu-jitsu perigoso, com boa frieza para ir ao chão.",
+   next:"Aguarda uma chance de título, sem data confirmada."},
+  {name:"Baysangur Susurkaev", status:"Prospecto", rec:"12-0", div:"Peso-Médio", country:"Rússia", flag:"🇷🇺", chip:"Prospecto",
+   bio:"Subiu para 12-0 com uma finalização no UFC 328, em maio de 2026.", style:"Jogo de chão agressivo e muita explosão.", next:"Segue subindo no ranking dos médios."},
+  {name:"Abdul Rakhman Yakhyaev", status:"Teste de fogo", rec:"10-0", div:"Meio-Pesado", country:"Rússia", flag:"🇷🇺", chip:"Prospecto",
+   bio:"Invicto nos meio-pesados, vai enfrentar o veterano Nikita Krylov no UFC 333.", style:"Wrestling e pressão física.", next:"UFC 333, em 24/10/2026."},
+  {name:"Nurullo Aliev", status:"Prospecto", rec:"12-0", div:"Peso-Leve", country:"Tadjiquistão", flag:"🇹🇯", chip:"Prospecto",
+   bio:"Invicto dos leves, enfrenta o ranqueado Grant Dawson no UFC 333, um dos testes mais difíceis da carreira.", style:"Pressão, ritmo e grappling.", next:"UFC 333, em 24/10/2026."},
+  {name:"Khabib Nurmagomedov", status:"Aposentado invicto", rec:"29-0", div:"Peso-Leve", country:"Rússia", flag:"🇷🇺", chip:"Lenda",
+   bio:"Encerrou a carreira em outubro de 2020, após vencer Justin Gaethje, com 29 vitórias e nenhuma derrota.", style:"Wrestling e sambo de dominação total.", next:"Hoje atua como treinador e mentor."}
+];
+
+const future = [
+  {tag:"Especulação", cls:"chip--gray", title:"Peso-pesado em aberto", text:"Com Gane como campeão e o retorno de Tom Aspinall em discussão, a unificação do cinturão é a principal história dos pesados."},
+  {tag:"Especulação", cls:"chip--gray", title:"Revanche Strickland × Chimaev", text:"Depois da decisão dividida em maio, muita gente espera uma segunda luta pelo cinturão dos médios."},
+  {tag:"Especulação", cls:"chip--gray", title:"1ª defesa de Natalia Silva", text:"A nova campeã peso-mosca deve ter desafiantes de peso, e o retorno de Shevchenko é um dos cenários comentados."},
+  {tag:"Tradição", cls:"", title:"Novembro no Madison Square Garden", text:"O UFC costuma fazer um grande card em Nova York em novembro. Datas e lutas ainda precisam de confirmação oficial."},
+  {tag:"Em andamento", cls:"chip--red", title:"Novo ranking algorítmico", text:"Desde junho de 2026 o UFC vem fazendo a transição para o Meta UFC Rankings, o que pode mudar a forma de decidir quem luta pelo cinturão."}
+];
+
+/* ============ ticker + counters ============ */
+(function(){
+  const html = results.map(r => "<span><b>" + r[0] + "</b> · " + r[1] + "</span>").join("");
+  $("#ticker").innerHTML = html + html;
+})();
+
+/* ============ modal ============ */
+const modal = $("#modal"), mContent = $("#mContent");
+let lastFocus = null;
+function openModal(o){
+  lastFocus = document.activeElement;
+  const stats = (o.stats || []).map(s => "<div><strong>" + s[1] + "</strong><span>" + s[0] + "</span></div>").join("");
+  const chips = (o.chips || []).map(c => '<span class="chip ' + (c[1] || "") + '">' + c[0] + "</span>").join("");
+  const tabs = o.tabs.map((t, i) => '<button role="tab" id="mt' + i + '" aria-selected="' + (i === 0) + '" aria-controls="mp" data-i="' + i + '">' + t.label + "</button>").join("");
+  mContent.innerHTML =
+    '<div class="m-head"><div class="av">' + avatar(o.title) + '</div><div><h3 id="mTitle">' + o.title + '</h3><p class="sub">' + o.sub + '</p><div class="chips-row">' + chips + "</div></div></div>" +
+    '<div class="m-stats">' + stats + "</div>" +
+    '<div class="m-tabs" role="tablist" aria-label="Detalhes">' + tabs + "</div>" +
+    '<div class="m-body" id="mp" role="tabpanel">' + o.tabs[0].html + "</div>";
+  const btns = $$(".m-tabs button", mContent);
+  function select(i){
+    btns.forEach((b, k) => b.setAttribute("aria-selected", String(k === i)));
+    $("#mp", mContent).innerHTML = o.tabs[i].html;
+    $("#mp", mContent).setAttribute("aria-labelledby", "mt" + i);
+  }
+  btns.forEach((b, i) => {
+    b.addEventListener("click", () => select(i));
+    b.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft"){
+        const n = (i + (e.key === "ArrowRight" ? 1 : btns.length - 1)) % btns.length;
+        select(n); btns[n].focus(); e.preventDefault();
+      }
+    });
+  });
+  modal.classList.add("open"); modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("lock");
+  $(".modal__x", modal).focus();
+}
+function closeModal(){
+  modal.classList.remove("open"); modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("lock");
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
+modal.addEventListener("click", e => { if (e.target.closest("[data-close]")) closeModal(); });
+document.addEventListener("keydown", e => {
+  if (!modal.classList.contains("open")) return;
+  if (e.key === "Escape") closeModal();
+  if (e.key === "Tab"){
+    const f = $$("button, [href], [tabindex]:not([tabindex='-1'])", modal).filter(x => !x.disabled && x.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ last.focus(); e.preventDefault(); }
+    else if (!e.shiftKey && document.activeElement === last){ first.focus(); e.preventDefault(); }
+  }
+});
+
+function openChamp(c){
+  openModal({
+    title:c.name, sub:(c.nick ? "“" + c.nick + "” · " : "") + c.div,
+    chips:[[c.belt + " do " + c.div, ""], [c.flag + " " + c.country, "chip--gray"]],
+    stats:[["Cartel", c.rec], ["Categoria", c.limit], ["Cinturão desde", c.since]],
+    tabs:[
+      {label:"Resumo", html:"<p>" + c.bio + "</p>"},
+      {label:"Estilo", html:"<p>" + c.style + "</p>"},
+      {label:"E agora?", html:"<p>" + c.next + "</p>"}
+    ]
+  });
+}
+function openLegend(l){
+  openModal({
+    title:l.name, sub:l.role, chips:[["Lenda do UFC", ""]], stats:[["Cartel", l.rec]],
+    tabs:[
+      {label:"Resumo", html:"<p>" + l.blurb + "</p>"},
+      {label:"Feitos", html:"<ul>" + l.highlights.map(h => "<li>" + h + "</li>").join("") + "</ul>"},
+      {label:"Estilo e legado", html:"<p><strong>Estilo:</strong> " + l.style + "</p><p><strong>Legado:</strong> " + l.legacy + "</p>"}
+    ]
+  });
+}
+function openUnd(u){
+  openModal({
+    title:u.name, sub:u.div + " · " + u.flag + " " + u.country, chips:[[u.chip, u.chip === "Lenda" ? "chip--gray" : "chip--red"]],
+    stats:[["Cartel", u.rec], ["Derrotas", "0"]],
+    tabs:[
+      {label:"Resumo", html:"<p>" + u.bio + "</p>"},
+      {label:"Estilo", html:"<p>" + u.style + "</p>"},
+      {label:"E agora?", html:"<p>" + u.next + "</p>"}
+    ]
+  });
+}
+function activate(el, fn){
+  el.addEventListener("click", fn);
+  el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); fn(); } });
+}
+
+/* ============ champions: tabs + chips + search ============ */
+const state = {g:"all", wk:"all", q:""};
+const chipsBox = $("#weightChips");
+chipsBox.innerHTML = '<button class="on" data-wk="all">Todas as categorias</button>' + WK.map(w => '<button data-wk="' + w + '">' + w + "</button>").join("");
+
+function cardHTML(c, idx){
+  return '<article class="card champ reveal" tabindex="0" role="button" data-idx="' + idx + '" aria-label="Ver detalhes de ' + c.name + '">' +
+    '<div class="champ__top"><span class="belt">★ ' + c.belt + '</span><div class="av">' + avatar(c.name) + "</div></div>" +
+    '<div class="champ__body"><div class="champ__div">' + c.div + "</div>" +
+    '<h3 class="champ__name">' + c.name + '</h3><div class="champ__nick">' + (c.nick ? "“" + c.nick + "”" : "&nbsp;") + "</div>" +
+    '<div class="champ__meta"><div class="rec">' + c.rec + "<small>Cartel</small></div>" +
+    '<div class="nat"><span>' + c.flag + "</span>" + c.country + "</div></div></div></article>";
+}
+function matches(c){
+  if (state.g !== "all" && c.g !== state.g) return false;
+  if (state.wk !== "all" && c.wk !== state.wk) return false;
+  if (state.q){
+    const hay = norm([c.name, c.nick, c.div, c.wk, c.country, c.g === "M" ? "masculino" : "feminino"].join(" "));
+    return norm(state.q).split(/\s+/).every(t => hay.includes(t));
+  }
+  return true;
+}
+function renderChamps(){
+  const list = champions.map((c, i) => ({c, i})).filter(x => matches(x.c));
+  const box = $("#champs");
+  const order = {Pesado:0,"Meio-Pesado":1,"Médio":2,"Meio-Médio":3,Leve:4,Pena:5,Galo:6,Mosca:7,Palha:8};
+  let html = "";
+  [["M","Masculino"],["F","Feminino"]].forEach(([g, label]) => {
+    const part = list.filter(x => x.c.g === g).sort((a, b) => order[a.c.wk] - order[b.c.wk]);
+    if (part.length) html += '<h3 class="group-title">' + label + '</h3><div class="grid grid--champs">' + part.map(x => cardHTML(x.c, x.i)).join("") + "</div>";
+  });
+  box.innerHTML = html;
+  $("#champEmpty").classList.toggle("show", list.length === 0);
+  $("#champCount").textContent = list.length + (list.length === 1 ? " campeão exibido" : " campeões exibidos") + " de " + champions.length;
+  $$(".champ", box).forEach(el => {
+    activate(el, () => openChamp(champions[+el.dataset.idx]));
+    requestAnimationFrame(() => el.classList.add("in"));
+  });
+}
+$("#genderTabs").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  $$("#genderTabs button").forEach(x => x.setAttribute("aria-selected", String(x === b)));
+  state.g = b.dataset.g; renderChamps();
+});
+$("#genderTabs").addEventListener("keydown", e => {
+  if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+  const bs = $$("#genderTabs button"); const cur = bs.findIndex(b => b.getAttribute("aria-selected") === "true");
+  const n = (cur + (e.key === "ArrowRight" ? 1 : bs.length - 1)) % bs.length; bs[n].click(); bs[n].focus();
+});
+chipsBox.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  $$("button", chipsBox).forEach(x => x.classList.toggle("on", x === b));
+  state.wk = b.dataset.wk; renderChamps();
+});
+const cs = $("#csearch"), gs = $("#gsearch");
+cs.addEventListener("input", () => { state.q = cs.value.trim(); gs.value = cs.value; renderChamps(); });
+
+/* ============ global search (navbar) ============ */
+const sug = $("#suggest");
+function buildIndex(){
+  const idx = [];
+  champions.forEach(c => idx.push({label:c.name, sub:"Campeão · " + c.div, hay:norm([c.name, c.nick, c.div, c.wk, c.country].join(" ")), act:() => { openChamp(c); }}));
+  legends.forEach(l => idx.push({label:l.name, sub:"Lenda · " + l.role, hay:norm(l.name + " " + l.role), act:() => openLegend(l)}));
+  unbeaten.forEach(u => idx.push({label:u.name, sub:"Invicto · " + u.div, hay:norm(u.name + " " + u.div + " " + u.country), act:() => openUnd(u)}));
+  return idx;
+}
+const searchIndex = buildIndex();
+function showSuggest(q){
+  if (!q){ sug.classList.remove("open"); sug.innerHTML = ""; return; }
+  const terms = norm(q).split(/\s+/);
+  const found = searchIndex.filter(x => terms.every(t => x.hay.includes(t))).slice(0, 6);
+  sug.innerHTML = found.length
+    ? found.map((x, i) => '<button role="option" data-i="' + i + '"><span class="av">' + avatar(x.label) + "</span><span><strong>" + x.label + "</strong><small>" + x.sub + "</small></span></button>").join("")
+    : '<div class="empty">Nada encontrado para “' + q.replace(/[<>&]/g, "") + "”.</div>";
+  sug.classList.add("open");
+  $$("button", sug).forEach((b, i) => b.addEventListener("click", () => {
+    sug.classList.remove("open"); closeMenu(); found[i].act();
+  }));
+}
+gs.addEventListener("input", () => {
+  cs.value = gs.value; state.q = gs.value.trim(); renderChamps(); showSuggest(gs.value.trim());
+});
+gs.addEventListener("keydown", e => {
+  if (e.key === "Enter"){
+    e.preventDefault(); sug.classList.remove("open"); closeMenu();
+    $("#campeoes").scrollIntoView({behavior:"smooth"});
+  }
+  if (e.key === "Escape"){ sug.classList.remove("open"); }
+  if (e.key === "ArrowDown"){ const b = $("button", sug); if (b){ b.focus(); e.preventDefault(); } }
+});
+sug.addEventListener("keydown", e => {
+  const bs = $$("button", sug), i = bs.indexOf(document.activeElement);
+  if (e.key === "ArrowDown" && i < bs.length - 1){ bs[i + 1].focus(); e.preventDefault(); }
+  if (e.key === "ArrowUp"){ (i > 0 ? bs[i - 1] : gs).focus(); e.preventDefault(); }
+  if (e.key === "Escape"){ sug.classList.remove("open"); gs.focus(); }
+});
+document.addEventListener("click", e => { if (!e.target.closest(".search")) sug.classList.remove("open"); });
+
+/* ============ P4P ============ */
+function renderP4P(list, el){
+  el.innerHTML = list.map((p, i) =>
+    '<li tabindex="0" role="button" data-i="' + i + '"><span class="n">' + (i + 1) + '</span><span class="av">' + avatar(p.name) + "</span>" +
+    "<span><strong>" + p.name + "</strong><small>" + p.sub + "</small></span>" + (p.tag ? '<span class="chip">' + p.tag + "</span>" : "<span></span>") + "</li>").join("");
+  $$("li", el).forEach((li, i) => {
+    const p = list[i];
+    const champ = p.ref && champions.find(c => c.name === p.ref);
+    activate(li, () => {
+      if (champ) openChamp(champ);
+      else openModal({title:p.name, sub:p.sub, chips:[["#" + (i + 1) + " P4P", ""]], stats:[["Posição P4P", "#" + (i + 1)], ["País", p.flag]],
+        tabs:[{label:"Resumo", html:"<p>" + p.name + " aparece em " + (i + 1) + "º lugar no ranking pound-for-pound que consultamos (" + p.sub + "). Não há cinturão atribuído a este lutador no momento, conforme as fontes usadas nesta página.</p>"}]});
+    });
+  });
+}
+renderP4P(p4pM, $("#p4pM")); renderP4P(p4pF, $("#p4pF"));
+
+/* ============ legends ============ */
+$("#legends").innerHTML = legends.map((l, i) =>
+  '<article class="card legend reveal" tabindex="0" role="button" data-i="' + i + '" aria-label="Ver história de ' + l.name + '">' +
+  '<div class="legend__img"><div class="av">' + avatar(l.name) + '</div><span class="legend__num">' + pad(i + 1) + '</span></div>' +
+  '<div class="legend__body"><h3>' + l.name + '</h3><div class="role">' + l.role + "</div><p>" + l.blurb + "</p>" +
+  '<div class="legend__foot"><span>Cartel <b>' + l.rec + '</b></span><span class="more">Ler mais →</span></div></div></article>').join("");
+$$("#legends .legend").forEach(el => activate(el, () => openLegend(legends[+el.dataset.i])));
+
+/* ============ fights carousel ============ */
+const track = $("#track");
+track.innerHTML = fights.map((f, i) =>
+  '<article class="fight" data-n="' + pad(i + 1) + '"><div class="fight__ev"><span>' + f.ev + '</span><span class="chip">' + f.sub + "</span></div>" +
+  '<div class="vs"><strong>' + f.a + "</strong><i>VS</i><strong>" + f.b + "</strong></div>" +
+  '<div class="stars" aria-label="Nota ' + f.stars + ' de 5">' + "★".repeat(f.stars) + '<span style="opacity:.25">' + "★".repeat(5 - f.stars) + "</span></div>" +
+  "<p>" + f.text + '</p><div class="extra"><p>' + f.extra + '</p></div><button class="tog" aria-expanded="false">Ver mais +</button></article>').join("");
+$$(".fight .tog", track).forEach(b => b.addEventListener("click", () => {
+  const card = b.closest(".fight"), open = card.classList.toggle("open");
+  b.setAttribute("aria-expanded", String(open)); b.textContent = open ? "Ver menos −" : "Ver mais +";
+}));
+const dotsBox = $("#dots");
+dotsBox.innerHTML = fights.map((_, i) => '<button aria-label="Ir para a luta ' + (i + 1) + '"></button>').join("");
+const dots = $$("button", dotsBox);
+function step(){ const c = $(".fight", track); return c ? c.getBoundingClientRect().width + 22 : 300; }
+function updateDots(){
+  const i = Math.min(fights.length - 1, Math.round(track.scrollLeft / step()));
+  dots.forEach((d, k) => d.classList.toggle("on", k === i));
+}
+dots.forEach((d, i) => d.addEventListener("click", () => track.scrollTo({left:i * step(), behavior:"smooth"})));
+$("#next").addEventListener("click", () => track.scrollBy({left:step(), behavior:"smooth"}));
+$("#prev").addEventListener("click", () => track.scrollBy({left:-step(), behavior:"smooth"}));
+track.addEventListener("scroll", () => requestAnimationFrame(updateDots), {passive:true});
+track.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight"){ track.scrollBy({left:step(), behavior:"smooth"}); e.preventDefault(); }
+  if (e.key === "ArrowLeft"){ track.scrollBy({left:-step(), behavior:"smooth"}); e.preventDefault(); }
+});
+(function drag(){
+  let down = false, sx = 0, sl = 0, moved = false;
+  track.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse" || e.target.closest("button")) return; down = true; moved = false; sx = e.clientX; sl = track.scrollLeft; track.style.scrollSnapType = "none"; });
+  window.addEventListener("pointermove", e => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 3) moved = true; track.scrollLeft = sl - dx; });
+  window.addEventListener("pointerup", () => { if (!down) return; down = false; track.style.scrollSnapType = ""; });
+})();
+updateDots();
+
+/* ============ unbeaten ============ */
+$("#und").innerHTML = unbeaten.map((u, i) =>
+  '<article class="card und reveal" tabindex="0" role="button" data-i="' + i + '" aria-label="Ver detalhes de ' + u.name + '">' +
+  '<div class="av">' + avatar(u.name) + "</div><h3>" + u.name + "</h3><small>" + u.div + " · " + u.flag + " " + u.country + "</small>" +
+  '<div class="big">' + u.rec.replace("-0", "<em>-0</em>") + '</div><div class="bar"><i></i></div><span class="chip ' + (u.chip === "Lenda" ? "chip--gray" : "chip--red") + '">' + u.chip + "</span>" +
+  '<p style="margin:12px 0 0;color:#c3c3cb;font-size:.88rem">' + u.status + "</p></article>").join("");
+$$("#und .und").forEach(el => activate(el, () => openUnd(unbeaten[+el.dataset.i])));
+
+/* ============ future ============ */
+$("#stack").innerHTML = future.map(f =>
+  '<article class="card mini reveal"><span class="chip ' + f.cls + '">' + f.tag + "</span><h4>" + f.title + "</h4><p>" + f.text + "</p></article>").join("");
+
+/* ============ countdown ============ */
+const target = new Date("2026-10-24T18:00:00Z").getTime();
+function tick(){
+  let d = target - Date.now();
+  if (d < 0) d = 0;
+  const days = Math.floor(d / 864e5), h = Math.floor(d % 864e5 / 36e5), m = Math.floor(d % 36e5 / 6e4), s = Math.floor(d % 6e4 / 1e3);
+  $("#cdD").textContent = pad(days); $("#cdH").textContent = pad(h); $("#cdM").textContent = pad(m); $("#cdS").textContent = pad(s);
+  $("#daysLeft").textContent = days;
+}
+tick(); setInterval(tick, 1000);
+
+/* ============ count-up ============ */
+function countUp(el){
+  const end = +el.dataset.count, dur = 1400, t0 = performance.now();
+  (function f(t){
+    const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(end * e);
+    if (p < 1) requestAnimationFrame(f);
+  })(t0);
+}
+
+/* ============ menu ============ */
+const burger = $("#burger"), panel = $("#panel");
+function closeMenu(){ panel.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); burger.setAttribute("aria-label", "Abrir menu"); }
+burger.addEventListener("click", () => {
+  const open = panel.classList.toggle("open");
+  burger.setAttribute("aria-expanded", String(open)); burger.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+});
+$$("#links a").forEach(a => a.addEventListener("click", closeMenu));
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
+window.addEventListener("resize", () => { if (window.innerWidth > 980) closeMenu(); });
+$$("[data-fake]").forEach(a => a.addEventListener("click", e => e.preventDefault()));
+
+/* ============ scroll effects ============ */
+const nav = $("#nav"), toTop = $("#toTop");
+window.addEventListener("scroll", () => {
+  nav.classList.toggle("scrolled", window.scrollY > 20);
+  toTop.classList.toggle("show", window.scrollY > 700);
+}, {passive:true});
+toTop.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+
+renderChamps();
+
+/* reveal + active link (after dynamic content exists) */
+(function observers(){
+  const revealEls = $$(".reveal");
+  if (!("IntersectionObserver" in window)){
+    revealEls.forEach(el => el.classList.add("in")); $$("[data-count]").forEach(countUp); return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+  }, {threshold:.12, rootMargin:"0px 0px -40px 0px"});
+  revealEls.forEach(el => io.observe(el));
+
+  const co = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting){ countUp(en.target); co.unobserve(en.target); } });
+  }, {threshold:.5});
+  $$("[data-count]").forEach(el => co.observe(el));
+
+  const links = $$("#links a");
+  const so = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting){
+        links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+      }
+    });
+  }, {rootMargin:"-45% 0px -50% 0px"});
+  $$("main section[id]").forEach(s => so.observe(s));
+})();
+
+})();
+</script>
+</body>
+</html>
